@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
+    <meta name="author" content="DataStax">
+
+    <title>DataStax C++ Driver for Apache Cassandra - Basics</title>
+
+    <link rel="icon" href="../../favicons/favicon.ico">
+    <link rel="apple-touch-icon" href="../../favicons/favicon.png">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-app="docs">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../">Cassandra C/C++ Driver</a>
+        </div>
+        <div class="collapse navbar-collapse" ng-controller="search">
+          <ul class="nav navbar-nav">
+            <li><a href="../../">Introduction</a></li>
+            <li class="active"><a href="../">Topics</a></li>
+            <li><a href="../../api/">API docs</a></li>
+          </ul>
+          <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
+            <div class="form-group has-feedback">
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search()" data-toggle="dropdown" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
+              <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
+            </div>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="content">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              <li><a href="../../">Introduction</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">Topics</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Basics</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <h1 id="basics">Basics<a class="anchor" href="#basics" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
+
+<h2 id="feature-compatibility">Feature Compatibility<a class="anchor" href="#feature-compatibility" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>Cassandra 2.0+ is required for parameterized queries, prepared statements, paging, and batches. Cassandra 1.2 does NOT support these features.</p>
+<h3 id="subtopics">Subtopics<a class="anchor" href="#subtopics" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+<ul class="sub-topics">
+<li><a href="keyspaces/">Keyspaces</a></li>
+<li><a href="futures/">Futures</a></li>
+<li><a href="binding_parameters/">Binding Parameters</a></li>
+<li><a href="handling_results/">Handling Results</a></li>
+<li><a href="schema_metadata/">Schema Metadata</a></li>
+<li><a href="uuids/">Uuids</a></li>
+<li><a href="prepared_statements/">Prepared Statements</a></li>
+<li><a href="batches/">Batches</a></li>
+</ul>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
+            
+              
+                
+                  <li><a href="../building/">Building</a></li>
+                
+              
+                
+                  <li class="active">
+                    <a href="./">Basics</a>
+                    <ul class="nav nav-pills nav-stacked">
+                      
+                      
+                      <li><a href="keyspaces/">Keyspaces</a></li>
+                      
+                      
+                      
+                      <li><a href="futures/">Futures</a></li>
+                      
+                      
+                      
+                      <li><a href="binding_parameters/">Binding Parameters</a></li>
+                      
+                      
+                      
+                      <li><a href="handling_results/">Handling Results</a></li>
+                      
+                      
+                      
+                      <li><a href="schema_metadata/">Schema Metadata</a></li>
+                      
+                      
+                      
+                      <li><a href="uuids/">Uuids</a></li>
+                      
+                      
+                      
+                      <li><a href="prepared_statements/">Prepared Statements</a></li>
+                      
+                      
+                      
+                      <li><a href="batches/">Batches</a></li>
+                      
+                      
+                    </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="../security/">Security</a></li>
+                
+              
+                
+                  <li><a href="../logging/">Logging</a></li>
+                
+              
+                
+                  <li><a href="../configuration/">Configuration</a></li>
+                
+              
+                
+                  <li><a href="../faq/">FAQ</a></li>
+                
+              
+            
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>
+          <a href="https://github.com/datastax/cpp-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/cpp-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/CPP">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/cpp-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
+
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.js"></script>
+    <script src="../../js/angular.js"></script>
+    <script src="../../js/mousetrap.js"></script>
+    <script src="../../js/hotkeys.js"></script>
+    <script src="../../js/ZeroClipboard.js"></script>
+    <script src="../../js/lunr.js"></script>
+    <script src="../../js/app.js"></script>
+  </body>
+</html>

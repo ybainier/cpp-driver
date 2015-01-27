@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
+    <meta name="author" content="DataStax">
+
+    <title>DataStax C++ Driver for Apache Cassandra - Topics</title>
+
+    <link rel="icon" href="../favicons/favicon.ico">
+    <link rel="apple-touch-icon" href="../favicons/favicon.png">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-app="docs">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../">Cassandra C/C++ Driver</a>
+        </div>
+        <div class="collapse navbar-collapse" ng-controller="search">
+          <ul class="nav navbar-nav">
+            <li><a href="../">Introduction</a></li>
+            <li class="active"><a href="./">Topics</a></li>
+            <li><a href="../api/">API docs</a></li>
+          </ul>
+          <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
+            <div class="form-group has-feedback">
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search()" data-toggle="dropdown" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
+              <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
+            </div>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="content">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              <li><a href="../">Introduction</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Topics</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <h1 id="getting-started">Getting started<a class="anchor" href="#getting-started" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
+
+<h2 id="installation">Installation<a class="anchor" href="#installation" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>Binary packages can be downloaded from <a href="TODO">here</a> or the driver can also be <a href="TODO">built</a>.</p>
+
+<h2 id="connecting">Connecting<a class="anchor" href="#connecting" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+<pre class="highlight"><code class="c"><span class="cp">#include &lt;cassandra.h&gt;
+#include &lt;stdio.h&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nc">CassCluster</span><span class="o">*</span> <span class="n">cluster</span> <span class="o">=</span> <span class="nb">cass_cluster_new</span><span class="p">();</span>
+
+  <span class="cm">/* Add contact points */</span>
+  <span class="nb">cass_cluster_set_contact_points</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">);</span>
+
+  <span class="cm">/* Create and connect a session */</span>
+  <span class="nc">CassSession</span><span class="o">*</span> <span class="n">session</span> <span class="o">=</span> <span class="nb">cass_session_new</span><span class="p">();</span>
+
+  <span class="cm">/* Provide the cluster object as configuration to connect the session */</span>
+  <span class="nc">CassFuture</span><span class="o">*</span> <span class="n">connect_future</span> <span class="o">=</span> <span class="nb">cass_session_connect</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">cluster</span><span class="p">);</span>
+
+  <span class="cm">/* This operation will block until the result is ready */</span>
+  <span class="nc">CassError</span> <span class="n">rc</span> <span class="o">=</span> <span class="nb">cass_future_error_code</span><span class="p">(</span><span class="n">connect_future</span><span class="p">);</span>
+
+  <span class="n">printf</span><span class="p">(</span><span class="s">"Connect result: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">cass_error_desc</span><span class="p">(</span><span class="n">rc</span><span class="p">));</span>
+
+  <span class="cm">/* Run queries... */</span>
+
+  <span class="nb">cass_future_free</span><span class="p">(</span><span class="n">connect_future</span><span class="p">);</span>
+  <span class="nb">cass_session_free</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+  <span class="nb">cass_cluster_free</span><span class="p">(</span><span class="n">cluster</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+<p>To connect a session you need to create a <a href="http://datastax.github.io/cpp-driver/api/struct_cass_cluster/"><code>CassCluster</code></a> object and configure it. The minimal configuration needed to connect is a list of contact points. The contact points are used to initialize the driver and it will automatically discover the rest of the nodes in your cluster. It’s a good idea to include more than one contact point to be robust against node failures.</p>
+
+<h2 id="futures">Futures<a class="anchor" href="#futures" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>The driver is designed so that no operation will force your application to block. Operations that would normally cause your application to block, such as connecting to a cluster or running a query, instead return a <a href="http://datastax.github.io/cpp-driver/api/struct_cass_future/"><code>CassFuture</code></a> object that can be waited on, polled or used to register a callback. The API can also be used synchronously by immediately attempting to get the result from a future.</p>
+
+<h2 id="executing-a-query">Executing a Query<a class="anchor" href="#executing-a-query" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>Queries are executed using <a href="http://datastax.github.io/cpp-driver/api/struct_cass_future/"><code>CassStatement</code></a> objects. Statements encapsulate the query string and the query parameters. Query parameters are not supported by ealier versions of Cassandra (1.2 and below) and values need to be inlined in the query string itself.</p>
+<pre class="highlight"><code class="c"><span class="nc">CassString</span> <span class="n">insert_query</span>
+  <span class="o">=</span> <span class="nb">cass_string_init</span><span class="p">(</span><span class="s">"INSERT INTO example (key, value) VALUES ('abc', 123);"</span><span class="p">);</span>
+
+<span class="o">/</span> <span class="o">*</span> <span class="n">Create</span> <span class="n">a</span> <span class="n">statement</span> <span class="n">with</span> <span class="n">zero</span> <span class="n">parameters</span> <span class="err">*/</span>
+<span class="nc">CassStatement</span><span class="o">*</span> <span class="n">statement</span> <span class="o">=</span> <span class="nb">cass_statement_new</span><span class="p">(</span><span class="n">insert_query</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="nc">CassFuture</span><span class="o">*</span> <span class="n">query_future</span> <span class="o">=</span> <span class="nb">cass_session_execute</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">statement</span><span class="p">);</span>
+
+<span class="cm">/* Statement objects can be freed immediately after being executed */</span>
+<span class="nb">cass_statement_free</span><span class="p">(</span><span class="n">statement</span><span class="p">);</span>
+
+<span class="cm">/* This will block until the query has finished */</span>
+<span class="nc">CassError</span> <span class="n">rc</span> <span class="o">=</span> <span class="nb">cass_future_error_code</span><span class="p">(</span><span class="n">query_future</span><span class="p">);</span>
+
+<span class="n">printf</span><span class="p">(</span><span class="s">"Query result: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">cass_error_desc</span><span class="p">(</span><span class="n">rc</span><span class="p">));</span>
+
+<span class="nb">cass_future_free</span><span class="p">(</span><span class="n">query_future</span><span class="p">);</span>
+</code></pre>
+<h2 id="query-parameters">Query Parameters<a class="anchor" href="#query-parameters" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>Cassandra 2.0+ supports the use of query parameters. This allows the same query string to be executed mulitple times with different values.  Your application can then avoid string manipulation to pass values. If you’re repeating the same query mulitple time you should use prepared staements.</p>
+<pre class="highlight"><code class="c"><span class="nc">CassString</span> <span class="n">insert_query</span>
+  <span class="o">=</span> <span class="nb">cass_string_init</span><span class="p">(</span><span class="s">"INSERT INTO example (key, value) VALUES (?, ?);"</span><span class="p">);</span>
+
+<span class="cm">/* There are two bind variables in the query string */</span>
+<span class="nc">CassStatement</span><span class="o">*</span> <span class="n">statement</span> <span class="o">=</span> <span class="nb">cass_statement_new</span><span class="p">(</span><span class="n">insert_query</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+
+<span class="cm">/* Bind the values using the indices of the bind variables */</span>
+<span class="nb">cass_statement_bind_string</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">cass_string_init</span><span class="p">(</span><span class="s">"abc"</span><span class="p">));</span>
+<span class="nb">cass_statement_bind_int32</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">123</span><span class="p">);</span>
+
+<span class="nc">CassFuture</span><span class="o">*</span> <span class="n">query_future</span> <span class="o">=</span> <span class="nb">cass_session_execute</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">statement</span><span class="p">);</span>
+
+<span class="cm">/* Statement objects can be freed immediately after being executed */</span>
+<span class="nb">cass_statement_free</span><span class="p">(</span><span class="n">statement</span><span class="p">);</span>
+
+<span class="cm">/* This will block until the query has finished */</span>
+<span class="nc">CassError</span> <span class="n">rc</span> <span class="o">=</span> <span class="nb">cass_future_error_code</span><span class="p">(</span><span class="n">query_future</span><span class="p">);</span>
+
+<span class="n">printf</span><span class="p">(</span><span class="s">"Query result: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">cass_error_desc</span><span class="p">(</span><span class="n">rc</span><span class="p">));</span>
+
+<span class="nb">cass_future_free</span><span class="p">(</span><span class="n">query_future</span><span class="p">);</span>
+</code></pre>
+<h2 id="handling-query-results">Handling query results<a class="anchor" href="#handling-query-results" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>A single row can be retrieved using the convenience function <a href="TODO"><code>cass_result_first_row()</code></a> to get the first row. If multiple rows are returned a CassIterator object can be used to iterate over the returned rows.</p>
+<pre class="highlight"><code class="c"><span class="cm">/* Execute "SELECT * FROM example (key, value) WHERE key = 'abc'" */</span>
+
+<span class="cm">/* This will also block until the query returns */</span>
+<span class="k">const</span> <span class="nc">CassResult</span><span class="o">*</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">cass_future_get_result</span><span class="p">(</span><span class="n">future</span><span class="p">);</span>
+
+<span class="cm">/* If there was an error then the result won't be available */</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="nx">NULL</span><span class="p">)</span> <span class="p">{</span>
+  <span class="cm">/* Handle error */</span>
+  <span class="nb">cass_future_free</span><span class="p">(</span><span class="n">query_future</span><span class="p">);</span>
+  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* The future can be freed immediately after getting the result object */</span>
+<span class="nb">cass_future_free</span><span class="p">(</span><span class="n">query_future</span><span class="p">);</span>
+
+<span class="cm">/* This can be used to retrieve on the first row of the result */</span>
+<span class="k">const</span> <span class="nc">CassRow</span><span class="o">*</span> <span class="n">row</span> <span class="o">=</span> <span class="nb">cass_result_first_row</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+
+<span class="cm">/* Now we can retrieve the column values from the row */</span>
+<span class="nc">CassString</span> <span class="n">key</span><span class="p">;</span>
+<span class="cm">/* Get the column value of "key" by name */</span>
+<span class="nb">cass_value_get_string</span><span class="p">(</span><span class="nb">cass_row_get_column_by_name</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="s">"key"</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">key</span><span class="p">);</span>
+
+<span class="nb">cass_int32_t</span> <span class="n">value</span><span class="p">;</span>
+<span class="cm">/* Get the column value of "value" by name */</span>
+<span class="nb">cass_value_get_int32</span><span class="p">(</span><span class="nb">cass_row_get_column_by_name</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="s">"value"</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">);</span>
+
+
+<span class="cm">/* This will free the future as well as the string pointed to by the CassString 'key' */</span>
+<span class="nb">cass_result_free</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+</code></pre>
+<h1 id="architecture">Architecture<a class="anchor" href="#architecture" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
+
+<h2 id="cluster">Cluster<a class="anchor" href="#cluster" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>The CassCluster object describes your Cassandra cluster’s configuration. The default cluster object is good for most clusters and only a list of contact points needs to be configured. Once a session is connected using a cluster object its configuration is constant. Modify the cluster object configuration after connecting a session doesn’t change the session’s configuration.</p>
+
+<h2 id="session">Session<a class="anchor" href="#session" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>The session object is used to execute queries. Internally, it also manages a pool of client connections to Cassandra and uses a load balancing policy to distribute requests across those connections. It’s recommend that your application only creates a single session object per keyspace as a session object is designed to be created once, reused and shared by multiple application threads. The throughput of a session can be scaled by increasing the number of I/O threads. An I/O thread is used to handle reading and writing query request data to and from Cassandra. The number of I/O threads defaults to one per CPU core, but it can be configured using <a href=""><code>cass_cluster_set_num_threads_io()</code></a>. It’s generally better to create a single session with more I/O threads than multiple sessions with a smaller number of I/O threads. More DataStax driver best practices can be found in this post.</p>
+
+<h2 id="thread-safety">Thread safety<a class="anchor" href="#thread-safety" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p><a href="TODO"><code>CassSession</code></a> is designed to be used concurrently from multiple threads. It is best practice to create a single session per keysapce. <a href="TODO"><code>CassFuture</code></a> is also thread safe. Other than these exclusions, in general, functions that might modify an object’s state are NOT thread safe. Object’s that are immutable (marked ‘const’) can be read safely by multiple threads. None of the &#8216;free’ functions can be called conncurently on the same instance of an object.</p>
+
+<h2 id="memory-handling">Memory handling<a class="anchor" href="#memory-handling" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>Values such as <a href="TODO"><code>CassString</code></a> and <a href="TODO"><code>CassBytes</code></a> point to memory held by the result object. The lifetimes of those values are valid as long as the result object isn’t freed. These values need to be copied into application memory if they need to live longer than the result object’s lifetime. Primitive types such as <a href="TODO"><code>cass_int32_t</code></a> are copied by the driver because it can be done cheaply without incurring extra allocations.</p>
+
+<p>Moving an iterator to the next value invalidates the value it previously returned.</p>
+
+<h2 id="todo">TODO<a class="anchor" href="#todo" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>Here are some features that are missing from the C/C++ driver, but are included with other drivers. The schedule for these features can be found on <a href="https://datastax-oss.atlassian.net/browse/CPP">JIRA</a>.</p>
+
+<ul>
+<li>Compression</li>
+<li>Query tracing</li>
+<li>Event registration and notification</li>
+<li>Callback intefaces for load balancing, authenticaiton, reconnection and retry</li>
+<li>Packaging for Debian-based Linux, RHEL-based Linux and OS X</li>
+<li>Binary releases for Windows and Linux</li>
+</ul>
+<h3 id="subtopics">Subtopics<a class="anchor" href="#subtopics" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+<ul class="sub-topics">
+<li><a href="building/">Building</a></li>
+<li><a href="basics/">Basics</a></li>
+<li><a href="security/">Security</a></li>
+<li><a href="logging/">Logging</a></li>
+<li><a href="configuration/">Configuration</a></li>
+<li><a href="faq/">FAQ</a></li>
+</ul>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
+            
+              
+                
+                  <li><a href="building/">Building</a></li>
+                
+              
+                
+                  <li><a href="basics/">Basics</a></li>
+                
+              
+                
+                  <li><a href="security/">Security</a></li>
+                
+              
+                
+                  <li><a href="logging/">Logging</a></li>
+                
+              
+                
+                  <li><a href="configuration/">Configuration</a></li>
+                
+              
+                
+                  <li><a href="faq/">FAQ</a></li>
+                
+              
+            
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>
+          <a href="https://github.com/datastax/cpp-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/cpp-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/CPP">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/cpp-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
+
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/angular.js"></script>
+    <script src="../js/mousetrap.js"></script>
+    <script src="../js/hotkeys.js"></script>
+    <script src="../js/ZeroClipboard.js"></script>
+    <script src="../js/lunr.js"></script>
+    <script src="../js/app.js"></script>
+  </body>
+</html>
