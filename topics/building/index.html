@@ -81,18 +81,27 @@
           <h1 id="building">Building<a class="anchor" href="#building" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 
-<h2 id="driver-dependencies">Driver Dependencies<a class="anchor" href="#driver-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h2 id="supported-platforms">Supported Platforms<a class="anchor" href="#supported-platforms" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>The driver is known to work on OS X 10.9, Windows 7, CentOS/RHEL 5/6, and Ubuntu 12.04/14.04. </p>
+
+<p>It has been built using GCC 4.1.2+, Clang 3.4+, and MSVC 2010/2012/2013.</p>
+
+<h2 id="dependencies">Dependencies<a class="anchor" href="#dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
 <ul>
 <li><a href="http://www.cmake.org">CMake</a></li>
-<li><a href="https://github.com/libuv/libuv">libuv (1.0x or 0.10)</a></li>
+<li><a href="https://github.com/libuv/libuv">libuv (1.x or 0.10.x)</a></li>
 <li>
 <a href="http://www.openssl.org/">OpenSSL</a> (optional)</li>
 </ul>
 
-<h2 id="test-dependencies">Test Dependencies<a class="anchor" href="#test-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h2>
+<p><strong>NOTE:</strong> Utilizing the default package manager configuration to install dependencies on *nix based operating systems may result in older versions of dependecies being retrieved. OpenSSL is of the upmost concern as each new version addresses security <a href="https://www.openssl.org/news/vulnerabilities.html">vulnerabilities</a> that have been identifed and corrected.</p>
+
+<h3 id="test-dependencies">Test Dependencies<a class="anchor" href="#test-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
 
 <ul>
 <li><a href="http://www.boost.org">boost 1.55+</a></li>
@@ -100,73 +109,137 @@
 <li><a href="https://github.com/pcmanus/ccm">ccm</a></li>
 </ul>
 
-<h2 id="supported-platforms">Supported Platforms<a class="anchor" href="#supported-platforms" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h2>
-
-<p>The driver is known to work on OS X 10.9, Windows 7, RHEL 5/6, and Ubuntu 12.04/14.04. </p>
-
-<p>It has been built using GCC 4.1.2+, Clang 3.4+, and MSVC 2010/2013.</p>
-
 <h2 id="os-x">OS X<a class="anchor" href="#os-x" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
 <p>The driver has been built and tested using the Clang compiler provided by XCode 5.1. The dependencies were obtained using <a href="http://brew.sh">Homebrew</a>.</p>
 
-<p>To obtain dependencies:</p>
+<h3 id="obtaining-dependencies">Obtaining Dependencies<a class="anchor" href="#obtaining-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
 <pre class="highlight"><code class="bash">brew install libuv cmake
 </code></pre>
-<p>Note: We currently use the OpenSSL library included with XCode.</p>
+<p><strong>NOTE:</strong> The driver utilizes the OpenSSL library included with XCode.</p>
 
-<p>To obtain test dependencies (This is not required):</p>
-<pre class="highlight"><code class="bash">brew install boost libssh2
-</code></pre>
-<p>To build:</p>
+<h3 id="building">Building<a class="anchor" href="#building" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
 <pre class="highlight"><code class="bash">git clone https://github.com/datastax/cpp-driver.git
 <span class="nb">cd </span>cpp-driver
 cmake .
+make
+</code></pre>
+<h3 id="test-dependencies-and-building-tests-not-required">Test Dependencies and Building Tests (NOT REQUIRED)<a class="anchor" href="#test-dependencies-and-building-tests-not-required" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+
+<h4 id="obtaining-test-dependencies">Obtaining Test Dependencies<a class="anchor" href="#obtaining-test-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h4>
+<pre class="highlight"><code class="bash">brew install boost libssh2
+</code></pre>
+<h4 id="building-with-the-testing-framework">Building with the Testing Framework<a class="anchor" href="#building-with-the-testing-framework" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h4>
+<pre class="highlight"><code class="bash">cmake -DCASS_BUILD_TESTS<span class="o">=</span>ON .
 make
 </code></pre>
 <h2 id="windows">Windows<a class="anchor" href="#windows" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>The driver has been built and tested using Microsoft Visual Studio 2010 and 2013 (using the “Express” versions) on Windows 7 SP1. The dependencies need to be manually built or obtained.</p>
+<p>The driver has been built and tested using Microsoft Visual Studio 2010, 2012 and 2013 (using the “Express” and Professional versions) and Windows SDK v7.1, 8.0, and 8.1 on Windows 7 SP1. The library dependencies will automatically download and build; however the following build dependencies will need to be installed.</p>
 
-<p>To obtain dependencies:
-* Download and install CMake for Windows. Make sure to select the option “Add CMake to the system PATH for all users” or “Add CMake to the system PATH for current user”.
-* Download and build the latest release of libuv 0.10 from <a href="https://github.com/joyent/libuv/releases">https://github.com/joyent/libuv/releases</a>.
-  1. Follow the instructions <a href="https://github.com/joyent/libuv#windows">here</a>.
-  2. Open up the generated Visual Studio solution “uv.sln”.
-  3. If you want a 64-bit build you will need to create a “x64” solution platform in the “Configuration Manager”.
-  4. Open “Properties” on the “libuv” project. Set “Multi-threaded DLL (/MD)” for the “Configuration Properties -&gt; C/C++ -&gt; Code Generation -&gt; Runtime Library” option.
-  5. Build the “libuv” project
-  6. Copy the files in “libuv/include” to “cpp-driver/lib/libuv/include” and “libuv/Release/lib” to “cpp-driver/lib/libuv/lib”.
-* Download and install either the 32-bit or 64-bit version of OpenSSL from <a href="http://slproweb.com/products/Win32OpenSSL.html">http://slproweb.com/products/Win32OpenSSL.html</a>. You may also need to install the “Visual C++ 2008 Redistributables”.</p>
+<h3 id="windows-build-dependencies">Windows Build Dependencies<a class="anchor" href="#windows-build-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
 
-<p>To build 32-bit (using “VS2013 x86 Native Tools Command Prompt”):</p>
-<pre class="highlight"><code class="bash"><span class="nb">cd</span> &lt;path to driver&gt;/cpp-driver
-cmake -G <span class="s2">"Visual Studio 12"</span>
-msbuild cassandra.vcxproj /p:Configuration<span class="o">=</span>Release /t:Clean,Build
+<p>To obtain build dependencies:</p>
+
+<ul>
+<li>Download and install <a href="http://www.cmake.org/download">CMake</a>.
+
+<ul>
+<li>Make sure to select the option “Add CMake to the system PATH for all users” or “Add CMake to the system PATH for current user”.</li>
+</ul>
+</li>
+<li>Download and install <a href="http://git-scm.com/download/win">Git</a>
+
+<ul>
+<li>Make sure to select the option “Use Git from Windows Command Prompt” or manually add the git executable to the system PATH.</li>
+<li>NOTE: This build dependency is required if building with OpenSSL support</li>
+</ul>
+</li>
+<li>Download and install <a href="https://www.perl.org/get.html#win32">ActiveState Perl</a>
+
+<ul>
+<li>Make sure to select the option “Add Perl to PATH environment variable”.</li>
+</ul>
+</li>
+<li>Download and install <a href="https://www.python.org/downloads">Python v2.7.x</a>
+
+<ul>
+<li>Make sure to select/install the feature “Add python.exe to Path”</li>
+</ul>
+</li>
+</ul>
+
+<h3 id="performing-the-windows-build">Performing the Windows Build<a class="anchor" href="#performing-the-windows-build" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+
+<p>A batch script has been created to detect installed Visual Studio version(s) (and/or Windows SDK installtion) in order to simplify the build operations on Windows.  If you have more than one version of Visual Studio (and/or Windows SDK) installed you will be prompted to select which version to use when compiling the driver.</p>
+
+<p>First you will need to open a “Command Prompt” (or Windows SDK Command Prompt) to execute the batch script.</p>
+<pre><code class="dos">Usage: VC_BUILD.BAT [OPTION...]
+
+        --DEBUG                         Enable debug build
+        --RELEASE                       Enable release build (default)
+        --DISABLE-CLEAN                 Disable clean build
+        --DISABLE-OPENSSL               Disable OpenSSL support
+        --ENABLE-PACKAGES [version]     Enable package generation (**)
+        --SHARED                        Build shared library (default)
+        --STATIC                        Build static library
+        --X86                           Target 32-bit build (*)
+        --X64                           Target 64-bit build (*)
+
+        --HELP                          Display this message
+
+*  Default target architecture is determined based on system architecture
+** Packages are only generated using detected installations of Visual Studio
 </code></pre>
-<p>To build 64-bit (using “VS2013 x64 Cross Tools Command Prompt”):</p>
-<pre class="highlight"><code class="bash"><span class="nb">cd</span> &lt;path to driver&gt;/cpp-driver
-cmake -G <span class="s2">"Visual Studio 12 Win64"</span>
-msbuild cassandra.vcxproj /p:Configuration<span class="o">=</span>Release /t:Clean,Build
+<p>To build 32-bit shared library:</p>
+<pre><code class="dos">VC_BUILD.BAT --X86
 </code></pre>
-<p>Note: Use “cmake -G &#8220;Visual Studio 10” for Visual Studio 2010</p>
-
+<p>To build 64-bit shared library:</p>
+<pre><code class="dos">VC_BUILD.BAT --X64
+</code></pre>
+<p>To build static library:</p>
+<pre><code class="dos">VC_BUILD.BAT --STATIC
+</code></pre>
+<p>To build library without OpenSSL support:</p>
+<pre><code class="dos">VC_BUILD.BAT --DISABLE-OPENSSL
+</code></pre>
+<p>To build 32-bit static library without OpenSSL support:</p>
+<pre><code class="dos">VC_BUILD.BAT --DISABLE-OPENSSL --STATIC --X86
+</code></pre>
 <h2 id="linux">Linux<a class="anchor" href="#linux" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>The driver was built and tested using both GCC and Clang on Ubuntu 14.04.</p>
+<p>The driver has been built using both Clang and GCC while being tested with GCC compiled source on Ubuntu 12.04/14.04.</p>
 
-<p>To obtain dependencies (GCC):</p>
+<h3 id="obtaining-dependencies">Obtaining Dependencies<a class="anchor" href="#obtaining-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+
+<h4 id="ubuntu">Ubuntu<a class="anchor" href="#ubuntu" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h4>
+
+<h5 id="additional-requirements-for-ubuntu-12-04-lts">Additional Requirements for Ubuntu 12.04 LTS<a class="anchor" href="#additional-requirements-for-ubuntu-12-04-lts" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h5>
+
+<p>Ubuntu 12.04 does not have libuv in its repositories; however LinuxJedi created a PPA for this dependency which is a backport from Ubuntu 14.04 LTS. It can be found at: <a href="https://launchpad.net/%7Elinuxjedi/+archive/ubuntu/ppa">https://launchpad.net/~linuxjedi/+archive/ubuntu/ppa</a>.</p>
+<pre class="highlight"><code class="bash">sudo apt-add-repository ppa:linuxjedi/ppa
+sudo apt-get update
+</code></pre>
+<h4 id="gcc">GCC<a class="anchor" href="#gcc" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h4>
 <pre class="highlight"><code class="bash">sudo apt-get install g++ make cmake libuv-dev libssl-dev
 </code></pre>
-<p>To obtain dependencies (Clang):</p>
+<h4 id="clang">Clang<a class="anchor" href="#clang" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h4>
 <pre class="highlight"><code class="bash">sudo apt-get install clang make cmake libuv-dev libssl-dev
-</code></pre>
-<p>To obtain test dependencies (This is not required):</p>
-<pre class="highlight"><code class="bash">sudo apt-get install libboost-chrono-dev libboost-date-time-dev libboost-log-dev libboost-system-dev libboost-thread-dev libboost-test-dev libssh2-1-dev
 </code></pre>
 <p>To build:</p>
 <pre class="highlight"><code class="bash">git clone https://github.com/datastax/cpp-driver.git
@@ -174,11 +247,27 @@ msbuild cassandra.vcxproj /p:Configuration<span class="o">=</span>Release /t:Cle
 cmake .
 make
 </code></pre>
-<h2 id="building-tests">Building Tests<a class="anchor" href="#building-tests" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h2>
+<h3 id="test-dependencies-and-building-tests-not-required">Test Dependencies and Building Tests (NOT REQUIRED)<a class="anchor" href="#test-dependencies-and-building-tests-not-required" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
 
-<p>Tests are not built by default. To build the tests add “-DCASS_BUILD_TESTS=ON” when running cmake.</p>
+<h4 id="obtaining-test-dependencies">Obtaining Test Dependencies<a class="anchor" href="#obtaining-test-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h4>
 
+<h5 id="ubuntu-12-04-lts">Ubuntu 12.04 LTS<a class="anchor" href="#ubuntu-12-04-lts" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h5>
+<pre class="highlight"><code class="bash">sudo add-apt-repository ppa:boost-latest/ppa
+sudo apt-get update
+sudo apt-get install libboost1.55-all-dev libssh2-1-dev
+</code></pre>
+<h5 id="ubuntu-14-04-lts">Ubuntu 14.04 LTS<a class="anchor" href="#ubuntu-14-04-lts" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h5>
+<pre class="highlight"><code class="bash">sudo apt-get install libboost-chrono-dev libboost-date-time-dev libboost-log-dev libboost-system-dev libboost-thread-dev libboost-test-dev libssh2-1-dev
+</code></pre>
+<h4 id="building-with-the-testing-framework">Building with the Testing Framework<a class="anchor" href="#building-with-the-testing-framework" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h4>
+<pre class="highlight"><code class="bash">cmake -DCASS_BUILD_TESTS<span class="o">=</span>ON .
+make
+</code></pre>
         </div>
         <nav class="col-md-3 side-nav">
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">

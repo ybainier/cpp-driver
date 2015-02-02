@@ -66,7 +66,7 @@
               
             </ol>
           </nav>
-          <h1 id="datastax-c-c-driver-for-apache-cassandra-beta">DataStax C/C++ Driver for Apache Cassandra (Beta)<a class="anchor" href="#datastax-c-c-driver-for-apache-cassandra-beta" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+          <h1 id="datastax-c-c-driver-for-apache-cassandra">DataStax C/C++ Driver for Apache Cassandra<a class="anchor" href="#datastax-c-c-driver-for-apache-cassandra" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 
 <p><a href="https://travis-ci.org/datastax/cpp-driver"><img src="https://travis-ci.org/datastax/cpp-driver.svg?branch=1.0" alt="Build Status"></a></p>
@@ -75,11 +75,15 @@
 the Cassandra Query Language version 3 (CQL3) and Cassandra’s Binary Protocol (version 1 and 2).</p>
 
 <ul>
+<li>Code: <a href="https://github.com/datastax/cpp-driver">https://github.com/datastax/cpp-driver</a>
+</li>
+<li>Docs: <a href="http://datastax.github.io/cpp-driver">http://datastax.github.io/cpp-driver</a>
+</li>
 <li>JIRA: <a href="https://datastax-oss.atlassian.net/browse/CPP">https://datastax-oss.atlassian.net/browse/CPP</a>
 </li>
-<li>MAILING LIST: <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user">https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user</a>
+<li>Mailing List: <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user">https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user</a>
 </li>
-<li>IRC: #datastax-drivers on <code>irc.freenode.net &lt;http://freenode.net&gt;</code>
+<li>IRC: <a href="http://webchat.freenode.net/?channels=datastax-drivers">#datastax-drivers on <code>irc.freenode.net &lt;http://freenode.net&gt;</code></a>
 </li>
 </ul>
 
@@ -99,7 +103,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s Binary Protocol 
 <li>SSL</li>
 </ul>
 
-<h2 id="upgrading-from-a-beta-to-a-rc-release">Upgrading from a beta to a RC release<a class="anchor" href="#upgrading-from-a-beta-to-a-rc-release" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h2 id="upgrading-from-a-beta-to-a-rc-release">Upgrading from a Beta to a RC Release<a class="anchor" href="#upgrading-from-a-beta-to-a-rc-release" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
 <p>There were a couple breaking API changes between beta5 and rc1 that are documented in detail <a href="http://www.datastax.com/dev/blog/datastax-c-driver-rc1-released">here</a>.</p>
@@ -120,8 +124,10 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s Binary Protocol 
   <span class="nc">CassCluster</span><span class="o">*</span> <span class="n">cluster</span> <span class="o">=</span> <span class="nb">cass_cluster_new</span><span class="p">();</span>
   <span class="nc">CassSession</span><span class="o">*</span> <span class="n">session</span> <span class="o">=</span> <span class="nb">cass_session_new</span><span class="p">();</span>
 
+  <span class="cm">/* Add contact points */</span>
   <span class="nb">cass_cluster_set_contact_points</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="s">"127.0.0.1,127.0.0.2,127.0.0.3"</span><span class="p">);</span>
 
+  <span class="cm">/* Provide the cluster object as configuration to connect the session */</span>
   <span class="n">connect_future</span> <span class="o">=</span> <span class="nb">cass_session_connect</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">cluster</span><span class="p">);</span>
 
   <span class="k">if</span> <span class="p">(</span><span class="nb">cass_future_error_code</span><span class="p">(</span><span class="n">connect_future</span><span class="p">)</span> <span class="o">==</span> <span class="n">CASS_OK</span><span class="p">)</span> <span class="p">{</span>
@@ -135,7 +141,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s Binary Protocol 
     <span class="nc">CassFuture</span><span class="o">*</span> <span class="n">result_future</span> <span class="o">=</span> <span class="nb">cass_session_execute</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">statement</span><span class="p">);</span>
 
     <span class="k">if</span><span class="p">(</span><span class="nb">cass_future_error_code</span><span class="p">(</span><span class="n">result_future</span><span class="p">)</span> <span class="o">==</span> <span class="n">CASS_OK</span><span class="p">)</span> <span class="p">{</span>
-      <span class="cm">/* Retrieve result set and iterator over the rows */</span>
+      <span class="cm">/* Retrieve result set and iterate over the rows */</span>
       <span class="k">const</span> <span class="nc">CassResult</span><span class="o">*</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">cass_future_get_result</span><span class="p">(</span><span class="n">result_future</span><span class="p">);</span>
       <span class="nc">CassIterator</span><span class="o">*</span> <span class="n">rows</span> <span class="o">=</span> <span class="nb">cass_iterator_from_result</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
 
@@ -182,7 +188,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s Binary Protocol 
 <h2 id="license">License<a class="anchor" href="#license" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>Copyright © 2014 DataStax</p>
+<p>Copyright © 2015 DataStax</p>
 
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -202,7 +208,7 @@ limitations under the License.</p>
             
               <li><a href="#functionality">Functionality
 </a></li>
-<li><a href="#upgrading-from-a-beta-to-a-rc-release">Upgrading from a beta to a RC release
+<li><a href="#upgrading-from-a-beta-to-a-rc-release">Upgrading from a Beta to a RC Release
 </a></li>
 <li><a href="#examples">Examples
 </a></li>

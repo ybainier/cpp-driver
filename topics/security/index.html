@@ -86,7 +86,7 @@
 <h2 id="authentication">Authentication<a class="anchor" href="#authentication" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>Authentication allows your application to supply credentials that can be used to control access to Cassandra resources. The driver currently only supports plain text authentication so it is best used in conjunction with SSL. Future release may relax this constraint with the use of SASL authentication. Credentials can be passed using the following:</p>
+<p>Authentication allows an application to supply credentials that can be used to control access to Cassandra resources. The driver currently supports plain text authentication so it is best used in conjunction with SSL. Future release may relax this constraint with the use of SASL authentication. Credentials can be passed using the following:</p>
 <pre class="highlight"><code class="c"><span class="nc">CassCluster</span><span class="o">*</span> <span class="n">cluster</span> <span class="o">=</span> <span class="nb">cass_cluster_new</span><span class="p">();</span>
 
 <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">username</span> <span class="o">=</span> <span class="s">"username1"</span><span class="p">;</span>

@@ -87,14 +87,14 @@
           <h1 id="futures">Futures<a class="anchor" href="#futures" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 
-<p>Futures are returned from any driver call that would have required your application to block. This allows your application to continue processing and/or also submit several queries at once. Although the driver has an asynchronous design it can be used sychronously by immediately attempting to get result or explicting waiting for the future.</p>
+<p>Futures are returned from any driver call that would result in blocking the client application/thread. This allows the client application to continue processing and/or also submit multiple queries in succession. Although the driver has an asynchronous design it can be used sychronously by immediately attempting to get result or explicting waiting on the future.</p>
 
-<h2 id="waiting-for-results">Waiting for results<a class="anchor" href="#waiting-for-results" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h2 id="waiting-for-results">Waiting for Results<a class="anchor" href="#waiting-for-results" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>Futures results can be waited on indefinately by either calling a wait method or by attempting to get the result. They can also be waited on for an explict amount of time or they can polled without waiting.</p>
+<p>Futures results can be waited on indefinately by either calling a wait method or by attempting to get the result. They can also be waited on for an explict amount of time or periodically polled without waiting to execute application code.</p>
 
-<h3 id="synchronously-waiting">Synchronously waiting<a class="anchor" href="#synchronously-waiting" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h3 id="synchronously-waiting-on-the-future">Synchronously Waiting on the Future<a class="anchor" href="#synchronously-waiting-on-the-future" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
 <pre class="highlight"><code class="c"><span class="nc">CassFuture</span><span class="o">*</span> <span class="n">future</span> <span class="o">=</span> <span class="cm">/* Some operation */</span>
 
@@ -103,7 +103,7 @@
 
 <span class="nb">cass_future_free</span><span class="p">(</span><span class="n">future</span><span class="p">);</span>
 </code></pre>
-<h3 id="synchronously-waiting-for-the-result">Synchronously waiting for the result<a class="anchor" href="#synchronously-waiting-for-the-result" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h3 id="synchronously-waiting-for-the-result">Synchronously Waiting for the Result<a class="anchor" href="#synchronously-waiting-for-the-result" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
 <pre class="highlight"><code class="c"><span class="nc">CassFuture</span><span class="o">*</span> <span class="n">future</span> <span class="o">=</span> <span class="nb">cass_session_execute</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">statement</span><span class="p">);</span>
 
@@ -121,7 +121,7 @@
 
 <span class="nb">cass_future_free</span><span class="p">(</span><span class="n">future</span><span class="p">);</span>
 </code></pre>
-<h3 id="timed-wait">Timed wait<a class="anchor" href="#timed-wait" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h3 id="timed-wait">Timed Wait<a class="anchor" href="#timed-wait" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
 <pre class="highlight"><code class="c"><span class="nc">CassFuture</span><span class="o">*</span> <span class="n">future</span> <span class="o">=</span> <span class="cm">/* Some operation */</span>
 
@@ -152,7 +152,7 @@
 <h2 id="callbacks">Callbacks<a class="anchor" href="#callbacks" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>A callback can be set on a future to notify your application when a request has completed. Using a future callback is the lowest latency method of notification when waiting for several asynchronous operations.  </p>
+<p>A callback can be set on a future to notify the client application when a request has completed. Using a future callback is the lowest latency method of notification when waiting for several asynchronous operations.  </p>
 
 <p><strong>Important</strong>: The driver may run the callback on thread that’s different from the application’s calling thread. Any data accessed in the callback must be immutable or synchronized with a mutex, semaphore, etc. </p>
 <pre class="highlight"><code class="c"><span class="kt">void</span> <span class="nf">on_result</span><span class="p">(</span><span class="nc">CassFuture</span><span class="o">*</span> <span class="n">future</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
@@ -195,15 +195,15 @@
                       <li class="active">
                         <a href="./">Futures</a>
                         <ul class="nav nav-pills nav-stacked">
-<li><a href="#waiting-for-results">Waiting for results
+<li><a href="#waiting-for-results">Waiting for Results
 </a></li>
 <li><a href="#callbacks">Callbacks
 </a></li>
-<li><a href="#synchronously-waiting">Synchronously waiting
+<li><a href="#synchronously-waiting-on-the-future">Synchronously Waiting on the Future
 </a></li>
-<li><a href="#synchronously-waiting-for-the-result">Synchronously waiting for the result
+<li><a href="#synchronously-waiting-for-the-result">Synchronously Waiting for the Result
 </a></li>
-<li><a href="#timed-wait">Timed wait
+<li><a href="#timed-wait">Timed Wait
 </a></li>
 <li><a href="#polling">Polling
 </a></li>
@@ -229,6 +229,10 @@
                       
                       
                       <li><a href="../prepared_statements/">Prepared Statements</a></li>
+                      
+                      
+                      
+                      <li><a href="../consistency/">Consistency</a></li>
                       
                       
                       

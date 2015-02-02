@@ -385,15 +385,59 @@
   
 
   
-  <div class="panel panel-default member-definition" id="1a531bfa189092cd2e9e46141ce38a0806">
+  <div class="panel panel-default member-definition" id="1af768d5a0838ded6cce36a906392eb14e">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1a531bfa189092cd2e9e46141ce38a0806" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      void cass_cluster_set_num_threads_io <big>(</big> <a href="."><code>CassCluster</code></a> * cluster, unsigned num_threads <big>)</big>
+      <a class="anchor" href="#1af768d5a0838ded6cce36a906392eb14e" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_cluster_set_num_threads_io <big>(</big> <a href="."><code>CassCluster</code></a> * cluster, unsigned num_threads <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Sets the number of IO threads. This is the number of threads that will handle query requests.</p>
 
-<p>Default: 0 (creates a thread per core)</p>
+<p>Default: 1</p>
+
+<dl class="tags">
+
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>cluster</var>
+</td>
+          <td>
+<a href="."><code>CassCluster</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>num_threads</var>
+</td>
+          <td>unsigned</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+
+
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
+
+
+</dl>
 
 
     </div>
@@ -589,7 +633,7 @@
     <div class="panel-body public_func-body">
       <p>Sets the number of connections made to each server in each IO thread.</p>
 
-<p>Default: 2</p>
+<p>Default: 1</p>
 
 <dl class="tags">
 
@@ -649,7 +693,7 @@
     <div class="panel-body public_func-body">
       <p>Sets the maximum number of connections made to each server in each IO thread.</p>
 
-<p>Default: 4</p>
+<p>Default: 2</p>
 
 <dl class="tags">
 

@@ -234,6 +234,8 @@
     <div class="panel-body public_func-body">
       <p>Wait for the future to be set with either a result or error.</p>
 
+<p>Important: Do not wait in a future callback. Waiting in a future callback will cause a deadlock.</p>
+
 
     </div>
   </div>

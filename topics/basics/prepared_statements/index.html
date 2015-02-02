@@ -87,8 +87,9 @@
           <h1 id="prepared-statements">Prepared Statements<a class="anchor" href="#prepared-statements" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 
-<p>Prepared statements should be used to improve the performance of frequently executed queries. Preparing the query caches it on the Cassandra cluster and only needs to be done once. Once created, prepared statements should be reused with different bind variables. Prepared queries use the <code>?</code> marked to denote bind variables in the query string.</p>
-<pre class="highlight"><code class="c"><span class="nc">CassString</span> <span class="n">insert_query</span> <span class="o">=</span> <span class="nb">cass_string_init</span><span class="p">(</span><span class="s">"INSERT INTO example (key, value) VALUES (?, ?);"</span><span class="p">);</span>
+<p>Prepared statements can be used to improve the performance of frequently executed queries. Preparing the query caches it on the Cassandra cluster and only needs to be performed once. Once created, prepared statements should be reused with different bind variables. Prepared queries use the <code>?</code> marked to denote bind variables in the query string.</p>
+<pre class="highlight"><code class="c"><span class="nc">CassString</span> <span class="n">insert_query</span>
+  <span class="o">=</span> <span class="nb">cass_string_init</span><span class="p">(</span><span class="s">"INSERT INTO example (key, value) VALUES (?, ?);"</span><span class="p">);</span>
 
 <span class="cm">/* Prepare the statement on the Cassandra cluster */</span>
 <span class="nc">CassFuture</span><span class="o">*</span> <span class="n">prepare_future</span> <span class="o">=</span> <span class="nb">cass_session_prepare</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">insert_query</span><span class="p">);</span>
@@ -165,6 +166,10 @@
                         <a href="./">Prepared Statements</a>
                         <ul class="nav nav-pills nav-stacked"></ul>
                       </li>
+                      
+                      
+                      
+                      <li><a href="../consistency/">Consistency</a></li>
                       
                       
                       

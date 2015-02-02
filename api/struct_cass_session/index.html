@@ -136,6 +136,8 @@
     <div class="panel-body public_func-body">
       <p>Frees a session instance. If the session is still connected it will be syncronously closed before being deallocated.</p>
 
+<p>Important: Do not free a session in a future callback. Freeing a session in a future callback will cause a deadlock.</p>
+
 
     </div>
   </div>
