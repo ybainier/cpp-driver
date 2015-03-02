@@ -84,12 +84,15 @@
 <h2 id="supported-platforms">Supported Platforms<a class="anchor" href="#supported-platforms" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>The driver is known to work on OS X 10.9, Windows 7, CentOS/RHEL 5/6, and Ubuntu 12.04/14.04. </p>
+<p>The driver is known to work on CentOS/RHEL 5/6/7, Mac OS X 10.8/10.9 (Mavericks and Yosemite), Ubuntu 12.04/14.04 LTS, and Windows 7 SP1.</p>
 
 <p>It has been built using GCC 4.1.2+, Clang 3.4+, and MSVC 2010/2012/2013.</p>
 
 <h2 id="dependencies">Dependencies<a class="anchor" href="#dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
+
+<h3 id="driver">Driver<a class="anchor" href="#driver" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
 
 <ul>
 <li><a href="http://www.cmake.org">CMake</a></li>
@@ -98,7 +101,7 @@
 <a href="http://www.openssl.org/">OpenSSL</a> (optional)</li>
 </ul>
 
-<p><strong>NOTE:</strong> Utilizing the default package manager configuration to install dependencies on *nix based operating systems may result in older versions of dependecies being retrieved. OpenSSL is of the upmost concern as each new version addresses security <a href="https://www.openssl.org/news/vulnerabilities.html">vulnerabilities</a> that have been identifed and corrected.</p>
+<p><strong>NOTE:</strong> Utilizing the default package manager configuration to install dependencies on *nix based operating systems may result in older versions of dependencies being installed.</p>
 
 <h3 id="test-dependencies">Test Dependencies<a class="anchor" href="#test-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
@@ -106,37 +109,130 @@
 <ul>
 <li><a href="http://www.boost.org">boost 1.55+</a></li>
 <li><a href="http://www.libssh2.org">libssh2</a></li>
-<li><a href="https://github.com/pcmanus/ccm">ccm</a></li>
 </ul>
 
-<h2 id="os-x">OS X<a class="anchor" href="#os-x" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h2 id="linux-os-x">Linux/OS X<a class="anchor" href="#linux-os-x" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>The driver has been built and tested using the Clang compiler provided by XCode 5.1. The dependencies were obtained using <a href="http://brew.sh">Homebrew</a>.</p>
+<p>The driver has been built using both Clang (Ubuntu 12.04/14.04 and OS X) and GCC (Linux).</p>
 
 <h3 id="obtaining-dependencies">Obtaining Dependencies<a class="anchor" href="#obtaining-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
+
+<h4 id="centos-rhel">CentOS/RHEL<a class="anchor" href="#centos-rhel" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h4>
+
+<h5 id="additional-requirements-for-centos-rhel-5">Additional Requirements for CentOS/RHEL 5<a class="anchor" href="#additional-requirements-for-centos-rhel-5" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h5>
+
+<p>CentOS/RHEL 5 does not contain <code>git</code> in its repositories; however RepoForge (formerly RPMforge) has a RPM for this dependency. It can be found <a href="http://pkgs.repoforge.org/git/">here</a>.</p>
+
+<h6 id="download-the-appropriate-repoforge-release-package">Download the Appropriate RepoForge Release Package<a class="anchor" href="#download-the-appropriate-repoforge-release-package" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h6>
+
+<ul>
+<li><a href="http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el5.rf.i386.rpm">32-bit</a></li>
+<li><a href="http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el5.rf.x86_64.rpm">64-bit</a></li>
+</ul>
+
+<h6 id="install-key-and-rpm-package">Install Key and RPM Package<a class="anchor" href="#install-key-and-rpm-package" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h6>
+<pre class="highlight"><code class="bash">sudo rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt
+sudo rpm -i rpmforge-release-0.5.3-1.el5.rf.<span class="k">*</span>.rpm
+</code></pre>
+<h5 id="dependencies-and-libuv-installation">Dependencies and libuv Installation<a class="anchor" href="#dependencies-and-libuv-installation" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h5>
+<pre class="highlight"><code class="bash">sudo yum install automake cmake gcc-c++ git libtool openssl-devel wget
+<span class="nb">pushd</span> /tmp
+wget http://libuv.org/dist/v1.4.0/libuv-v1.4.0.tar.gz
+tar xzf libuv-v1.4.0.tar.gz
+<span class="nb">pushd </span>libuv-v1.4.0
+sh autogen.sh
+./configure
+sudo make install
+<span class="nb">popd
+popd</span>
+</code></pre>
+<h4 id="os-x">OS X<a class="anchor" href="#os-x" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h4>
+
+<p>The driver has been built and tested using the Clang compiler provided by XCode 5.1+. The dependencies were obtained using <a href="http://brew.sh">Homebrew</a>.</p>
 <pre class="highlight"><code class="bash">brew install libuv cmake
 </code></pre>
 <p><strong>NOTE:</strong> The driver utilizes the OpenSSL library included with XCode.</p>
 
-<h3 id="building">Building<a class="anchor" href="#building" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h4 id="ubuntu">Ubuntu<a class="anchor" href="#ubuntu" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h4>
+
+<h5 id="additional-requirements-for-ubuntu-12-04">Additional Requirements for Ubuntu 12.04<a class="anchor" href="#additional-requirements-for-ubuntu-12-04" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h5>
+
+<p>Ubuntu 12.04 does not contain libuv in its repositories; however the LinuxJedi PPA has a backport from Ubuntu 14.04 which can be found <a href="https://launchpad.net/%7Elinuxjedi/+archive/ubuntu/ppa">here</a>.</p>
+<pre class="highlight"><code class="bash">sudo apt-add-repository ppa:linuxjedi/ppa
+sudo apt-get update
+</code></pre>
+<h5 id="gcc">GCC<a class="anchor" href="#gcc" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h5>
+<pre class="highlight"><code class="bash">sudo apt-get install g++ make cmake libuv-dev libssl-dev
+</code></pre>
+<h5 id="clang">Clang<a class="anchor" href="#clang" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h5>
+<pre class="highlight"><code class="bash">sudo apt-get install clang make cmake libuv-dev libssl-dev
+</code></pre>
+<h3 id="building-the-driver">Building the Driver<a class="anchor" href="#building-the-driver" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
 <pre class="highlight"><code class="bash">git clone https://github.com/datastax/cpp-driver.git
-<span class="nb">cd </span>cpp-driver
-cmake .
+mkdir cpp-driver/build
+<span class="nb">cd </span>cpp-driver/build
+cmake ..
 make
 </code></pre>
-<h3 id="test-dependencies-and-building-tests-not-required">Test Dependencies and Building Tests (NOT REQUIRED)<a class="anchor" href="#test-dependencies-and-building-tests-not-required" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h3 id="test-dependencies-and-building-the-tests-not-required">Test Dependencies and Building the Tests (<u>NOT REQUIRED</u>)<a class="anchor" href="#test-dependencies-and-building-the-tests-not-required" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
 
 <h4 id="obtaining-test-dependencies">Obtaining Test Dependencies<a class="anchor" href="#obtaining-test-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h4>
+
+<h5 id="centos-rhel">CentOS/RHEL<a class="anchor" href="#centos-rhel" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h5>
+
+<p>CentOS/RHEL does not contain Boost v1.55+ libraries in its repositories; however these can be easily installed from source. Ensure previous version of Boost has been removed by executing the command <code>sudo yum remove boost*</code> before proceeding.</p>
+<pre class="highlight"><code class="bash">sudo yum install libssh2-devel
+<span class="nb">pushd</span> /tmp
+wget http://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.tar.gz/download -O boost_1_57_0.tar.gz
+tar xzf boost_1_57_0.tar.gz
+<span class="nb">pushd </span>boost_1_57_0
+./bootstrap.sh --with-libraries<span class="o">=</span>atomic,chrono,date_time,log,program_options,random,regex,system,thread,test
+sudo ./b2 <span class="nv">cxxflags</span><span class="o">=</span><span class="s2">"-fPIC"</span> install
+<span class="nb">popd
+popd</span>
+</code></pre>
+<p><strong>NOTE:</strong> CentOS/RHEL 5 has known issues when compiling tests with GCC 4.1.2 as it is not a supported Boost compiler.</p>
+
+<h5 id="os-x">OS X<a class="anchor" href="#os-x" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h5>
 <pre class="highlight"><code class="bash">brew install boost libssh2
 </code></pre>
-<h4 id="building-with-the-testing-framework">Building with the Testing Framework<a class="anchor" href="#building-with-the-testing-framework" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h5 id="ubuntu">Ubuntu<a class="anchor" href="#ubuntu" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h5>
+
+<h6 id="additional-requirements-for-ubuntu-12-04">Additional Requirements for Ubuntu 12.04<a class="anchor" href="#additional-requirements-for-ubuntu-12-04" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h6>
+
+<p>Ubuntu 12.04 does not contain Boost v1.55+ C++ libraries in its repositories; however it can be obtained from the Boost PPA which can be found <a href="https://launchpad.net/%7Eboost-latest/+archive/ubuntu/ppa">here</a>.</p>
+<pre class="highlight"><code class="bash">sudo add-apt-repository ppa:boost-latest/ppa
+sudo apt-get update
+</code></pre>
+<h5 id="install-dependencies">Install Dependencies<a class="anchor" href="#install-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h5>
+<pre class="highlight"><code class="bash">sudo apt-get install libboost1.55-all-dev libssh2-1-dev
+</code></pre>
+<h4 id="building-the-driver-with-the-tests">Building the Driver with the Tests<a class="anchor" href="#building-the-driver-with-the-tests" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h4>
-<pre class="highlight"><code class="bash">cmake -DCASS_BUILD_TESTS<span class="o">=</span>ON .
+<pre class="highlight"><code class="bash">git clone https://github.com/datastax/cpp-driver.git
+mkdir cpp-driver/build
+<span class="nb">cd </span>cpp-driver/build
+cmake -DCASS_BUILD_TESTS<span class="o">=</span>ON ..
 make
 </code></pre>
 <h2 id="windows">Windows<a class="anchor" href="#windows" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
@@ -144,10 +240,8 @@ make
 
 <p>The driver has been built and tested using Microsoft Visual Studio 2010, 2012 and 2013 (using the “Express” and Professional versions) and Windows SDK v7.1, 8.0, and 8.1 on Windows 7 SP1. The library dependencies will automatically download and build; however the following build dependencies will need to be installed.</p>
 
-<h3 id="windows-build-dependencies">Windows Build Dependencies<a class="anchor" href="#windows-build-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h3 id="obtaining-build-dependencies">Obtaining Build Dependencies<a class="anchor" href="#obtaining-build-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
-
-<p>To obtain build dependencies:</p>
 
 <ul>
 <li>Download and install <a href="http://www.cmake.org/download">CMake</a>.
@@ -160,13 +254,14 @@ make
 
 <ul>
 <li>Make sure to select the option “Use Git from Windows Command Prompt” or manually add the git executable to the system PATH.</li>
-<li>NOTE: This build dependency is required if building with OpenSSL support</li>
 </ul>
 </li>
 <li>Download and install <a href="https://www.perl.org/get.html#win32">ActiveState Perl</a>
 
 <ul>
 <li>Make sure to select the option “Add Perl to PATH environment variable”.</li>
+<li>
+<strong>NOTE:</strong> This build dependency is required if building with OpenSSL support</li>
 </ul>
 </li>
 <li>Download and install <a href="https://www.python.org/downloads">Python v2.7.x</a>
@@ -177,10 +272,10 @@ make
 </li>
 </ul>
 
-<h3 id="performing-the-windows-build">Performing the Windows Build<a class="anchor" href="#performing-the-windows-build" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h3 id="building-the-driver">Building the Driver<a class="anchor" href="#building-the-driver" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
 
-<p>A batch script has been created to detect installed Visual Studio version(s) (and/or Windows SDK installtion) in order to simplify the build operations on Windows.  If you have more than one version of Visual Studio (and/or Windows SDK) installed you will be prompted to select which version to use when compiling the driver.</p>
+<p>A batch script has been created to detect installed versions of Visual Studio (and/or Windows SDK installations) to simplify the build process on Windows. If you have more than one version of Visual Studio (and/or Windows SDK) installed you will be prompted to select which version to use when compiling the driver.</p>
 
 <p>First you will need to open a “Command Prompt” (or Windows SDK Command Prompt) to execute the batch script.</p>
 <pre><code class="dos">Usage: VC_BUILD.BAT [OPTION...]
@@ -190,6 +285,8 @@ make
         --DISABLE-CLEAN                 Disable clean build
         --DISABLE-OPENSSL               Disable OpenSSL support
         --ENABLE-PACKAGES [version]     Enable package generation (**)
+        --ENABLE-TESTS [boost-root-dir] Enable test builds
+        --ENABLE-ZLIB                   Enable zlib
         --SHARED                        Build shared library (default)
         --STATIC                        Build static library
         --X86                           Target 32-bit build (*)
@@ -215,59 +312,62 @@ make
 <p>To build 32-bit static library without OpenSSL support:</p>
 <pre><code class="dos">VC_BUILD.BAT --DISABLE-OPENSSL --STATIC --X86
 </code></pre>
-<h2 id="linux">Linux<a class="anchor" href="#linux" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h2>
-
-<p>The driver has been built using both Clang and GCC while being tested with GCC compiled source on Ubuntu 12.04/14.04.</p>
-
-<h3 id="obtaining-dependencies">Obtaining Dependencies<a class="anchor" href="#obtaining-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h3>
-
-<h4 id="ubuntu">Ubuntu<a class="anchor" href="#ubuntu" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h4>
-
-<h5 id="additional-requirements-for-ubuntu-12-04-lts">Additional Requirements for Ubuntu 12.04 LTS<a class="anchor" href="#additional-requirements-for-ubuntu-12-04-lts" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h5>
-
-<p>Ubuntu 12.04 does not have libuv in its repositories; however LinuxJedi created a PPA for this dependency which is a backport from Ubuntu 14.04 LTS. It can be found at: <a href="https://launchpad.net/%7Elinuxjedi/+archive/ubuntu/ppa">https://launchpad.net/~linuxjedi/+archive/ubuntu/ppa</a>.</p>
-<pre class="highlight"><code class="bash">sudo apt-add-repository ppa:linuxjedi/ppa
-sudo apt-get update
-</code></pre>
-<h4 id="gcc">GCC<a class="anchor" href="#gcc" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h4>
-<pre class="highlight"><code class="bash">sudo apt-get install g++ make cmake libuv-dev libssl-dev
-</code></pre>
-<h4 id="clang">Clang<a class="anchor" href="#clang" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h4>
-<pre class="highlight"><code class="bash">sudo apt-get install clang make cmake libuv-dev libssl-dev
-</code></pre>
-<p>To build:</p>
-<pre class="highlight"><code class="bash">git clone https://github.com/datastax/cpp-driver.git
-<span class="nb">cd </span>cpp-driver
-cmake .
-make
-</code></pre>
-<h3 id="test-dependencies-and-building-tests-not-required">Test Dependencies and Building Tests (NOT REQUIRED)<a class="anchor" href="#test-dependencies-and-building-tests-not-required" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h3 id="test-dependencies-and-building-the-tests-not-required">Test Dependencies and Building the Tests (<u>NOT REQUIRED</u>)<a class="anchor" href="#test-dependencies-and-building-the-tests-not-required" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
 
 <h4 id="obtaining-test-dependencies">Obtaining Test Dependencies<a class="anchor" href="#obtaining-test-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h4>
 
-<h5 id="ubuntu-12-04-lts">Ubuntu 12.04 LTS<a class="anchor" href="#ubuntu-12-04-lts" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h5>
-<pre class="highlight"><code class="bash">sudo add-apt-repository ppa:boost-latest/ppa
-sudo apt-get update
-sudo apt-get install libboost1.55-all-dev libssh2-1-dev
-</code></pre>
-<h5 id="ubuntu-14-04-lts">Ubuntu 14.04 LTS<a class="anchor" href="#ubuntu-14-04-lts" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h5>
-<pre class="highlight"><code class="bash">sudo apt-get install libboost-chrono-dev libboost-date-time-dev libboost-log-dev libboost-system-dev libboost-thread-dev libboost-test-dev libssh2-1-dev
-</code></pre>
-<h4 id="building-with-the-testing-framework">Building with the Testing Framework<a class="anchor" href="#building-with-the-testing-framework" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<p>Boost v1.55+ is the only external dependency that will need to be obtained in order to build the unit and integration tests.</p>
+
+<p>To simplify the process; pre-built binaries can be obtained <a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.57.0/">here</a>. Ensure the proper Visual Studio (or Windows SDK) version and architecture is obtained and select from the following list:</p>
+
+<ul>
+<li>Visual Studio 2010 (Windows SDK 7.1)
+
+<ul>
+<li>Boost v1.55 <a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.55.0/boost_1_55_0-msvc-10.0-32.exe/download">32-bit</a>/<a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.55.0/boost_1_55_0-msvc-10.0-64.exe/download">64-bit</a>
+</li>
+<li>Boost v1.56 <a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.56.0/boost_1_56_0-msvc-10.0-32.exe/download">32-bit</a>/<a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.56.0/boost_1_56_0-msvc-10.0-64.exe/download">64-bit</a>
+</li>
+<li>Boost v1.57 <a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.57.0/boost_1_57_0-msvc-10.0-32.exe/download">32-bit</a>/<a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.57.0/boost_1_57_0-msvc-10.0-64.exe/download">64-bit</a>
+</li>
+</ul>
+</li>
+<li>Visual Studio 2012 (Windows SDK 8.0)
+
+<ul>
+<li>Boost v1.55 <a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.55.0/boost_1_55_0-msvc-11.0-32.exe/download">32-bit</a>/<a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.55.0/boost_1_55_0-msvc-11.0-64.exe/download">64-bit</a>
+</li>
+<li>Boost v1.56 <a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.56.0/boost_1_56_0-msvc-11.0-32.exe/download">32-bit</a>/<a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.56.0/boost_1_56_0-msvc-11.0-64.exe/download">64-bit</a>
+</li>
+<li>Boost v1.57 <a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.57.0/boost_1_57_0-msvc-11.0-32.exe/download">32-bit</a>/<a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.57.0/boost_1_57_0-msvc-11.0-64.exe/download">64-bit</a>
+</li>
+</ul>
+</li>
+<li>Visual Studio 2013 (Windows SDK 8.1)
+
+<ul>
+<li>Boost v1.55 <a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.55.0/boost_1_55_0-msvc-12.0-32.exe/download">32-bit</a>/<a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.55.0/boost_1_55_0-msvc-12.0-64.exe/download">64-bit</a>
+</li>
+<li>Boost v1.56 <a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.56.0/boost_1_56_0-msvc-12.0-32.exe/download">32-bit</a>/<a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.56.0/boost_1_56_0-msvc-12.0-64.exe/download">64-bit</a>
+</li>
+<li>Boost v1.57 <a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.57.0/boost_1_57_0-msvc-12.0-32.exe/download">32-bit</a>/<a href="http://sourceforge.net/projects/boost/files/boost-binaries/1.57.0/boost_1_57_0-msvc-12.0-64.exe/download">64-bit</a>
+</li>
+</ul>
+</li>
+</ul>
+
+<p><strong>NOTE:</strong> Ensure the Boost library directory structure is configured correctly by renaming the library directory to <u>lib</u> (e.g. lib64-msvc-12.0 to lib).</p>
+
+<h4 id="building-the-driver-with-the-tests">Building the Driver with the Tests<a class="anchor" href="#building-the-driver-with-the-tests" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h4>
-<pre class="highlight"><code class="bash">cmake -DCASS_BUILD_TESTS<span class="o">=</span>ON .
-make
+<pre><code class="dos">VC_BUILD.BAT --STATIC --ENABLE-TESTS &lt;ABSOLUTE-PATH-TO-BOOST&gt;
+
+[e.g. C:\local\boost_1_57_0]
 </code></pre>
+<p><strong>NOTE:</strong> <code>--STATIC</code> is preferred on Windows in order to statically link all the libraries into the executable</p>
+
         </div>
         <nav class="col-md-3 side-nav">
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
@@ -295,11 +395,15 @@ make
                 
               
                 
+                  <li><a href="../faq/">FAQ</a></li>
+                
+              
+                
                   <li><a href="../configuration/">Configuration</a></li>
                 
               
                 
-                  <li><a href="../faq/">FAQ</a></li>
+                  <li><a href="../testing/">Testing</a></li>
                 
               
             

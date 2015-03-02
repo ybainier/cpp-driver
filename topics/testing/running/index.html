@@ -9,7 +9,7 @@
     <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
     <meta name="author" content="DataStax">
 
-    <title>DataStax C++ Driver for Apache Cassandra - Consistency</title>
+    <title>DataStax C++ Driver for Apache Cassandra - Running</title>
 
     <link rel="icon" href="../../../favicons/favicon.ico">
     <link rel="apple-touch-icon" href="../../../favicons/favicon.png">
@@ -72,109 +72,62 @@
               
               
               
-              <li><a href="../">Basics</a></li>
+              <li><a href="../">Testing</a></li>
               
               
               
               
               
-              <li class="active">Consistency</li>
+              <li class="active">Running</li>
               
               
               
             </ol>
           </nav>
-          <h1 id="consistency">Consistency<a class="anchor" href="#consistency" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+          <h1 id="running">Running<a class="anchor" href="#running" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 
-<p>A setting that defines a successful write or read by the number of cluster replicas that acknowledge the write or respond to the read request, respectively.</p>
-
-<h2 id="consistency-levels">Consistency Levels<a class="anchor" href="#consistency-levels" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h2 id="unit-testing">Unit Testing<a class="anchor" href="#unit-testing" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<h3 id="read-and-write-consistency-levels">Read and Write Consistency Levels<a class="anchor" href="#read-and-write-consistency-levels" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<p>The unit tests do not require any additional setup or configuration. Simply run
+the <code>cassandra_unit_tests</code> executable. Unit tests are used to ensure the
+functionality of internal components and don’t require an instance of Cassandra
+to be running.</p>
+
+<h2 id="integration-testing">Integration Testing<a class="anchor" href="#integration-testing" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>The integration tests require a machine (local or remote) with Secure Shell
+(SSH) capabilities; either physical machine or Virtual Machine (VM). These
+tests rely on <a href="http://datastax.github.io/cpp-driver/topics/testing/ccm/">Cassandra Cluster Manager (CCM)</a> and
+cannot run successfully if this dependency is not met. Once the <a href="http://datastax.github.io/cpp-driver/topics/testing/configuration/">configuration</a>
+has been completed the integration tests can be run by executing the
+<code>cassandra_integration_tests</code> executable. Integration tests are used to ensure
+the functionality of the driver’s API and/or the interaction of multiple
+internal components.</p>
+
+<h3 id="running-tests-individually">Running Tests Individually<a class="anchor" href="#running-tests-individually" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
 
-<p>The consistency level determines the number of replicas on which the read/write must respond/succeed before returning an acknowledgment to the client application. Descriptions and Usage scenarios for each read/write consistency level can be found <a href="http://www.datastax.com/documentation/cassandra/2.0/cassandra/dml/dml_config_consistency_c.html">here</a>.</p>
+<p>Running the integration test executable without any arguments will start all
+of the integration tests in sequence (one after another). The Boost Test
+framework with which the integration and unit tests are compiled come with a
+filter argument that allow for individual test execution. Using the
+<code>--run_test</code> argument supplying the test suite and case will execute a single
+test.</p>
 
-<table class="table table-striped table-hover table-condensed">
-  <thead>
-    <tr>
-      <th>Level</th>
-      <th>Driver</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>All</td>
-      <td><code>CASS_CONSISTENCY_ALL</code></td>
-    </tr>
+<h4 id="example">Example<a class="anchor" href="#example" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h4>
 
-    <tr>
-      <td>Each Quorum</td>
-      <td><code>CASS_CONSISTENCY_EACH_QUORUM</code></td>
-    </tr>
-
-    <tr>
-      <td>Quorum</td>
-      <td><code>CASS_CONSISTENCY_QUORUM</code></td>
-    </tr>
-
-    <tr>
-      <td>Local Quorum</td>
-      <td><code>CASS_CONSISTENCY_LOCAL_QUORUM</code></td>
-    </tr>
-
-    <tr>
-      <td><b>One</b></td>
-      <td><code><b>CASS_CONSISTENCY_ONE</b></code></td>
-    </tr>
-
-    <tr>
-      <td>Two</td>
-      <td><code>CASS_CONSISTENCY_TWO</code></td>
-    </tr>
-
-    <tr>
-      <td>Three</td>
-      <td><code>CASS_CONSISTENCY_THREE</code></td>
-    </tr>
-
-    <tr>
-      <td>Local One</td>
-      <td><code>CASS_CONSISTENCY_LOCAL_ONE</code></td>
-    </tr>
-
-    <tr>
-      <td>Any</td>
-      <td><code>CASS_CONSISTENCY_ANY</code></td>
-    </tr>
-
-    <tr>
-      <td>Serial</td>
-      <td><code>CASS_CONSISTENCY_SERIAL</code></td>
-    </tr>
-
-    <tr>
-      <td>Local Serial</td>
-      <td><code>CASS_CONSISTENCY_LOCAL_SERIAL</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p><strong>NOTE:</strong> Consistency level <code>CASS_CONSISTENCY_ANY</code> is only valid for read operation statements.</p>
-
-<h2 id="setting-consistency-level">Setting Consistency Level<a class="anchor" href="#setting-consistency-level" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h2>
-
-<p>A <a href="http://datastax.github.io/cpp-driver/api/struct_cass_future/">‘CassStatement’</a> object can have its consistency level altered at anytime before the statement is executed by the session.</p>
-<pre class="highlight"><code class="c"><span class="cm">/* Create a simple or prepared statment */</span>
-
-<span class="cm">/* Ensure the session executed statement has strong consistency */</span>
-<span class="nb">cass_statement_set_consistency</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">CASS_CONSISTENCY_QUORUM</span><span class="p">);</span>
+<p>The example below shows how to execute the <code>simple</code> test case in the <code>async</code>
+test suite.</p>
+<pre class="highlight"><code class="bash">cassandra_integration_tests --run_test<span class="o">=</span>async/simple
 </code></pre>
-<p><strong>NOTE:</strong> Consistency is ignored for <code>USE</code>, <code>TRUNCATE</code>, <code>CREATE</code> and <code>ALTER</code> statements, and some <code>CASS_CONSISTENCY_ANY</code> aren’t allowed in all situations.</p>
-
+<p>To run all of the test cases in the <code>async</code> suite wildcards can be used in
+conjunction with the <code>run_test</code> argument</p>
+<pre class="highlight"><code class="bash">cassandra_integration_tests --run_test<span class="o">=</span>async/<span class="k">*</span>
+</code></pre>
         </div>
         <nav class="col-md-3 side-nav">
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
@@ -185,58 +138,7 @@
                 
               
                 
-                  <li class="active">
-                    <a href="../">Basics</a>
-                    <ul class="nav nav-pills nav-stacked">
-                      
-                      
-                      <li><a href="../keyspaces/">Keyspaces</a></li>
-                      
-                      
-                      
-                      <li><a href="../futures/">Futures</a></li>
-                      
-                      
-                      
-                      <li><a href="../binding_parameters/">Binding Parameters</a></li>
-                      
-                      
-                      
-                      <li><a href="../handling_results/">Handling Results</a></li>
-                      
-                      
-                      
-                      <li><a href="../schema_metadata/">Schema Metadata</a></li>
-                      
-                      
-                      
-                      <li><a href="../uuids/">Uuids</a></li>
-                      
-                      
-                      
-                      <li><a href="../prepared_statements/">Prepared Statements</a></li>
-                      
-                      
-                      
-                      <li class="active">
-                        <a href="./">Consistency</a>
-                        <ul class="nav nav-pills nav-stacked">
-<li><a href="#consistency-levels">Consistency Levels
-</a></li>
-<li><a href="#setting-consistency-level">Setting Consistency Level
-</a></li>
-<li><a href="#read-and-write-consistency-levels">Read and Write Consistency Levels
-</a></li>
-</ul>
-                      </li>
-                      
-                      
-                      
-                      <li><a href="../batches/">Batches</a></li>
-                      
-                      
-                    </ul>
-                  </li>
+                  <li><a href="../../basics/">Basics</a></li>
                 
               
                 
@@ -256,7 +158,34 @@
                 
               
                 
-                  <li><a href="../../testing/">Testing</a></li>
+                  <li class="active">
+                    <a href="../">Testing</a>
+                    <ul class="nav nav-pills nav-stacked">
+                      
+                      
+                      <li><a href="../ccm/">Ccm</a></li>
+                      
+                      
+                      
+                      <li><a href="../configuration/">Configuration</a></li>
+                      
+                      
+                      
+                      <li class="active">
+                        <a href="./">Running</a>
+                        <ul class="nav nav-pills nav-stacked">
+<li><a href="#unit-testing">Unit Testing
+</a></li>
+<li><a href="#integration-testing">Integration Testing
+</a></li>
+<li><a href="#running-tests-individually">Running Tests Individually
+</a></li>
+</ul>
+                      </li>
+                      
+                      
+                    </ul>
+                  </li>
                 
               
             
