@@ -9,7 +9,7 @@
     <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
     <meta name="author" content="DataStax">
 
-    <title>DataStax C++ Driver for Apache Cassandra - CassSchemaMetaField</title>
+    <title>DataStax C++ Driver for Apache Cassandra - CassAuthCallbacks</title>
 
     <link rel="icon" href="../../favicons/favicon.ico">
     <link rel="apple-touch-icon" href="../../favicons/favicon.png">
@@ -72,7 +72,7 @@
               
               
               
-              <li class="active">CassSchemaMetaField</li>
+              <li class="active">CassAuthCallbacks</li>
               
               
               
@@ -80,111 +80,63 @@
           </nav>
           
 <div class="page-header">
-  <h1 id="struct-cassschemametafield">
+  <h1 id="struct-cassauthcallbacks">
     <small>struct</small>
-    CassSchemaMetaField
-  <a class="anchor" href="#struct-cassschemametafield" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+    CassAuthCallbacks
+  <a class="anchor" href="#struct-cassauthcallbacks" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 </div>
-<p>Key/Value metadata field for a keyspace, table, or column.</p>
+<p>Authentication callbacks</p>
 
 
-<h2 id="functions">Functions<a class="anchor" href="#functions" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h2 id="attributes">Attributes<a class="anchor" href="#attributes" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
-<div class="public_func-content">
+<div class="public_attrib-content">
 
   
-  <div class="panel panel-default member-definition" id="1aebf67e963a2b974bb165a3081f69717b">
-    <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1aebf67e963a2b974bb165a3081f69717b" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../struct_cass_string"><code>CassString</code></a> cass_schema_meta_field_name <big>(</big> const <a href="."><code>CassSchemaMetaField</code></a> * field <big>)</big>
+  <div class="panel panel-default member-definition" id="1a7b184bd76793d11c54284f58b3057a9a">
+    <div class="panel-heading public_attrib-heading">
+      <a class="anchor" href="#1a7b184bd76793d11c54284f58b3057a9a" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <a href="../cassandra_8h#1a067c2c03a68738f6129d2577abf8306e"><code>CassAuthInitalCallback</code></a> initial_callback
     </div>
-    <div class="panel-body public_func-body">
-      <p>Gets the name for a schema metadata field</p>
-
-<dl class="tags">
-
-  <dt class="tag-title">Parameters:</dt>
-  <dd class="tag-content">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th class="name">Name</th>
-          <th class="type">Type</th>
-          <th class="details">Details</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-        
-        <tr>
-          <td>
-<small>in</small> <var>field</var>
-</td>
-          <td>const <a href="."><code>CassSchemaMetaField</code></a> *</td>
-          <td></td>
-        </tr>
-        
-      </tbody>
-    </table>
-  </dd>
-
-
-  <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>The name of the metadata data field</p></dd>
-
-
-</dl>
-
-
+    <div class="panel-body public_attrib-body">
+      
     </div>
   </div>
   
 
   
-  <div class="panel panel-default member-definition" id="1ae31cd276aabb84a270b2bb628bb03141">
-    <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1ae31cd276aabb84a270b2bb628bb03141" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      const <a href="../struct_cass_value"><code>CassValue</code></a> * cass_schema_meta_field_value <big>(</big> const <a href="."><code>CassSchemaMetaField</code></a> * field <big>)</big>
+  <div class="panel panel-default member-definition" id="1a56519f4d2c9808f2ac049a5e1b81eb4e">
+    <div class="panel-heading public_attrib-heading">
+      <a class="anchor" href="#1a56519f4d2c9808f2ac049a5e1b81eb4e" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <a href="../cassandra_8h#1add76ef2658b5c85bbdaf906981d63c61"><code>CassAuthChallengeCallback</code></a> challenge_callback
     </div>
-    <div class="panel-body public_func-body">
-      <p>Gets the value for a schema metadata field</p>
+    <div class="panel-body public_attrib-body">
+      
+    </div>
+  </div>
+  
 
-<dl class="tags">
+  
+  <div class="panel panel-default member-definition" id="1a803d0c72c29da5e79cf1ff5c6bb1befe">
+    <div class="panel-heading public_attrib-heading">
+      <a class="anchor" href="#1a803d0c72c29da5e79cf1ff5c6bb1befe" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <a href="../cassandra_8h#1a3c36b67b8956c1634796ca03f2b68555"><code>CassAuthSuccessCallback</code></a> success_callback
+    </div>
+    <div class="panel-body public_attrib-body">
+      
+    </div>
+  </div>
+  
 
-  <dt class="tag-title">Parameters:</dt>
-  <dd class="tag-content">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th class="name">Name</th>
-          <th class="type">Type</th>
-          <th class="details">Details</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-        
-        <tr>
-          <td>
-<small>in</small> <var>field</var>
-</td>
-          <td>const <a href="."><code>CassSchemaMetaField</code></a> *</td>
-          <td></td>
-        </tr>
-        
-      </tbody>
-    </table>
-  </dd>
-
-
-  <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>The value of the metadata data field</p></dd>
-
-
-</dl>
-
-
+  
+  <div class="panel panel-default member-definition" id="1abab8d09cd9d734643206a40ecd55a91e">
+    <div class="panel-heading public_attrib-heading">
+      <a class="anchor" href="#1abab8d09cd9d734643206a40ecd55a91e" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <a href="../cassandra_8h#1ae814df4b9105b3f89db0b4c9459020ab"><code>CassAuthCleanupCallback</code></a> cleanup_callback
+    </div>
+    <div class="panel-body public_attrib-body">
+      
     </div>
   </div>
   
@@ -205,8 +157,8 @@
               <a href="../struct_cass_auth">CassAuth</a>
             </li>
             
-            <li>
-              <a href="../struct_cass_auth_callbacks">CassAuthCallbacks</a>
+            <li class="active">
+              <a href=".">CassAuthCallbacks</a>
             </li>
             
             <li>
@@ -265,8 +217,8 @@
               <a href="../struct_cass_schema_meta">CassSchemaMeta</a>
             </li>
             
-            <li class="active">
-              <a href=".">CassSchemaMetaField</a>
+            <li>
+              <a href="../struct_cass_schema_meta_field">CassSchemaMetaField</a>
             </li>
             
             <li>

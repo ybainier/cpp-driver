@@ -9,12 +9,12 @@
     <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
     <meta name="author" content="DataStax">
 
-    <title>DataStax C++ Driver for Apache Cassandra - API docs</title>
+    <title>DataStax C++ Driver for Apache Cassandra - CassAuth</title>
 
-    <link rel="icon" href="../favicons/favicon.ico">
-    <link rel="apple-touch-icon" href="../favicons/favicon.png">
-    <link href="../css/style.css" rel="stylesheet">
-    <link href="../css/pygments.css" rel="stylesheet">
+    <link rel="icon" href="../../favicons/favicon.ico">
+    <link rel="apple-touch-icon" href="../../favicons/favicon.png">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/pygments.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -31,13 +31,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../">Cassandra C/C++ Driver</a>
+          <a class="navbar-brand" href="../../">Cassandra C/C++ Driver</a>
         </div>
         <div class="collapse navbar-collapse" ng-controller="search">
           <ul class="nav navbar-nav">
-            <li><a href="../">Introduction</a></li>
-            <li><a href="../topics/">Topics</a></li>
-            <li class="active"><a href="./">API docs</a></li>
+            <li><a href="../../">Introduction</a></li>
+            <li><a href="../../topics/">Topics</a></li>
+            <li class="active"><a href="../">API docs</a></li>
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
@@ -60,13 +60,19 @@
               
               
               
-              <li><a href="../">Introduction</a></li>
+              <li><a href="../../">Introduction</a></li>
               
               
               
               
               
-              <li class="active">API docs</li>
+              <li><a href="../">API docs</a></li>
+              
+              
+              
+              
+              
+              <li class="active">CassAuth</li>
               
               
               
@@ -74,73 +80,45 @@
           </nav>
           
 <div class="page-header">
-  <h1 id="api-documentation">
-    API Documentation
-  <a class="anchor" href="#api-documentation" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+  <h1 id="struct-cassauth">
+    <small>struct</small>
+    CassAuth
+  <a class="anchor" href="#struct-cassauth" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 </div>
+<p>An authentication exchange.</p>
 
-<h2 id="files">Files<a class="anchor" href="#files" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+
+<h2 id="attributes">Attributes<a class="anchor" href="#attributes" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
-<ul class="list-inline">
+<div class="public_attrib-content">
 
-  <li><code><a href="cassandra_8h">cassandra.h</a></code></li>
+  
+  <div class="panel panel-default member-definition" id="1a382f990086d1775499fb6d8c204fedab">
+    <div class="panel-heading public_attrib-heading">
+      <a class="anchor" href="#1a382f990086d1775499fb6d8c204fedab" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <a href="../struct_cass_inet"><code>CassInet</code></a> host
+    </div>
+    <div class="panel-body public_attrib-body">
+      <p>The IP address of the server</p>
+    </div>
+  </div>
+  
 
-</ul>
+  
+  <div class="panel panel-default member-definition" id="1aa84720affbfba6b19a4609ed97f74b11">
+    <div class="panel-heading public_attrib-heading">
+      <a class="anchor" href="#1aa84720affbfba6b19a4609ed97f74b11" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      void * data
+    </div>
+    <div class="panel-body public_attrib-body">
+      <p>User data for resources acquired during an exchange</p>
+    </div>
+  </div>
+  
 
-<h2 id="classes">Classes<a class="anchor" href="#classes" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h2>
-<ul class="list-inline">
+</div>
 
-  <li><code><a href="struct_cass_auth">CassAuth</a></code></li>
-
-  <li><code><a href="struct_cass_auth_callbacks">CassAuthCallbacks</a></code></li>
-
-  <li><code><a href="struct_cass_batch">CassBatch</a></code></li>
-
-  <li><code><a href="struct_cass_bytes">CassBytes</a></code></li>
-
-  <li><code><a href="struct_cass_cluster">CassCluster</a></code></li>
-
-  <li><code><a href="struct_cass_collection">CassCollection</a></code></li>
-
-  <li><code><a href="struct_cass_decimal">CassDecimal</a></code></li>
-
-  <li><code><a href="struct_cass_future">CassFuture</a></code></li>
-
-  <li><code><a href="struct_cass_inet">CassInet</a></code></li>
-
-  <li><code><a href="struct_cass_iterator">CassIterator</a></code></li>
-
-  <li><code><a href="struct_cass_log_message">CassLogMessage</a></code></li>
-
-  <li><code><a href="struct_cass_prepared">CassPrepared</a></code></li>
-
-  <li><code><a href="struct_cass_result">CassResult</a></code></li>
-
-  <li><code><a href="struct_cass_row">CassRow</a></code></li>
-
-  <li><code><a href="struct_cass_schema">CassSchema</a></code></li>
-
-  <li><code><a href="struct_cass_schema_meta">CassSchemaMeta</a></code></li>
-
-  <li><code><a href="struct_cass_schema_meta_field">CassSchemaMetaField</a></code></li>
-
-  <li><code><a href="struct_cass_session">CassSession</a></code></li>
-
-  <li><code><a href="struct_cass_ssl">CassSsl</a></code></li>
-
-  <li><code><a href="struct_cass_statement">CassStatement</a></code></li>
-
-  <li><code><a href="struct_cass_string">CassString</a></code></li>
-
-  <li><code><a href="struct_cass_uuid">CassUuid</a></code></li>
-
-  <li><code><a href="struct_cass_uuid_gen">CassUuidGen</a></code></li>
-
-  <li><code><a href="struct_cass_value">CassValue</a></code></li>
-
-</ul>
 
         </div>
         <nav class="col-md-3 side-nav">
@@ -148,103 +126,103 @@
             
             
             <li>
-              <a href="cassandra_8h">cassandra.h</a>
+              <a href="../cassandra_8h">cassandra.h</a>
+            </li>
+            
+            <li class="active">
+              <a href=".">CassAuth</a>
             </li>
             
             <li>
-              <a href="struct_cass_auth">CassAuth</a>
+              <a href="../struct_cass_auth_callbacks">CassAuthCallbacks</a>
             </li>
             
             <li>
-              <a href="struct_cass_auth_callbacks">CassAuthCallbacks</a>
+              <a href="../struct_cass_batch">CassBatch</a>
             </li>
             
             <li>
-              <a href="struct_cass_batch">CassBatch</a>
+              <a href="../struct_cass_bytes">CassBytes</a>
             </li>
             
             <li>
-              <a href="struct_cass_bytes">CassBytes</a>
+              <a href="../struct_cass_cluster">CassCluster</a>
             </li>
             
             <li>
-              <a href="struct_cass_cluster">CassCluster</a>
+              <a href="../struct_cass_collection">CassCollection</a>
             </li>
             
             <li>
-              <a href="struct_cass_collection">CassCollection</a>
+              <a href="../struct_cass_decimal">CassDecimal</a>
             </li>
             
             <li>
-              <a href="struct_cass_decimal">CassDecimal</a>
+              <a href="../struct_cass_future">CassFuture</a>
             </li>
             
             <li>
-              <a href="struct_cass_future">CassFuture</a>
+              <a href="../struct_cass_inet">CassInet</a>
             </li>
             
             <li>
-              <a href="struct_cass_inet">CassInet</a>
+              <a href="../struct_cass_iterator">CassIterator</a>
             </li>
             
             <li>
-              <a href="struct_cass_iterator">CassIterator</a>
+              <a href="../struct_cass_log_message">CassLogMessage</a>
             </li>
             
             <li>
-              <a href="struct_cass_log_message">CassLogMessage</a>
+              <a href="../struct_cass_prepared">CassPrepared</a>
             </li>
             
             <li>
-              <a href="struct_cass_prepared">CassPrepared</a>
+              <a href="../struct_cass_result">CassResult</a>
             </li>
             
             <li>
-              <a href="struct_cass_result">CassResult</a>
+              <a href="../struct_cass_row">CassRow</a>
             </li>
             
             <li>
-              <a href="struct_cass_row">CassRow</a>
+              <a href="../struct_cass_schema">CassSchema</a>
             </li>
             
             <li>
-              <a href="struct_cass_schema">CassSchema</a>
+              <a href="../struct_cass_schema_meta">CassSchemaMeta</a>
             </li>
             
             <li>
-              <a href="struct_cass_schema_meta">CassSchemaMeta</a>
+              <a href="../struct_cass_schema_meta_field">CassSchemaMetaField</a>
             </li>
             
             <li>
-              <a href="struct_cass_schema_meta_field">CassSchemaMetaField</a>
+              <a href="../struct_cass_session">CassSession</a>
             </li>
             
             <li>
-              <a href="struct_cass_session">CassSession</a>
+              <a href="../struct_cass_ssl">CassSsl</a>
             </li>
             
             <li>
-              <a href="struct_cass_ssl">CassSsl</a>
+              <a href="../struct_cass_statement">CassStatement</a>
             </li>
             
             <li>
-              <a href="struct_cass_statement">CassStatement</a>
+              <a href="../struct_cass_string">CassString</a>
             </li>
             
             <li>
-              <a href="struct_cass_string">CassString</a>
+              <a href="../struct_cass_uuid">CassUuid</a>
             </li>
             
             <li>
-              <a href="struct_cass_uuid">CassUuid</a>
+              <a href="../struct_cass_uuid_gen">CassUuidGen</a>
             </li>
             
             <li>
-              <a href="struct_cass_uuid_gen">CassUuidGen</a>
-            </li>
-            
-            <li>
-              <a href="struct_cass_value">CassValue</a>
+              <a href="../struct_cass_value">CassValue</a>
             </li>
             
             
@@ -281,13 +259,13 @@
       </ul>
     </footer>
 
-    <script src="../js/jquery.js"></script>
-    <script src="../js/bootstrap.js"></script>
-    <script src="../js/angular.js"></script>
-    <script src="../js/mousetrap.js"></script>
-    <script src="../js/hotkeys.js"></script>
-    <script src="../js/ZeroClipboard.js"></script>
-    <script src="../js/lunr.js"></script>
-    <script src="../js/app.js"></script>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.js"></script>
+    <script src="../../js/angular.js"></script>
+    <script src="../../js/mousetrap.js"></script>
+    <script src="../../js/hotkeys.js"></script>
+    <script src="../../js/ZeroClipboard.js"></script>
+    <script src="../../js/lunr.js"></script>
+    <script src="../../js/app.js"></script>
   </body>
 </html>

@@ -94,6 +94,58 @@
 <div class="define-content">
 
   
+  <div class="panel panel-default member-definition" id="1aa171ddbcef9d4f5e808bb733e3ff36e9">
+    <div class="panel-heading define-heading">
+      <a class="anchor" href="#1aa171ddbcef9d4f5e808bb733e3ff36e9" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CASS_VERSION_MAJOR
+    </div>
+    <div class="panel-body define-body">
+      
+      <pre>#define CASS_VERSION_MAJOR 1</pre>
+    </div>
+  </div>
+  
+
+  
+  <div class="panel panel-default member-definition" id="1a780dd34077b5a4bc321e2328140941c5">
+    <div class="panel-heading define-heading">
+      <a class="anchor" href="#1a780dd34077b5a4bc321e2328140941c5" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CASS_VERSION_MINOR
+    </div>
+    <div class="panel-body define-body">
+      
+      <pre>#define CASS_VERSION_MINOR 0</pre>
+    </div>
+  </div>
+  
+
+  
+  <div class="panel panel-default member-definition" id="1aef389f3f2287bb6d82a3f7030358fa84">
+    <div class="panel-heading define-heading">
+      <a class="anchor" href="#1aef389f3f2287bb6d82a3f7030358fa84" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CASS_VERSION_PATCH
+    </div>
+    <div class="panel-body define-body">
+      
+      <pre>#define CASS_VERSION_PATCH 1</pre>
+    </div>
+  </div>
+  
+
+  
+  <div class="panel panel-default member-definition" id="1a731d43503fd67cb97faf9ee7f94eb42d">
+    <div class="panel-heading define-heading">
+      <a class="anchor" href="#1a731d43503fd67cb97faf9ee7f94eb42d" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CASS_VERSION_SUFFIX
+    </div>
+    <div class="panel-body define-body">
+      
+      <pre>#define CASS_VERSION_SUFFIX “”</pre>
+    </div>
+  </div>
+  
+
+  
   <div class="panel panel-default member-definition" id="1aadc8c5427f9adefa279c70b487303c83">
     <div class="panel-heading define-heading">
       <a class="anchor" href="#1aadc8c5427f9adefa279c70b487303c83" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
@@ -1130,8 +1182,64 @@
       CassLogCallback
     </div>
     <div class="panel-body typedef-body">
-      <p>A callback that’s used to handle logging.</p>
+      <p>A callback used to handle logging.</p>
       <pre>typedef void(*)(const CassLogMessage *message, void *data) CassLogCallback</pre>
+    </div>
+  </div>
+  
+
+  
+  <div class="panel panel-default member-definition" id="1a067c2c03a68738f6129d2577abf8306e">
+    <div class="panel-heading typedef-heading">
+      <a class="anchor" href="#1a067c2c03a68738f6129d2577abf8306e" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassAuthInitalCallback
+    </div>
+    <div class="panel-body typedef-body">
+      <p>A callback used to initiate an authentication exchange.</p>
+
+<p>If the number of bytes exceeds response_size then immediately return the number of required bytes. The callback will then be recalled with a new buffer of the correct size.</p>
+      <pre>typedef size_t(*)(CassAuth *auth, void *data, char *response, size_t response_size) CassAuthInitalCallback</pre>
+    </div>
+  </div>
+  
+
+  
+  <div class="panel panel-default member-definition" id="1add76ef2658b5c85bbdaf906981d63c61">
+    <div class="panel-heading typedef-heading">
+      <a class="anchor" href="#1add76ef2658b5c85bbdaf906981d63c61" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassAuthChallengeCallback
+    </div>
+    <div class="panel-body typedef-body">
+      <p>A callback used when an authentication challenge initiated by the server.</p>
+
+<p>If the number of bytes exceeds response_size then immediately return the number of required bytes. The callback will then be recalled with a new buffer of the correct size.</p>
+      <pre>typedef size_t(*)(CassAuth *auth, void *data, const char *challenge, size_t challenge_size, char *response, size_t response_size) CassAuthChallengeCallback</pre>
+    </div>
+  </div>
+  
+
+  
+  <div class="panel panel-default member-definition" id="1a3c36b67b8956c1634796ca03f2b68555">
+    <div class="panel-heading typedef-heading">
+      <a class="anchor" href="#1a3c36b67b8956c1634796ca03f2b68555" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassAuthSuccessCallback
+    </div>
+    <div class="panel-body typedef-body">
+      <p>A callback used to indicate the success of the authentication exchange.</p>
+      <pre>typedef void(*)(CassAuth *auth, void *data, const char *token, size_t token_size) CassAuthSuccessCallback</pre>
+    </div>
+  </div>
+  
+
+  
+  <div class="panel panel-default member-definition" id="1ae814df4b9105b3f89db0b4c9459020ab">
+    <div class="panel-heading typedef-heading">
+      <a class="anchor" href="#1ae814df4b9105b3f89db0b4c9459020ab" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassAuthCleanupCallback
+    </div>
+    <div class="panel-body typedef-body">
+      <p>A callback used to cleanup resources that were acquired during the process of the authentication exchange. This is called after the termination of the exchange regardless of the outcome.</p>
+      <pre>typedef void(*)(CassAuth *auth, void *data) CassAuthCleanupCallback</pre>
     </div>
   </div>
   
@@ -1316,6 +1424,14 @@
             
             <li class="active">
               <a href=".">cassandra.h</a>
+            </li>
+            
+            <li>
+              <a href="../struct_cass_auth">CassAuth</a>
+            </li>
+            
+            <li>
+              <a href="../struct_cass_auth_callbacks">CassAuthCallbacks</a>
             </li>
             
             <li>

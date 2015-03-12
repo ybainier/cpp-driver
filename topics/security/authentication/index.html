@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
+    <meta name="author" content="DataStax">
+
+    <title>DataStax C++ Driver for Apache Cassandra - Authentication</title>
+
+    <link rel="icon" href="../../../favicons/favicon.ico">
+    <link rel="apple-touch-icon" href="../../../favicons/favicon.png">
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-app="docs">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../">Cassandra C/C++ Driver</a>
+        </div>
+        <div class="collapse navbar-collapse" ng-controller="search">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../">Introduction</a></li>
+            <li class="active"><a href="../../">Topics</a></li>
+            <li><a href="../../../api/">API docs</a></li>
+          </ul>
+          <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
+            <div class="form-group has-feedback">
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search()" data-toggle="dropdown" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
+              <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
+            </div>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="content">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              <li><a href="../../../">Introduction</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../../">Topics</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">Security</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Authentication</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <h1 id="authentication">Authentication<a class="anchor" href="#authentication" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
+
+<p>The driver can be setup to use either the built-in plain text authentication
+or to use a custom authentication implementation.</p>
+
+<h2 id="plain-text">Plain text<a class="anchor" href="#plain-text" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>Credentials are provided using the <a href="http://datastax.github.io/cpp-driver/api/struct_cass_cluster/#1a44848bd5231e0e525fdfa5c5f4c37ff8"><code>cass_cluster_set_credentials()</code></a> function.</p>
+<pre class="highlight"><code class="c"><span class="nb">cass_cluster_set_credentials</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="s">"cassandra"</span><span class="p">,</span> <span class="s">"cassandra"</span><span class="p">);</span>
+</code></pre>
+<p><strong>Important</strong>: The credentials are sent in plain text to the server. For this
+reason, it is highly recommended that this be used in conjunction with
+client-to-node encryption (SSL), or in a trusted network environment.</p>
+
+<h2 id="custom">Custom<a class="anchor" href="#custom" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>A custom authentication implementation can be set using
+<a href="http://datastax.github.io/cpp-driver/api/struct_cass_cluster/#1aba62ec73570702e5044c547ceca23da5"><code>cass_cluster_set_auth_callbacks()</code></a>. This is useful for integrating with more
+complex authentication systems such as Kerberos.</p>
+<pre class="highlight"><code class="c"><span class="kt">size_t</span> <span class="nf">on_auth_initial</span><span class="p">(</span><span class="nc">CassAuth</span><span class="o">*</span> <span class="n">auth</span><span class="p">,</span>
+                       <span class="kt">void</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span>
+                       <span class="kt">char</span><span class="o">*</span> <span class="n">response</span><span class="p">,</span>
+                       <span class="kt">size_t</span> <span class="n">response_size</span><span class="p">)</span> <span class="p">{</span>
+  <span class="cm">/*
+   * This callback is used to initiate a request to begin an authentication
+   * exchange. Required resources can be acquired and initialized here.
+   *
+   * Resources required for this specific exchange can be stored in the
+   * `auth-&gt;data` field and will be available in the subsequent challenge
+   * and success phases of the exchange. The cleanup callback should be used to
+   * free these resources. This data will only ever be accessed by a single
+   * thread.
+   */</span>
+
+   <span class="cm">/*
+    * Return the number of bytes copied into `response` or the required size
+    * of `response` if it's too small.
+    */</span>
+   <span class="k">return</span> <span class="n">num_bytes</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">size_t</span> <span class="nf">on_auth_challenge</span><span class="p">(</span><span class="nc">CassAuth</span><span class="o">*</span> <span class="n">auth</span><span class="p">,</span>
+                         <span class="kt">void</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span>
+                         <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">token</span><span class="p">,</span>
+                         <span class="kt">size_t</span> <span class="n">token_size</span><span class="p">,</span>
+                         <span class="kt">char</span><span class="o">*</span> <span class="n">response</span><span class="p">,</span>
+                         <span class="kt">size_t</span> <span class="n">response_size</span><span class="p">)</span> <span class="p">{</span>
+  <span class="cm">/*
+   * This is used for handling an authentication challenge initiated
+   * by the server. The information contained in the token parameter is
+   * authentication protocol specific. It may be NULL or empty.
+   */</span>
+
+   <span class="cm">/*
+    * Return the number of bytes copied into `response` or the required size
+    * of `response` if it's too small.
+    */</span>
+  <span class="k">return</span> <span class="n">num_bytes</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">on_auth_success</span><span class="p">(</span><span class="nc">CassAuth</span><span class="o">*</span> <span class="n">auth</span><span class="p">,</span>
+                     <span class="kt">void</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span>
+                     <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">token</span><span class="p">,</span>
+                     <span class="kt">size_t</span> <span class="n">token_size</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="cm">/*
+   * This is to be used for handling the success phase of an exchange. The
+   * token parameters contains information that may be used to finialize
+   * the request. The information contained in the token parameter is
+   * authentication protocol specific. It may be NULL or empty.
+   */</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">on_auth_cleanup</span><span class="p">(</span><span class="nc">CassAuth</span><span class="o">*</span> <span class="n">auth</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="cm">/*
+   * This is used to cleanup resources acquired during the authentication
+   * exchange.
+   */</span>
+<span class="p">}</span>
+
+<span class="cm">/* ... */</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="cm">/* ... */</span>
+
+  <span class="cm">/* Initialize the callback struct */</span>
+  <span class="nc">CassAuthCallbacks</span> <span class="n">auth_callbacks</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">on_auth_initial</span><span class="p">,</span>
+    <span class="n">on_auth_challenge</span><span class="p">,</span>
+    <span class="n">on_auth_success</span><span class="p">,</span>
+    <span class="n">on_auth_cleanup</span>
+  <span class="p">};</span>
+
+
+  <span class="cm">/*
+   * The `data` argument passed into `cass_cluster_set_auth_callbacks()`
+   * is passed as the `data` parameter into the authentication callbacks.
+   * Callbacks will be called by multiple threads concurrently so it is important
+   * makes sure this data is either immutable or its access is serialized.
+   */</span>
+  <span class="kt">void</span><span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="cm">/* Some data */</span><span class="p">;</span>
+
+  <span class="cm">/* Set custom authentication callbacks and callback data */</span>
+  <span class="nb">cass_cluster_set_auth_callbacks</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">auth_callbacks</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+
+  <span class="cm">/* ... */</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
+            
+              
+                
+                  <li><a href="../../building/">Building</a></li>
+                
+              
+                
+                  <li><a href="../../basics/">Basics</a></li>
+                
+              
+                
+                  <li class="active">
+                    <a href="../">Security</a>
+                    <ul class="nav nav-pills nav-stacked">
+                      
+                      
+                      <li class="active">
+                        <a href="./">Authentication</a>
+                        <ul class="nav nav-pills nav-stacked">
+<li><a href="#plain-text">Plain text
+</a></li>
+<li><a href="#custom">Custom
+</a></li>
+</ul>
+                      </li>
+                      
+                      
+                      
+                      <li><a href="../ssl/">SSL</a></li>
+                      
+                      
+                    </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="../../logging/">Logging</a></li>
+                
+              
+                
+                  <li><a href="../../faq/">FAQ</a></li>
+                
+              
+                
+                  <li><a href="../../configuration/">Configuration</a></li>
+                
+              
+                
+                  <li><a href="../../testing/">Testing</a></li>
+                
+              
+            
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>
+          <a href="https://github.com/datastax/cpp-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/cpp-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/CPP">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/cpp-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
+
+    <script src="../../../js/jquery.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
+    <script src="../../../js/angular.js"></script>
+    <script src="../../../js/mousetrap.js"></script>
+    <script src="../../../js/hotkeys.js"></script>
+    <script src="../../../js/ZeroClipboard.js"></script>
+    <script src="../../../js/lunr.js"></script>
+    <script src="../../../js/app.js"></script>
+  </body>
+</html>

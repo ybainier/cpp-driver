@@ -325,6 +325,73 @@
   
 
   
+  <div class="panel panel-default member-definition" id="1aba62ec73570702e5044c547ceca23da5">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1aba62ec73570702e5044c547ceca23da5" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_cluster_set_auth_callbacks <big>(</big> <a href="."><code>CassCluster</code></a> * cluster, const <a href="../struct_cass_auth_callbacks"><code>CassAuthCallbacks</code></a> * callbacks, void * data <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Sets custom authentication callbacks</p>
+
+<dl class="tags">
+
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>cluster</var>
+</td>
+          <td>
+<a href="."><code>CassCluster</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>callbacks</var>
+</td>
+          <td>const <a href="../struct_cass_auth_callbacks"><code>CassAuthCallbacks</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>data</var>
+</td>
+          <td>void *</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+
+
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
+
+
+</dl>
+
+
+    </div>
+  </div>
+  
+
+  
   <div class="panel panel-default member-definition" id="1a35ac971c2e6ce9c55c53343c021f16f5">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1a35ac971c2e6ce9c55c53343c021f16f5" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
@@ -1380,6 +1447,14 @@
             
             <li>
               <a href="../cassandra_8h">cassandra.h</a>
+            </li>
+            
+            <li>
+              <a href="../struct_cass_auth">CassAuth</a>
+            </li>
+            
+            <li>
+              <a href="../struct_cass_auth_callbacks">CassAuthCallbacks</a>
             </li>
             
             <li>
