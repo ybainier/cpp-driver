@@ -9,19 +9,20 @@
     <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
     <meta name="author" content="DataStax">
 
-    <title>DataStax C++ Driver for Apache Cassandra - Configuration</title>
+    <title>DataStax C/C++ Driver - Configuration</title>
 
-    <link rel="icon" href="../../favicons/favicon.ico">
-    <link rel="apple-touch-icon" href="../../favicons/favicon.png">
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../favicon.png">
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/pygments.css" rel="stylesheet">
+    <link href="../../css/hotkeys.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body ng-app="docs">
+  <body ng-app="docs" data-spy="scroll" data-target=".side-nav">
     <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -31,18 +32,26 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../">Cassandra C/C++ Driver</a>
+          <a class="navbar-brand" href="../../">DataStax C/C++ Driver</a>
         </div>
         <div class="collapse navbar-collapse" ng-controller="search">
           <ul class="nav navbar-nav">
-            <li><a href="../../">Introduction</a></li>
-            <li class="active"><a href="../">Topics</a></li>
-            <li><a href="../../api/">API docs</a></li>
+            
+            
+            
+            <li class="active">
+              <a href="../">Topics</a>
+            </li>
+            
+            
+            <li>
+              <a href="../../api/">API docs</a>
+            </li>
+            
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
-              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search()" data-toggle="dropdown" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
-              <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.0')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
             </div>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
@@ -58,15 +67,32 @@
           <nav class="crumbs">
             <ol class="breadcrumb">
               
+              <li>
+                <div class="dropdown">
+                  <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    v2.0
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
+                  
+                    <li class="disabled"><a href="./">v2.0</a></li>
+                  
+                    <li><a href="../../v1.0/topics/configuration/">v1.0</a></li>
+                  
+                  </ul>
+                </div>
+              </li>
               
               
-              <li><a href="../../">Introduction</a></li>
+              
+              
+              <li><a href="../../">Home</a></li>
               
               
               
               
               
-              <li><a href="../">Topics</a></li>
+              <li><a href="../">Getting Started</a></li>
               
               
               
@@ -78,89 +104,142 @@
               
             </ol>
           </nav>
-          <h1 id="configuration">Configuration<a class="anchor" href="#configuration" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+          
+
+<h1 id="configuration">Configuration<a class="anchor" href="#configuration" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 
 <h2 id="load-balancing">Load balancing<a class="anchor" href="#load-balancing" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<h2 id="timeouts">Timeouts<a class="anchor" href="#timeouts" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h2>
+<p>Load balancing controls how queries are distributed to nodes in a Cassandra
+cluster.</p>
 
-<h2 id="performance">Performance<a class="anchor" href="#performance" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h2>
+<p>Without additional configuration the C/C++ driver defaults to using Datacenter-aware
+load balancing with token-aware routing. Meaning the driver will only send
+queries to nodes in the local datacenter (for local consistency levels) and
+it will use the primary key of queries to route them directly to the nodes where the
+corresponding data is located.</p>
+
+<h3 id="round-robin-load-balancing">Round-robin Load Balancing<a class="anchor" href="#round-robin-load-balancing" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+
+<p>This load balancing policy equally distributes queries across cluster without
+consideration of datacenter locality. This should only be used with
+Cassandra clusters where all nodes are located in the same datacenter.</p>
+
+<h3 id="datacenter-aware-load-balancing">Datacenter-aware Load Balancing<a class="anchor" href="#datacenter-aware-load-balancing" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+
+<p>This load balancing policy equally distributes queries to nodes in the local
+datacenter. Nodes in remote datacenters are only used when all local nodes are
+unavailable. Additionally, remote nodes are only considered when non-local
+consistency levels are used or if the driver is configured to use remote nodes
+with the <a href="http://datastax.github.io/cpp-driver/api/struct_cass_cluster/#1a46b9816129aaa5ab61a1363489dccfd0"><code>allow_remote_dcs_for_local_cl</code></a> setting.</p>
+<pre class="highlight"><code><span class="cm">/*
+ * Use up to 2 remote datacenter nodes for remote consistency levels
+ * or when `allow_remote_dcs_for_local_cl` is enabled.
+ */</span>
+<span class="kt">unsigned</span> <span class="n">used_hosts_per_remote_dc</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="cm">/* Don't use remote datacenter nodes for local consistency levels */</span>
+<span class="nb">cass_bool_t</span> <span class="n">allow_remote_dcs_for_local_cl</span> <span class="o">=</span> <span class="nb">cass_false</span><span class="p">;</span>
+
+<span class="nb">cass_cluster_set_load_balance_dc_aware</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span>
+                                       <span class="n">used_hosts_per_remote_dc</span><span class="p">,</span>
+                                       <span class="n">allow_remote_dcs_for_local_cl</span><span class="p">);</span>
+</code></pre>
+<h3 id="token-aware-routing">Token-aware Routing<a class="anchor" href="#token-aware-routing" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+
+<p>Token-aware routing uses the primary key of queries to route requests directly to
+the Cassandra nodes where the data is located. Using this policy avoids having
+to route requests through an extra coordinator node in the Cassandra cluster. This
+can improve query latency and reduce load on the Cassandra nodes. It can be used
+in conjunction with other load balancing and routing policies.</p>
+<pre class="highlight"><code><span class="cm">/* Enable token-aware routing (this is the default setting) */</span>
+<span class="nb">cass_cluster_set_token_aware_routing</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="nb">cass_true</span><span class="p">);</span>
+
+<span class="cm">/* Disable token-aware routing */</span>
+<span class="nb">cass_cluster_set_token_aware_routing</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="nb">cass_true</span><span class="p">);</span>
+</code></pre>
+<h3 id="latency-aware-routing">Latency-aware Routing<a class="anchor" href="#latency-aware-routing" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+
+<p>Latency-aware routing tracks the latency of queries to avoid sending new queries
+to poorly performing Cassandra nodes. It can be used in conjunction with other
+load balancing and routing policies.</p>
+<pre class="highlight"><code><span class="cm">/* Disable latency-aware routing (this is the default setting) */</span>
+<span class="nb">cass_cluster_set_latency_aware_routing</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="nb">cass_false</span><span class="p">);</span>
+
+<span class="cm">/* Enable latency-aware routing */</span>
+<span class="nb">cass_cluster_set_latency_aware_routing</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="nb">cass_true</span><span class="p">);</span>
+
+<span class="cm">/*
+ * Configure latency-aware routing settings
+ */</span>
+
+<span class="cm">/* Up to 2 times the best performing latency is okay */</span>
+<span class="nb">cass_double_t</span> <span class="n">exclusion_threshold</span> <span class="o">=</span> <span class="mi">2</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+
+ <span class="cm">/* Use the default scale */</span>
+<span class="nb">cass_uint64_t</span> <span class="n">scale_ms</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+
+<span class="cm">/* Retry a node after 10 seconds even if it was performing poorly before */</span>
+<span class="nb">cass_uint64_t</span> <span class="n">retry_period_ms</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
+
+<span class="cm">/* Find the best performing latency every 100 milliseconds */</span>
+<span class="nb">cass_uint64_t</span> <span class="n">update_rate_ms</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+
+<span class="cm">/* Only consider the average latency of a node after it's been queried 50 times */</span>
+<span class="nb">cass_uint64_t</span> <span class="n">min_measured</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+
+<span class="nb">cass_cluster_set_latency_aware_routing_settings</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span>
+                                                <span class="n">exclusion_threshold</span><span class="p">,</span>
+                                                <span class="n">scale_ms</span><span class="p">,</span>
+                                                <span class="n">retry_period_ms</span><span class="p">,</span>
+                                                <span class="n">update_rate_ms</span><span class="p">,</span>
+                                                <span class="n">min_measured</span><span class="p">);</span>
+</code></pre>
+
 
         </div>
-        <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
+        <div class="col-md-3">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+            <div id="table-of-contents-panel" class="panel panel-default">
+              <div id="table-of-contents-heading" class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#table-of-contents" aria-expanded="true" aria-controls="table-of-contents">
+                    Contents<i class="pull-right glyphicon glyphicon-chevron-up"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="table-of-contents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="table-of-contents-heading">
+                <div class="panel-body">
+                  <ol class="nav nav-pills nav-stacked toc"><li>
+<a href="#load-balancing">Load balancing
+</a><ol class="nav nav-pills nav-stacked">
+<li><a href="#round-robin-load-balancing">Round-robin Load Balancing
+</a></li>
+<li><a href="#datacenter-aware-load-balancing">Datacenter-aware Load Balancing
+</a></li>
+<li><a href="#token-aware-routing">Token-aware Routing
+</a></li>
+<li><a href="#latency-aware-routing">Latency-aware Routing
+</a></li>
+</ol>
+</li></ol>
+                </div>
+              </div>
+            </div>
+
             
-              
-                
-                  <li><a href="../building/">Building</a></li>
-                
-              
-                
-                  <li><a href="../basics/">Basics</a></li>
-                
-              
-                
-                  <li><a href="../security/">Security</a></li>
-                
-              
-                
-                  <li><a href="../logging/">Logging</a></li>
-                
-              
-                
-                  <li><a href="../faq/">FAQ</a></li>
-                
-              
-                
-                  <li class="active">
-                    <a href="./">Configuration</a>
-                    <ul class="nav nav-pills nav-stacked">
-                      
-                    </ul>
-                  </li>
-                
-              
-                
-                  <li><a href="../testing/">Testing</a></li>
-                
-              
-            
-          </ol>
-        </nav>
+          </div>
+        </div>
       </div>
     </div>
 
-    <footer class="container text-muted">
-      <ul class="list-inline">
-        <li>
-          <a href="https://github.com/datastax/cpp-driver">Code</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="http://datastax.github.io/cpp-driver/">Docs</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://datastax-oss.atlassian.net/browse/CPP">Issues</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user">Mailing List</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://github.com/datastax/cpp-driver/releases">Releases</a>
-        </li>
-      </ul>
-    </footer>
+    
 
     <script src="../../js/jquery.js"></script>
     <script src="../../js/bootstrap.js"></script>

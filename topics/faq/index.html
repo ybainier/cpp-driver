@@ -9,19 +9,20 @@
     <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
     <meta name="author" content="DataStax">
 
-    <title>DataStax C++ Driver for Apache Cassandra - FAQ</title>
+    <title>DataStax C/C++ Driver - FAQ</title>
 
-    <link rel="icon" href="../../favicons/favicon.ico">
-    <link rel="apple-touch-icon" href="../../favicons/favicon.png">
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../favicon.png">
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/pygments.css" rel="stylesheet">
+    <link href="../../css/hotkeys.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body ng-app="docs">
+  <body ng-app="docs" data-spy="scroll" data-target=".side-nav">
     <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -31,18 +32,26 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../">Cassandra C/C++ Driver</a>
+          <a class="navbar-brand" href="../../">DataStax C/C++ Driver</a>
         </div>
         <div class="collapse navbar-collapse" ng-controller="search">
           <ul class="nav navbar-nav">
-            <li><a href="../../">Introduction</a></li>
-            <li class="active"><a href="../">Topics</a></li>
-            <li><a href="../../api/">API docs</a></li>
+            
+            
+            
+            <li class="active">
+              <a href="../">Topics</a>
+            </li>
+            
+            
+            <li>
+              <a href="../../api/">API docs</a>
+            </li>
+            
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
-              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search()" data-toggle="dropdown" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
-              <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.0')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
             </div>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
@@ -58,15 +67,32 @@
           <nav class="crumbs">
             <ol class="breadcrumb">
               
+              <li>
+                <div class="dropdown">
+                  <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    v2.0
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
+                  
+                    <li class="disabled"><a href="./">v2.0</a></li>
+                  
+                    <li><a href="../../v1.0/topics/faq/">v1.0</a></li>
+                  
+                  </ul>
+                </div>
+              </li>
               
               
-              <li><a href="../../">Introduction</a></li>
+              
+              
+              <li><a href="../../">Home</a></li>
               
               
               
               
               
-              <li><a href="../">Topics</a></li>
+              <li><a href="../">Getting Started</a></li>
               
               
               
@@ -78,80 +104,37 @@
               
             </ol>
           </nav>
-          <h1 id="faq">FAQ<a class="anchor" href="#faq" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+          
+
+<h1 id="faq">FAQ<a class="anchor" href="#faq" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 
+
         </div>
-        <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
+        <div class="col-md-3">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+            <div id="table-of-contents-panel" class="panel panel-default">
+              <div id="table-of-contents-heading" class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#table-of-contents" aria-expanded="true" aria-controls="table-of-contents">
+                    Contents<i class="pull-right glyphicon glyphicon-chevron-up"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="table-of-contents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="table-of-contents-heading">
+                <div class="panel-body">
+                  
+                </div>
+              </div>
+            </div>
+
             
-              
-                
-                  <li><a href="../building/">Building</a></li>
-                
-              
-                
-                  <li><a href="../basics/">Basics</a></li>
-                
-              
-                
-                  <li><a href="../security/">Security</a></li>
-                
-              
-                
-                  <li><a href="../logging/">Logging</a></li>
-                
-              
-                
-                  <li class="active">
-                    <a href="./">FAQ</a>
-                    <ul class="nav nav-pills nav-stacked">
-                      
-                    </ul>
-                  </li>
-                
-              
-                
-                  <li><a href="../configuration/">Configuration</a></li>
-                
-              
-                
-                  <li><a href="../testing/">Testing</a></li>
-                
-              
-            
-          </ol>
-        </nav>
+          </div>
+        </div>
       </div>
     </div>
 
-    <footer class="container text-muted">
-      <ul class="list-inline">
-        <li>
-          <a href="https://github.com/datastax/cpp-driver">Code</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="http://datastax.github.io/cpp-driver/">Docs</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://datastax-oss.atlassian.net/browse/CPP">Issues</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user">Mailing List</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://github.com/datastax/cpp-driver/releases">Releases</a>
-        </li>
-      </ul>
-    </footer>
+    
 
     <script src="../../js/jquery.js"></script>
     <script src="../../js/bootstrap.js"></script>

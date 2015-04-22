@@ -9,19 +9,20 @@
     <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
     <meta name="author" content="DataStax">
 
-    <title>DataStax C++ Driver for Apache Cassandra - Configuration</title>
+    <title>DataStax C/C++ Driver - Configuration</title>
 
-    <link rel="icon" href="../../../favicons/favicon.ico">
-    <link rel="apple-touch-icon" href="../../../favicons/favicon.png">
+    <link rel="icon" href="../../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../../favicon.png">
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
+    <link href="../../../css/hotkeys.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body ng-app="docs">
+  <body ng-app="docs" data-spy="scroll" data-target=".side-nav">
     <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -31,18 +32,26 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../../">Cassandra C/C++ Driver</a>
+          <a class="navbar-brand" href="../../../">DataStax C/C++ Driver</a>
         </div>
         <div class="collapse navbar-collapse" ng-controller="search">
           <ul class="nav navbar-nav">
-            <li><a href="../../../">Introduction</a></li>
-            <li class="active"><a href="../../">Topics</a></li>
-            <li><a href="../../../api/">API docs</a></li>
+            
+            
+            
+            <li class="active">
+              <a href="../../">Topics</a>
+            </li>
+            
+            
+            <li>
+              <a href="../../../api/">API docs</a>
+            </li>
+            
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
-              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search()" data-toggle="dropdown" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
-              <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.0')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
             </div>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
@@ -58,15 +67,32 @@
           <nav class="crumbs">
             <ol class="breadcrumb">
               
+              <li>
+                <div class="dropdown">
+                  <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    v2.0
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
+                  
+                    <li class="disabled"><a href="./">v2.0</a></li>
+                  
+                    <li><a href="../../../v1.0/">v1.0</a></li>
+                  
+                  </ul>
+                </div>
+              </li>
               
               
-              <li><a href="../../../">Introduction</a></li>
+              
+              
+              <li><a href="../../../">Home</a></li>
               
               
               
               
               
-              <li><a href="../../">Topics</a></li>
+              <li><a href="../../">Getting Started</a></li>
               
               
               
@@ -84,13 +110,15 @@
               
             </ol>
           </nav>
-          <h1 id="configuration">Configuration<a class="anchor" href="#configuration" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+          
+
+<h1 id="configuration">Configuration<a class="anchor" href="#configuration" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 
 <p>In order to execute the integration tests, a <code>config.txt</code> file must be
 created in the working directory where the integration tests are run. Below is
 an example of the configuration file for use with the <a href="http://datastax.github.io/cpp-driver/topics/testing/ccm/#ccm-cluster-by-way-of-vagrant-and-virtual-box">CCM Cluster</a> VM.</p>
-<pre class="highlight"><code class="text">##
+<pre class="highlight"><code>##
 # CCM Options
 ##
 # CCM Cassandra Deployment Version
@@ -150,7 +178,7 @@ IP_PREFIX=192.168.33.1
 <p>To execute any of the tests in the <code>version1_downgrade</code> test suite, a copy of
 <code>config.txt</code> above should be created called <code>config_v1.txt</code> and the
 <code>CASSANDRA_VERSION</code> option must be updated to a Cassandra in the 1.x family.</p>
-<pre class="highlight"><code class="text">CASSANDRA_VERSION=1.2.19
+<pre class="highlight"><code>CASSANDRA_VERSION=1.2.19
 </code></pre>
 <p>(where <code>CASSANDRA_VERSION=1.2.19</code> is the latest version of Cassandra 1.2)</p>
 
@@ -160,97 +188,37 @@ IP_PREFIX=192.168.33.1
 <p>To execute any of the tests in the <code>ssl</code> test suite, follow the <a href="https://github.com/datastax/cpp-driver/tree/1.0/test/ccm_bridge/data/ssl">instructions</a>
 for generating public and private keys to use with the driver and Cassandra.</p>
 
+
         </div>
-        <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
-            
-              
-                
-                  <li><a href="../../building/">Building</a></li>
-                
-              
-                
-                  <li><a href="../../basics/">Basics</a></li>
-                
-              
-                
-                  <li><a href="../../security/">Security</a></li>
-                
-              
-                
-                  <li><a href="../../logging/">Logging</a></li>
-                
-              
-                
-                  <li><a href="../../faq/">FAQ</a></li>
-                
-              
-                
-                  <li><a href="../../configuration/">Configuration</a></li>
-                
-              
-                
-                  <li class="active">
-                    <a href="../">Testing</a>
-                    <ul class="nav nav-pills nav-stacked">
-                      
-                      
-                      <li><a href="../ccm/">Ccm</a></li>
-                      
-                      
-                      
-                      <li class="active">
-                        <a href="./">Configuration</a>
-                        <ul class="nav nav-pills nav-stacked">
+        <div class="col-md-3">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+            <div id="table-of-contents-panel" class="panel panel-default">
+              <div id="table-of-contents-heading" class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#table-of-contents" aria-expanded="true" aria-controls="table-of-contents">
+                    Contents<i class="pull-right glyphicon glyphicon-chevron-up"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="table-of-contents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="table-of-contents-heading">
+                <div class="panel-body">
+                  <ol class="nav nav-pills nav-stacked toc">
 <li><a href="#driver-downgrade-test-suite">Driver Downgrade Test Suite
 </a></li>
 <li><a href="#ssl-test-suite">SSL Test Suite
 </a></li>
-</ul>
-                      </li>
-                      
-                      
-                      
-                      <li><a href="../running/">Running</a></li>
-                      
-                      
-                    </ul>
-                  </li>
-                
-              
+</ol>
+                </div>
+              </div>
+            </div>
+
             
-          </ol>
-        </nav>
+          </div>
+        </div>
       </div>
     </div>
 
-    <footer class="container text-muted">
-      <ul class="list-inline">
-        <li>
-          <a href="https://github.com/datastax/cpp-driver">Code</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="http://datastax.github.io/cpp-driver/">Docs</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://datastax-oss.atlassian.net/browse/CPP">Issues</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user">Mailing List</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://github.com/datastax/cpp-driver/releases">Releases</a>
-        </li>
-      </ul>
-    </footer>
+    
 
     <script src="../../../js/jquery.js"></script>
     <script src="../../../js/bootstrap.js"></script>

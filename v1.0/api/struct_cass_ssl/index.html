@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
+    <meta name="author" content="DataStax">
+
+    <title>DataStax C/C++ Driver - CassSsl</title>
+
+    <link rel="icon" href="../../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../../favicon.png">
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
+    <link href="../../../css/hotkeys.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-app="docs" data-spy="scroll" data-target=".side-nav">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../">DataStax C/C++ Driver</a>
+        </div>
+        <div class="collapse navbar-collapse" ng-controller="search">
+          <ul class="nav navbar-nav">
+            
+            
+            
+            <li>
+              <a href="../../topics/">Topics</a>
+            </li>
+            
+            
+            <li class="active">
+              <a href="../">API docs</a>
+            </li>
+            
+          </ul>
+          <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
+            <div class="form-group has-feedback">
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v1.0')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
+            </div>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="content">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              <li>
+                <div class="dropdown">
+                  <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    v1.0
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
+                  
+                    <li><a href="../../../api/struct_cass_ssl/">v2.0</a></li>
+                  
+                    <li class="disabled"><a href="./">v1.0</a></li>
+                  
+                  </ul>
+                </div>
+              </li>
+              
+              
+              
+              
+              <li><a href="../../">Home</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">API docs</a></li>
+              
+              
+              
+              
+              
+              <li class="active">CassSsl</li>
+              
+              
+              
+            </ol>
+          </nav>
+          
+
+<div class="page-header">
+  <h1 id="struct-cassssl">
+    <small>struct</small>
+    CassSsl
+  <a class="anchor" href="#struct-cassssl" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
+</div>
+<p>Describes the SSL configuration of a cluster.</p>
+<h2 id="functions">Functions<a class="anchor" href="#functions" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+<div class="public_func-content">
+  
+  <div class="panel panel-default member-definition" id="1a25340df889e674a5e2ad1b60e6dcc4e4">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a25340df889e674a5e2ad1b60e6dcc4e4" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <a href="./"><code>CassSsl</code></a> * cass_ssl_new <big>(</big>  <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Creates a new SSL context.</p>
+<dl class="tags">
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>Returns a SSL context that must be freed.</p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a807650aac5e1aacc55d266b3391d657c"><code>cass_ssl_free()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1a807650aac5e1aacc55d266b3391d657c">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a807650aac5e1aacc55d266b3391d657c" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      void cass_ssl_free <big>(</big> <a href="./"><code>CassSsl</code></a> * ssl <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Frees a SSL context instance.</p>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1a59fbea2774deaa5d90325958313bd5fa">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a59fbea2774deaa5d90325958313bd5fa" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_ssl_add_trusted_cert <big>(</big> <a href="./"><code>CassSsl</code></a> * ssl, <a href="../struct_cass_string/"><code>CassString</code></a> cert <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Adds a trusted certificate. This is used to verify the peer’s certificate.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>ssl</var>
+</td>
+          <td>
+<a href="./"><code>CassSsl</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>cert</var>
+</td>
+          <td><a href="../struct_cass_string/"><code>CassString</code></a></td>
+          <td>
+<p>PEM formatted certificate string</p>
+</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred</p>
+</dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1ae97c8fe693922f7e1c8378b0ceab03da">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1ae97c8fe693922f7e1c8378b0ceab03da" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      void cass_ssl_set_verify_flags <big>(</big> <a href="./"><code>CassSsl</code></a> * ssl, int flags <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Sets verifcation performed on the peer’s certificate.</p>
+
+<p>CASS_SSL_VERIFY_NONE - No verification is performed CASS_SSL_VERIFY_PEER_CERT - Certificate is present and valid CASS_SSL_VERIFY_PEER_IDENTITY - IP address matches the certificate’s common name or one of its subject alternative names. This implies the certificate is also present.</p>
+
+<p>Default: CASS_SSL_VERIFY_PEER_CERT</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>ssl</var>
+</td>
+          <td>
+<a href="./"><code>CassSsl</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>flags</var>
+</td>
+          <td>int</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred</p>
+</dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1aec5e3edfc8b4f2d16e8cddbb76f0ad93">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1aec5e3edfc8b4f2d16e8cddbb76f0ad93" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_ssl_set_cert <big>(</big> <a href="./"><code>CassSsl</code></a> * ssl, <a href="../struct_cass_string/"><code>CassString</code></a> cert <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Set client-side certificate chain. This is used to authenticate the client on the server-side. This should contain the entire Certificate chain starting with the certificate itself.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>ssl</var>
+</td>
+          <td>
+<a href="./"><code>CassSsl</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>cert</var>
+</td>
+          <td><a href="../struct_cass_string/"><code>CassString</code></a></td>
+          <td>
+<p>PEM formatted certificate string</p>
+</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred</p>
+</dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1a7b030586b0f6a36188869450dd8718b0">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a7b030586b0f6a36188869450dd8718b0" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_ssl_set_private_key <big>(</big> <a href="./"><code>CassSsl</code></a> * ssl, <a href="../struct_cass_string/"><code>CassString</code></a> key, const char * password <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Set client-side private key. This is used to authenticate the client on the server-side.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>ssl</var>
+</td>
+          <td>
+<a href="./"><code>CassSsl</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>key</var>
+</td>
+          <td><a href="../struct_cass_string/"><code>CassString</code></a></td>
+          <td>
+<p>PEM formatted key string</p>
+</td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>password</var>
+</td>
+          <td>const char *</td>
+          <td>
+<p>used to decrypt key</p>
+</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred</p>
+</dd>
+</dl>
+
+    </div>
+  </div>
+  
+</div>
+
+
+        </div>
+        <div class="col-md-3">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+            <div id="table-of-contents-panel" class="panel panel-default">
+              <div id="table-of-contents-heading" class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#table-of-contents" aria-expanded="true" aria-controls="table-of-contents">
+                    Contents<i class="pull-right glyphicon glyphicon-chevron-up"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="table-of-contents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="table-of-contents-heading">
+                <div class="panel-body">
+                  <ol class="nav nav-pills nav-stacked toc"><li><a href="#functions">Functions
+</a></li></ol>
+                </div>
+              </div>
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <script src="../../../js/jquery.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
+    <script src="../../../js/angular.js"></script>
+    <script src="../../../js/mousetrap.js"></script>
+    <script src="../../../js/hotkeys.js"></script>
+    <script src="../../../js/ZeroClipboard.js"></script>
+    <script src="../../../js/lunr.js"></script>
+    <script src="../../../js/app.js"></script>
+  </body>
+</html>

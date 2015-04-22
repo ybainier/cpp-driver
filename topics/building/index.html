@@ -9,19 +9,20 @@
     <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
     <meta name="author" content="DataStax">
 
-    <title>DataStax C++ Driver for Apache Cassandra - Building</title>
+    <title>DataStax C/C++ Driver - Building</title>
 
-    <link rel="icon" href="../../favicons/favicon.ico">
-    <link rel="apple-touch-icon" href="../../favicons/favicon.png">
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../favicon.png">
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/pygments.css" rel="stylesheet">
+    <link href="../../css/hotkeys.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body ng-app="docs">
+  <body ng-app="docs" data-spy="scroll" data-target=".side-nav">
     <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -31,18 +32,26 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../">Cassandra C/C++ Driver</a>
+          <a class="navbar-brand" href="../../">DataStax C/C++ Driver</a>
         </div>
         <div class="collapse navbar-collapse" ng-controller="search">
           <ul class="nav navbar-nav">
-            <li><a href="../../">Introduction</a></li>
-            <li class="active"><a href="../">Topics</a></li>
-            <li><a href="../../api/">API docs</a></li>
+            
+            
+            
+            <li class="active">
+              <a href="../">Topics</a>
+            </li>
+            
+            
+            <li>
+              <a href="../../api/">API docs</a>
+            </li>
+            
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
-              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search()" data-toggle="dropdown" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
-              <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.0')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
             </div>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
@@ -58,15 +67,32 @@
           <nav class="crumbs">
             <ol class="breadcrumb">
               
+              <li>
+                <div class="dropdown">
+                  <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    v2.0
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
+                  
+                    <li class="disabled"><a href="./">v2.0</a></li>
+                  
+                    <li><a href="../../v1.0/topics/building/">v1.0</a></li>
+                  
+                  </ul>
+                </div>
+              </li>
               
               
-              <li><a href="../../">Introduction</a></li>
+              
+              
+              <li><a href="../../">Home</a></li>
               
               
               
               
               
-              <li><a href="../">Topics</a></li>
+              <li><a href="../">Getting Started</a></li>
               
               
               
@@ -78,7 +104,9 @@
               
             </ol>
           </nav>
-          <h1 id="building">Building<a class="anchor" href="#building" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+          
+
+<h1 id="building">Building<a class="anchor" href="#building" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 
 <h2 id="supported-platforms">Supported Platforms<a class="anchor" href="#supported-platforms" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
@@ -137,16 +165,16 @@
 
 <h6 id="install-key-and-rpm-package">Install Key and RPM Package<a class="anchor" href="#install-key-and-rpm-package" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h6>
-<pre class="highlight"><code class="bash">sudo rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt
+<pre class="highlight"><code>sudo rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt
 sudo rpm -i rpmforge-release-0.5.3-1.el5.rf.<span class="k">*</span>.rpm
 </code></pre>
 <h5 id="dependencies-and-libuv-installation">Dependencies and libuv Installation<a class="anchor" href="#dependencies-and-libuv-installation" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h5>
-<pre class="highlight"><code class="bash">sudo yum install automake cmake gcc-c++ git libtool openssl-devel wget
+<pre class="highlight"><code>sudo yum install automake cmake gcc-c++ git libtool openssl-devel wget
 <span class="nb">pushd</span> /tmp
-wget http://libuv.org/dist/v1.4.0/libuv-v1.4.0.tar.gz
-tar xzf libuv-v1.4.0.tar.gz
-<span class="nb">pushd </span>libuv-v1.4.0
+wget http://libuv.org/dist/v1.4.2/libuv-v1.4.2.tar.gz
+tar xzf libuv-v1.4.2.tar.gz
+<span class="nb">pushd </span>libuv-v1.4.2
 sh autogen.sh
 ./configure
 sudo make install
@@ -157,7 +185,7 @@ popd</span>
 </h4>
 
 <p>The driver has been built and tested using the Clang compiler provided by XCode 5.1+. The dependencies were obtained using <a href="http://brew.sh">Homebrew</a>.</p>
-<pre class="highlight"><code class="bash">brew install libuv cmake
+<pre class="highlight"><code>brew install libuv cmake
 </code></pre>
 <p><strong>NOTE:</strong> The driver utilizes the OpenSSL library included with XCode.</p>
 
@@ -168,20 +196,20 @@ popd</span>
 </h5>
 
 <p>Ubuntu 12.04 does not contain libuv in its repositories; however the LinuxJedi PPA has a backport from Ubuntu 14.04 which can be found <a href="https://launchpad.net/%7Elinuxjedi/+archive/ubuntu/ppa">here</a>.</p>
-<pre class="highlight"><code class="bash">sudo apt-add-repository ppa:linuxjedi/ppa
+<pre class="highlight"><code>sudo apt-add-repository ppa:linuxjedi/ppa
 sudo apt-get update
 </code></pre>
 <h5 id="gcc">GCC<a class="anchor" href="#gcc" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h5>
-<pre class="highlight"><code class="bash">sudo apt-get install g++ make cmake libuv-dev libssl-dev
+<pre class="highlight"><code>sudo apt-get install g++ make cmake libuv-dev libssl-dev
 </code></pre>
 <h5 id="clang">Clang<a class="anchor" href="#clang" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h5>
-<pre class="highlight"><code class="bash">sudo apt-get install clang make cmake libuv-dev libssl-dev
+<pre class="highlight"><code>sudo apt-get install clang make cmake libuv-dev libssl-dev
 </code></pre>
 <h3 id="building-the-driver">Building the Driver<a class="anchor" href="#building-the-driver" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
-<pre class="highlight"><code class="bash">git clone https://github.com/datastax/cpp-driver.git
+<pre class="highlight"><code>git clone https://github.com/datastax/cpp-driver.git
 mkdir cpp-driver/build
 <span class="nb">cd </span>cpp-driver/build
 cmake ..
@@ -197,7 +225,7 @@ make
 </h5>
 
 <p>CentOS/RHEL does not contain Boost v1.55+ libraries in its repositories; however these can be easily installed from source. Ensure previous version of Boost has been removed by executing the command <code>sudo yum remove boost*</code> before proceeding.</p>
-<pre class="highlight"><code class="bash">sudo yum install libssh2-devel
+<pre class="highlight"><code>sudo yum install libssh2-devel
 <span class="nb">pushd</span> /tmp
 wget http://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.tar.gz/download -O boost_1_57_0.tar.gz
 tar xzf boost_1_57_0.tar.gz
@@ -211,7 +239,7 @@ popd</span>
 
 <h5 id="os-x">OS X<a class="anchor" href="#os-x" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h5>
-<pre class="highlight"><code class="bash">brew install boost libssh2
+<pre class="highlight"><code>brew install boost libssh2
 </code></pre>
 <h5 id="ubuntu">Ubuntu<a class="anchor" href="#ubuntu" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h5>
@@ -220,16 +248,16 @@ popd</span>
 </h6>
 
 <p>Ubuntu 12.04 does not contain Boost v1.55+ C++ libraries in its repositories; however it can be obtained from the Boost PPA which can be found <a href="https://launchpad.net/%7Eboost-latest/+archive/ubuntu/ppa">here</a>.</p>
-<pre class="highlight"><code class="bash">sudo add-apt-repository ppa:boost-latest/ppa
+<pre class="highlight"><code>sudo add-apt-repository ppa:boost-latest/ppa
 sudo apt-get update
 </code></pre>
 <h5 id="install-dependencies">Install Dependencies<a class="anchor" href="#install-dependencies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h5>
-<pre class="highlight"><code class="bash">sudo apt-get install libboost1.55-all-dev libssh2-1-dev
+<pre class="highlight"><code>sudo apt-get install libboost1.55-all-dev libssh2-1-dev
 </code></pre>
 <h4 id="building-the-driver-with-the-tests">Building the Driver with the Tests<a class="anchor" href="#building-the-driver-with-the-tests" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h4>
-<pre class="highlight"><code class="bash">git clone https://github.com/datastax/cpp-driver.git
+<pre class="highlight"><code>git clone https://github.com/datastax/cpp-driver.git
 mkdir cpp-driver/build
 <span class="nb">cd </span>cpp-driver/build
 cmake -DCASS_BUILD_TESTS<span class="o">=</span>ON ..
@@ -280,22 +308,28 @@ make
 <p>First you will need to open a “Command Prompt” (or Windows SDK Command Prompt) to execute the batch script.</p>
 <pre><code class="dos">Usage: VC_BUILD.BAT [OPTION...]
 
-        --DEBUG                         Enable debug build
-        --RELEASE                       Enable release build (default)
-        --DISABLE-CLEAN                 Disable clean build
-        --DISABLE-OPENSSL               Disable OpenSSL support
-        --ENABLE-PACKAGES [version]     Enable package generation (**)
-        --ENABLE-TESTS [boost-root-dir] Enable test builds
-        --ENABLE-ZLIB                   Enable zlib
-        --SHARED                        Build shared library (default)
-        --STATIC                        Build static library
-        --X86                           Target 32-bit build (*)
-        --X64                           Target 64-bit build (*)
+    --DEBUG                           Enable debug build
+    --RELEASE                         Enable release build (default)
+    --DISABLE-CLEAN                   Disable clean build
+    --TARGET-COMPILER [version]       120, 110, 100, or WINSDK
+    --DISABLE-OPENSSL                 Disable OpenSSL support
+    --ENABLE-EXAMPLES                 Enable example builds
+    --ENABLE-PACKAGES [version]       Enable package generation (*)
+    --ENABLE-TESTS [boost-root-dir]   Enable test builds
+    --ENABLE-ZLIB                     Enable zlib
+    --GENERATE-SOLUTION               Generate Visual Studio solution (**)
+    --INSTALL-DIR [install-dir]       Override installation directory
+    --SHARED                          Build shared library (default)
+    --STATIC                          Build static library
+    --X86                             Target 32-bit build (***)
+    --X64                             Target 64-bit build (***)
+    --USE-BOOST-ATOMIC                Use Boost atomic
 
-        --HELP                          Display this message
+    --HELP                            Display this message
 
-*  Default target architecture is determined based on system architecture
-** Packages are only generated using detected installations of Visual Studio
+*   Packages are only generated using detected installations of Visual Studio
+**  Dependencies are built before generation of Visual Studio solution
+*** Default target architecture is determined based on system architecture
 </code></pre>
 <p>To build 32-bit shared library:</p>
 <pre><code class="dos">VC_BUILD.BAT --X86
@@ -303,8 +337,14 @@ make
 <p>To build 64-bit shared library:</p>
 <pre><code class="dos">VC_BUILD.BAT --X64
 </code></pre>
+<p>To build using Boost atomic implementation:</p>
+<pre><code class="dos">VC_BUILD.BAT --USE-BOOST-ATOMIC
+</code></pre>
 <p>To build static library:</p>
 <pre><code class="dos">VC_BUILD.BAT --STATIC
+</code></pre>
+<p>To build examples:</p>
+<pre><code class="dos">VC_BUILD.BAT --ENABLE-EXAMPLES
 </code></pre>
 <p>To build library without OpenSSL support:</p>
 <pre><code class="dos">VC_BUILD.BAT --DISABLE-OPENSSL
@@ -312,6 +352,18 @@ make
 <p>To build 32-bit static library without OpenSSL support:</p>
 <pre><code class="dos">VC_BUILD.BAT --DISABLE-OPENSSL --STATIC --X86
 </code></pre>
+<p>To generate Visual Studio solution file:</p>
+<pre><code class="dos">VC_BUILD.BAT --GENERATE-SOLUTION
+</code></pre>
+<p>To use vc_build.bat for easy inclusion into a project:</p>
+
+<p><code>dos
+VC_BUILD.BAT --TARGET-COMPILER 120 --INSTALL-DIR C:\myproject\dependencies\libs\cpp-driver
+</code>`</p>
+
+<p><strong>NOTE:</strong> When overridding installation directory using <code>--INSTALL-DIR</code>, the
+driver dependencies will also be copied (e.g. C:\myproject\dependencies\libs)</p>
+
 <h3 id="test-dependencies-and-building-the-tests-not-required">Test Dependencies and Building the Tests (<u>NOT REQUIRED</u>)<a class="anchor" href="#test-dependencies-and-building-the-tests-not-required" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
 
@@ -366,79 +418,128 @@ make
 
 [e.g. C:\local\boost_1_57_0]
 </code></pre>
-<p><strong>NOTE:</strong> <code>--STATIC</code> is preferred on Windows in order to statically link all the libraries into the executable</p>
+<p><strong>NOTE:</strong> When enabling tests, –USE-BOOST-ATOMIC will use the Boost atomic implementation supplied by <absolute-path-to-boost></absolute-path-to-boost></p>
+
 
         </div>
-        <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
+        <div class="col-md-3">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+            <div id="table-of-contents-panel" class="panel panel-default">
+              <div id="table-of-contents-heading" class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#table-of-contents" aria-expanded="true" aria-controls="table-of-contents">
+                    Contents<i class="pull-right glyphicon glyphicon-chevron-up"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="table-of-contents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="table-of-contents-heading">
+                <div class="panel-body">
+                  <ol class="nav nav-pills nav-stacked toc">
+<li><a href="#supported-platforms">Supported Platforms
+</a></li>
+<li>
+<a href="#dependencies">Dependencies
+</a><ol class="nav nav-pills nav-stacked">
+<li><a href="#driver">Driver
+</a></li>
+<li><a href="#test-dependencies">Test Dependencies
+</a></li>
+</ol>
+</li>
+<li>
+<a href="#linux-os-x">Linux/OS X
+</a><ol class="nav nav-pills nav-stacked">
+<li>
+<a href="#obtaining-dependencies">Obtaining Dependencies
+</a><ol class="nav nav-pills nav-stacked">
+<li>
+<a href="#centos-rhel">CentOS/RHEL
+</a><ol class="nav nav-pills nav-stacked">
+<li>
+<a href="#additional-requirements-for-centos-rhel-5">Additional Requirements for CentOS/RHEL 5
+</a><ol class="nav nav-pills nav-stacked">
+<li><a href="#download-the-appropriate-repoforge-release-package">Download the Appropriate RepoForge Release Package
+</a></li>
+<li><a href="#install-key-and-rpm-package">Install Key and RPM Package
+</a></li>
+</ol>
+</li>
+<li><a href="#dependencies-and-libuv-installation">Dependencies and libuv Installation
+</a></li>
+</ol>
+</li>
+<li><a href="#os-x">OS X
+</a></li>
+<li>
+<a href="#ubuntu">Ubuntu
+</a><ol class="nav nav-pills nav-stacked">
+<li><a href="#additional-requirements-for-ubuntu-12-04">Additional Requirements for Ubuntu 12.04
+</a></li>
+<li><a href="#gcc">GCC
+</a></li>
+<li><a href="#clang">Clang
+</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><a href="#building-the-driver">Building the Driver
+</a></li>
+<li>
+<a href="#test-dependencies-and-building-the-tests-not-required">Test Dependencies and Building the Tests (NOT REQUIRED)
+</a><ol class="nav nav-pills nav-stacked">
+<li>
+<a href="#obtaining-test-dependencies">Obtaining Test Dependencies
+</a><ol class="nav nav-pills nav-stacked">
+<li><a href="#centos-rhel">CentOS/RHEL
+</a></li>
+<li><a href="#os-x">OS X
+</a></li>
+<li>
+<a href="#ubuntu">Ubuntu
+</a><ol class="nav nav-pills nav-stacked"><li><a href="#additional-requirements-for-ubuntu-12-04">Additional Requirements for Ubuntu 12.04
+</a></li></ol>
+</li>
+<li><a href="#install-dependencies">Install Dependencies
+</a></li>
+</ol>
+</li>
+<li><a href="#building-the-driver-with-the-tests">Building the Driver with the Tests
+</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<a href="#windows">Windows
+</a><ol class="nav nav-pills nav-stacked">
+<li><a href="#obtaining-build-dependencies">Obtaining Build Dependencies
+</a></li>
+<li><a href="#building-the-driver">Building the Driver
+</a></li>
+<li>
+<a href="#test-dependencies-and-building-the-tests-not-required">Test Dependencies and Building the Tests (NOT REQUIRED)
+</a><ol class="nav nav-pills nav-stacked">
+<li><a href="#obtaining-test-dependencies">Obtaining Test Dependencies
+</a></li>
+<li><a href="#building-the-driver-with-the-tests">Building the Driver with the Tests
+</a></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+                </div>
+              </div>
+            </div>
+
             
-              
-                
-                  <li class="active">
-                    <a href="./">Building</a>
-                    <ul class="nav nav-pills nav-stacked">
-                      
-                    </ul>
-                  </li>
-                
-              
-                
-                  <li><a href="../basics/">Basics</a></li>
-                
-              
-                
-                  <li><a href="../security/">Security</a></li>
-                
-              
-                
-                  <li><a href="../logging/">Logging</a></li>
-                
-              
-                
-                  <li><a href="../faq/">FAQ</a></li>
-                
-              
-                
-                  <li><a href="../configuration/">Configuration</a></li>
-                
-              
-                
-                  <li><a href="../testing/">Testing</a></li>
-                
-              
-            
-          </ol>
-        </nav>
+          </div>
+        </div>
       </div>
     </div>
 
-    <footer class="container text-muted">
-      <ul class="list-inline">
-        <li>
-          <a href="https://github.com/datastax/cpp-driver">Code</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="http://datastax.github.io/cpp-driver/">Docs</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://datastax-oss.atlassian.net/browse/CPP">Issues</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user">Mailing List</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://github.com/datastax/cpp-driver/releases">Releases</a>
-        </li>
-      </ul>
-    </footer>
+    
 
     <script src="../../js/jquery.js"></script>
     <script src="../../js/bootstrap.js"></script>

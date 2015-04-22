@@ -9,19 +9,20 @@
     <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
     <meta name="author" content="DataStax">
 
-    <title>DataStax C++ Driver for Apache Cassandra - CassStatement</title>
+    <title>DataStax C/C++ Driver - CassStatement</title>
 
-    <link rel="icon" href="../../favicons/favicon.ico">
-    <link rel="apple-touch-icon" href="../../favicons/favicon.png">
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../favicon.png">
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/pygments.css" rel="stylesheet">
+    <link href="../../css/hotkeys.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body ng-app="docs">
+  <body ng-app="docs" data-spy="scroll" data-target=".side-nav">
     <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -31,18 +32,26 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../">Cassandra C/C++ Driver</a>
+          <a class="navbar-brand" href="../../">DataStax C/C++ Driver</a>
         </div>
         <div class="collapse navbar-collapse" ng-controller="search">
           <ul class="nav navbar-nav">
-            <li><a href="../../">Introduction</a></li>
-            <li><a href="../../topics/">Topics</a></li>
-            <li class="active"><a href="../">API docs</a></li>
+            
+            
+            
+            <li>
+              <a href="../../topics/">Topics</a>
+            </li>
+            
+            
+            <li class="active">
+              <a href="../">API docs</a>
+            </li>
+            
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
-              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search()" data-toggle="dropdown" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
-              <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.0')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
             </div>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
@@ -58,9 +67,26 @@
           <nav class="crumbs">
             <ol class="breadcrumb">
               
+              <li>
+                <div class="dropdown">
+                  <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    v2.0
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
+                  
+                    <li class="disabled"><a href="./">v2.0</a></li>
+                  
+                    <li><a href="../../v1.0/api/struct_cass_statement/">v1.0</a></li>
+                  
+                  </ul>
+                </div>
+              </li>
               
               
-              <li><a href="../../">Introduction</a></li>
+              
+              
+              <li><a href="../../">Home</a></li>
               
               
               
@@ -79,6 +105,7 @@
             </ol>
           </nav>
           
+
 <div class="page-header">
   <h1 id="struct-cassstatement">
     <small>struct</small>
@@ -88,24 +115,19 @@
 </div>
 <p>A statement object is an executable query. It represents either a regular (adhoc) statment or a prepared statement. It maitains the queries’ parameter values along with query options (consistency level, paging state, etc.)</p>
 
-<p>Note: Parameters for regular queries are not supported by the binary protocol version 1.</p>
-
-
+<p><strong>Note:</strong> Parameters for regular queries are not supported by the binary protocol version 1.</p>
 <h2 id="functions">Functions<a class="anchor" href="#functions" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 <div class="public_func-content">
-
   
-  <div class="panel panel-default member-definition" id="1aa423547b344749da3db096f2cba6d912">
+  <div class="panel panel-default member-definition" id="1a87a8e954fa8e6df9728b9e7e7eed1ee5">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1aa423547b344749da3db096f2cba6d912" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="."><code>CassStatement</code></a> * cass_statement_new <big>(</big> <a href="../struct_cass_string"><code>CassString</code></a> query, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> parameter_count <big>)</big>
+      <a class="anchor" href="#1a87a8e954fa8e6df9728b9e7e7eed1ee5" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <a href="./"><code>CassStatement</code></a> * cass_statement_new <big>(</big> const char * query, size_t parameter_count <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Creates a new query statement.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -123,8 +145,10 @@
           <td>
 <small>in</small> <var>query</var>
 </td>
-          <td><a href="../struct_cass_string"><code>CassString</code></a></td>
-          <td><p>The query is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p></td>
+          <td>const char *</td>
+          <td>
+<p>The query is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p>
+</td>
         </tr>
         
         
@@ -132,54 +156,121 @@
           <td>
 <small>in</small> <var>parameter_count</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
-          <td><p>The number of bound parameters.</p></td>
+          <td>size_t</td>
+          <td>
+<p>The number of bound parameters.</p>
+</td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>Returns a statement that must be freed.</p></dd>
-
-
+  <dd class="tag-content">
+<p>Returns a statement that must be freed.</p>
+</dd>
   <dt class="tag-title">See also:</dt>
   <dd class="tag-content">
     <ul>
     
-      <li><p><a href="../struct_cass_statement#1aa32f29a76e0c2f5d9a381a9af7d3f719"><code>cass_statement_free()</code></a></p></li>
+      <li>
+<p><a href="#1aa32f29a76e0c2f5d9a381a9af7d3f719"><code>cass_statement_free()</code></a></p>
+</li>
     
     </ul>
   </dd>
-
 </dl>
-
 
     </div>
   </div>
   
+  
+  <div class="panel panel-default member-definition" id="1a7bfa7c078a6adb21f6137aef77afb039">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a7bfa7c078a6adb21f6137aef77afb039" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <a href="./"><code>CassStatement</code></a> * cass_statement_new_n <big>(</big> const char * query, size_t query_length, size_t parameter_count <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1a87a8e954fa8e6df9728b9e7e7eed1ee5"><code>cass_statement_new()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>query</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>query_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>parameter_count</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1a87a8e954fa8e6df9728b9e7e7eed1ee5"><code>cass_statement_new()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a87a8e954fa8e6df9728b9e7e7eed1ee5"><code>cass_statement_new()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
 
+    </div>
+  </div>
+  
   
   <div class="panel panel-default member-definition" id="1aa32f29a76e0c2f5d9a381a9af7d3f719">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1aa32f29a76e0c2f5d9a381a9af7d3f719" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      void cass_statement_free <big>(</big> <a href="."><code>CassStatement</code></a> * statement <big>)</big>
+      void cass_statement_free <big>(</big> <a href="./"><code>CassStatement</code></a> * statement <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Frees a statement instance. Statements can be immediately freed after being prepared, executed or added to a batch.</p>
 
-
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1aaf65dadd459fa543c36a0ed508f4641d">
+  <div class="panel panel-default member-definition" id="1acde1fee789be33b943cb55fddbc2d95b">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1aaf65dadd459fa543c36a0ed508f4641d" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_add_key_index <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index <big>)</big>
+      <a class="anchor" href="#1acde1fee789be33b943cb55fddbc2d95b" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_add_key_index <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Adds a key index specifier to this a statement. When using token-aware routing, this can be used to tell the driver which parameters within a non-prepared, parameterized statement are part of the partition key.</p>
@@ -187,9 +278,7 @@
 <p>Use consecutive calls for composite partition keys.</p>
 
 <p>This is not necessary for prepared statements, as the key parameters are determined in the metadata processed in the prepare phase.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -208,7 +297,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -217,39 +306,33 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a6481f39f257b69c955f5cbe077b13fe6">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1a6481f39f257b69c955f5cbe077b13fe6" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_set_keyspace <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * keyspace <big>)</big>
+      CassError cass_statement_set_keyspace <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * keyspace <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Sets the statement’s keyspace for use with token-aware routing.</p>
 
 <p>This is not necessary for prepared statements, as the keyspace is determined in the metadata processed in the prepare phase.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -268,7 +351,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -284,32 +367,24 @@
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1a3063188cef63dfff558a6d99e8c15baf">
+  <div class="panel panel-default member-definition" id="1a7f03759769284fc58bad931636ee76ff">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1a3063188cef63dfff558a6d99e8c15baf" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_set_consistency <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a980c762144275babf54e87a5b983f083"><code>CassConsistency</code></a> consistency <big>)</big>
+      <a class="anchor" href="#1a7f03759769284fc58bad931636ee76ff" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_set_keyspace_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * keyspace, size_t keyspace_length <big>)</big>
     </div>
     <div class="panel-body public_func-body">
-      <p>Sets the statement’s consistency level.</p>
-
-<p>Default: CASS_CONSISTENCY_ONE</p>
-
+      <p>Same as <a href="#1a6481f39f257b69c955f5cbe077b13fe6"><code>cass_statement_set_keyspace()</code></a>, but with lengths for string parameters.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -328,7 +403,80 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>keyspace</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>keyspace_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1a6481f39f257b69c955f5cbe077b13fe6"><code>cass_statement_set_keyspace()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a6481f39f257b69c955f5cbe077b13fe6"><code>cass_statement_set_keyspace()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1a3063188cef63dfff558a6d99e8c15baf">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a3063188cef63dfff558a6d99e8c15baf" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_set_consistency <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, CassConsistency consistency <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Sets the statement’s consistency level.</p>
+
+<p>Default: CASS_CONSISTENCY_ONE</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -337,39 +485,33 @@
           <td>
 <small>in</small> <var>consistency</var>
 </td>
-          <td><a href="../cassandra_8h#1a980c762144275babf54e87a5b983f083"><code>CassConsistency</code></a></td>
+          <td>CassConsistency</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a56cbef04aa5c10af63f6c13a19f3f75c">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1a56cbef04aa5c10af63f6c13a19f3f75c" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_set_serial_consistency <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a980c762144275babf54e87a5b983f083"><code>CassConsistency</code></a> serial_consistency <big>)</big>
+      CassError cass_statement_set_serial_consistency <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, CassConsistency serial_consistency <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Sets the statement’s serial consistency level.</p>
 
 <p>Default: Not set</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -388,7 +530,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -397,39 +539,33 @@
           <td>
 <small>in</small> <var>serial_consistency</var>
 </td>
-          <td><a href="../cassandra_8h#1a980c762144275babf54e87a5b983f083"><code>CassConsistency</code></a></td>
+          <td>CassConsistency</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a199aec6388e8dc1dec7fa8316c99deb9">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1a199aec6388e8dc1dec7fa8316c99deb9" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_set_paging_size <big>(</big> <a href="."><code>CassStatement</code></a> * statement, int page_size <big>)</big>
+      CassError cass_statement_set_paging_size <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, int page_size <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Sets the statement’s page size.</p>
 
 <p>Default: -1 (Disabled)</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -448,7 +584,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -464,30 +600,24 @@
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1ade09e881851b568840872540e1d0510b">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1ade09e881851b568840872540e1d0510b" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_set_paging_state <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const <a href="../struct_cass_result"><code>CassResult</code></a> * result <big>)</big>
+      CassError cass_statement_set_paging_state <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const <a href="../struct_cass_result/"><code>CassResult</code></a> * result <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Sets the statement’s paging state.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -506,7 +636,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -515,37 +645,31 @@
           <td>
 <small>in</small> <var>result</var>
 </td>
-          <td>const <a href="../struct_cass_result"><code>CassResult</code></a> *</td>
+          <td>const <a href="../struct_cass_result/"><code>CassResult</code></a> *</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1aae27239bdc1cca7dde40811cd0440fbe">
+  <div class="panel panel-default member-definition" id="1aa508f051889f55a6c06a80ff73974ee5">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1aae27239bdc1cca7dde40811cd0440fbe" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_null <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index <big>)</big>
+      <a class="anchor" href="#1aa508f051889f55a6c06a80ff73974ee5" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_null <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds null to a query or bound statement at the specified index.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -564,7 +688,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -573,37 +697,31 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1ab03dc65f3afa1e1da80ff91819d93fbf">
+  <div class="panel panel-default member-definition" id="1a83d96b4b809498635859b5c5937a0e4f">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1ab03dc65f3afa1e1da80ff91819d93fbf" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_int32 <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index, <a href="../cassandra_8h#1ac21422590e7f1d5e290c518d3af91f2c"><code>cass_int32_t</code></a> value <big>)</big>
+      <a class="anchor" href="#1a83d96b4b809498635859b5c5937a0e4f" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_int32 <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, cass_int32_t value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds an “int” to a query or bound statement at the specified index.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -622,7 +740,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -631,7 +749,7 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -640,37 +758,31 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../cassandra_8h#1ac21422590e7f1d5e290c518d3af91f2c"><code>cass_int32_t</code></a></td>
+          <td>cass_int32_t</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1af790ba684289d319b5cb064b3131cd72">
+  <div class="panel panel-default member-definition" id="1ad5cd136abd32444b9bb4be48dadbaa2d">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1af790ba684289d319b5cb064b3131cd72" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_int64 <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index, <a href="../cassandra_8h#1a47e6a6268d29e794a1286df7aba901ec"><code>cass_int64_t</code></a> value <big>)</big>
+      <a class="anchor" href="#1ad5cd136abd32444b9bb4be48dadbaa2d" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_int64 <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, cass_int64_t value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “bigint”, “counter” or “timestamp” to a query or bound statement at the specified index.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -689,7 +801,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -698,7 +810,7 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -707,37 +819,31 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../cassandra_8h#1a47e6a6268d29e794a1286df7aba901ec"><code>cass_int64_t</code></a></td>
+          <td>cass_int64_t</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1a93b4c4d3b1467a1be8f2eef2f3f36b98">
+  <div class="panel panel-default member-definition" id="1aebf4f0edd064a1af5bf840919f43f57a">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1a93b4c4d3b1467a1be8f2eef2f3f36b98" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_float <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index, <a href="../cassandra_8h#1a8cf8ffc7ac8bb5ba8050ea0ce4da17a4"><code>cass_float_t</code></a> value <big>)</big>
+      <a class="anchor" href="#1aebf4f0edd064a1af5bf840919f43f57a" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_float <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, cass_float_t value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “float” to a query or bound statement at the specified index.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -756,7 +862,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -765,7 +871,7 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -774,37 +880,31 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../cassandra_8h#1a8cf8ffc7ac8bb5ba8050ea0ce4da17a4"><code>cass_float_t</code></a></td>
+          <td>cass_float_t</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1af18039e055e8e02153de89695a9e8c5e">
+  <div class="panel panel-default member-definition" id="1a08e4b45e151312da5d6dec6c563b0e68">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1af18039e055e8e02153de89695a9e8c5e" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_double <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index, <a href="../cassandra_8h#1a45a7c54910eb25a4c9af6c859436f359"><code>cass_double_t</code></a> value <big>)</big>
+      <a class="anchor" href="#1a08e4b45e151312da5d6dec6c563b0e68" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_double <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, cass_double_t value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “double” to a query or bound statement at the specified index.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -823,7 +923,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -832,7 +932,7 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -841,37 +941,31 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../cassandra_8h#1a45a7c54910eb25a4c9af6c859436f359"><code>cass_double_t</code></a></td>
+          <td>cass_double_t</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1aae37c4f062809ba54b57effb5abda64f">
+  <div class="panel panel-default member-definition" id="1ad516ba8b132b52585bc9f89890854e70">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1aae37c4f062809ba54b57effb5abda64f" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_bool <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index, <a href="../cassandra_8h#1a1ca1b54dc9ef2904490e4ad940cea15c"><code>cass_bool_t</code></a> value <big>)</big>
+      <a class="anchor" href="#1ad516ba8b132b52585bc9f89890854e70" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_bool <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, cass_bool_t value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “boolean” to a query or bound statement at the specified index.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -890,7 +984,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -899,7 +993,7 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -908,37 +1002,31 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../cassandra_8h#1a1ca1b54dc9ef2904490e4ad940cea15c"><code>cass_bool_t</code></a></td>
+          <td>cass_bool_t</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1a56928189e52a3b0fc336fb5fbe972934">
+  <div class="panel panel-default member-definition" id="1a5d7096dd878e2bb106e99df4e0e5740b">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1a56928189e52a3b0fc336fb5fbe972934" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_string <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index, <a href="../struct_cass_string"><code>CassString</code></a> value <big>)</big>
+      <a class="anchor" href="#1a5d7096dd878e2bb106e99df4e0e5740b" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_string <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, const char * value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “ascii”, “text” or “varchar” to a query or bound statement at the specified index.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -957,7 +1045,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -966,7 +1054,7 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -975,37 +1063,113 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../struct_cass_string"><code>CassString</code></a></td>
-          <td><p>The value is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p></td>
+          <td>const char *</td>
+          <td>
+<p>The value is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p>
+</td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1a2014098ef7596ca2a04536c69bc25bca">
+  <div class="panel panel-default member-definition" id="1a09a9eeb2f5f3c0c21feb2f7cdad476fc">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1a2014098ef7596ca2a04536c69bc25bca" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_bytes <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index, <a href="../struct_cass_bytes"><code>CassBytes</code></a> value <big>)</big>
+      <a class="anchor" href="#1a09a9eeb2f5f3c0c21feb2f7cdad476fc" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_string_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, const char * value, size_t value_length <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1a5d7096dd878e2bb106e99df4e0e5740b"><code>cass_statement_bind_string()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>index</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1a5d7096dd878e2bb106e99df4e0e5740b"><code>cass_statement_bind_string()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a5d7096dd878e2bb106e99df4e0e5740b"><code>cass_statement_bind_string()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1ade27401bc57b0891ba96e24fcaa7e25d">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1ade27401bc57b0891ba96e24fcaa7e25d" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_bytes <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, const cass_byte_t * value, size_t value_size <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “blob” or “varint” to a query or bound statement at the specified index.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1024,7 +1188,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1033,7 +1197,7 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -1042,37 +1206,42 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../struct_cass_bytes"><code>CassBytes</code></a></td>
-          <td><p>The value is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p></td>
+          <td>const cass_byte_t *</td>
+          <td>
+<p>The value is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p>
+</td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value_size</var>
+</td>
+          <td>size_t</td>
+          <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1aa389f82c0056e1ade745876a68d32e28">
+  <div class="panel panel-default member-definition" id="1aaa7af8c18c9f75bc98bc39d4a39c0318">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1aa389f82c0056e1ade745876a68d32e28" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_uuid <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index, <a href="../struct_cass_uuid"><code>CassUuid</code></a> value <big>)</big>
+      <a class="anchor" href="#1aaa7af8c18c9f75bc98bc39d4a39c0318" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_uuid <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, <a href="../struct_cass_uuid/"><code>CassUuid</code></a> value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “uuid” or “timeuuid” to a query or bound statement at the specified index.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1091,7 +1260,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1100,7 +1269,7 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -1109,37 +1278,31 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../struct_cass_uuid"><code>CassUuid</code></a></td>
+          <td><a href="../struct_cass_uuid/"><code>CassUuid</code></a></td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1abbf8bc728e9e8e761a7a206f6c1f0f6f">
+  <div class="panel panel-default member-definition" id="1a07c5b22dce197effb8a7a35dcdbfa634">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1abbf8bc728e9e8e761a7a206f6c1f0f6f" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_inet <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index, <a href="../struct_cass_inet"><code>CassInet</code></a> value <big>)</big>
+      <a class="anchor" href="#1a07c5b22dce197effb8a7a35dcdbfa634" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_inet <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, <a href="../struct_cass_inet/"><code>CassInet</code></a> value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds an “inet” to a query or bound statement at the specified index.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1158,7 +1321,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1167,7 +1330,7 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -1176,37 +1339,31 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../struct_cass_inet"><code>CassInet</code></a></td>
+          <td><a href="../struct_cass_inet/"><code>CassInet</code></a></td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1a4f559afece6c71e5ed3a322619c9060b">
+  <div class="panel panel-default member-definition" id="1ac5ad61d2a10567d40ee5f366060dba7e">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1a4f559afece6c71e5ed3a322619c9060b" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_decimal <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index, <a href="../struct_cass_decimal"><code>CassDecimal</code></a> value <big>)</big>
+      <a class="anchor" href="#1ac5ad61d2a10567d40ee5f366060dba7e" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_decimal <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, const cass_byte_t * varint, size_t varint_size, cass_int32_t scale <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Bind a “decimal” to a query or bound statement at the specified index.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1225,7 +1382,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1234,46 +1391,60 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
         
         <tr>
           <td>
-<small>in</small> <var>value</var>
+<small>in</small> <var>varint</var>
 </td>
-          <td><a href="../struct_cass_decimal"><code>CassDecimal</code></a></td>
-          <td><p>The value is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p></td>
+          <td>const cass_byte_t *</td>
+          <td>
+<p>The value is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p>
+</td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>varint_size</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>scale</var>
+</td>
+          <td>cass_int32_t</td>
+          <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1a0e993aefedd9110f29307bdd597fed36">
+  <div class="panel panel-default member-definition" id="1a0884e680446cd94d98c26006f78a0f23">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1a0e993aefedd9110f29307bdd597fed36" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_custom <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> size, <a href="../cassandra_8h#1adf466d51f018f454dad81726ca7663e9"><code>cass_byte_t</code></a> ** output <big>)</big>
+      <a class="anchor" href="#1a0884e680446cd94d98c26006f78a0f23" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_custom <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, size_t size, cass_byte_t ** output <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds any type to a query or bound statement at the specified index. A value can be copied into the resulting output buffer. This is normally reserved for large values to avoid extra memory copies.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1292,7 +1463,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1301,7 +1472,7 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -1310,7 +1481,7 @@
           <td>
 <small>in</small> <var>size</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -1319,38 +1490,31 @@
           <td>
 <small>out</small> <var>output</var>
 </td>
-          <td>
-<a href="../cassandra_8h#1adf466d51f018f454dad81726ca7663e9"><code>cass_byte_t</code></a> **</td>
+          <td>cass_byte_t **</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1af57fc57d5493da11b6b5db4d74997548">
+  <div class="panel panel-default member-definition" id="1a38766c759bdf8b4a2e87744dc3681bc6">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1af57fc57d5493da11b6b5db4d74997548" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_collection <big>(</big> <a href="."><code>CassStatement</code></a> * statement, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> index, const <a href="../struct_cass_collection"><code>CassCollection</code></a> * collection <big>)</big>
+      <a class="anchor" href="#1a38766c759bdf8b4a2e87744dc3681bc6" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_collection <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, size_t index, const <a href="../struct_cass_collection/"><code>CassCollection</code></a> * collection <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Bind a “list”, “map”, or “set” to a query or bound statement at the specified index.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1369,7 +1533,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1378,7 +1542,7 @@
           <td>
 <small>in</small> <var>index</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -1387,39 +1551,160 @@
           <td>
 <small>in</small> <var>collection</var>
 </td>
-          <td>const <a href="../struct_cass_collection"><code>CassCollection</code></a> *</td>
-          <td><p>The collection can be freed after this call.</p></td>
+          <td>const <a href="../struct_cass_collection/"><code>CassCollection</code></a> *</td>
+          <td>
+<p>The collection can be freed after this call.</p>
+</td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
+  
+  <div class="panel panel-default member-definition" id="1a4f1cd9bd8e521a333e475d0f6073d174">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a4f1cd9bd8e521a333e475d0f6073d174" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_null_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Binds a null to all the values with the specified name.</p>
 
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1a5c72d0bfe053cdaa1ba9b2c9471596f0">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a5c72d0bfe053cdaa1ba9b2c9471596f0" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_null_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1a4f1cd9bd8e521a333e475d0f6073d174"><code>cass_statement_bind_null_by_name()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1a4f1cd9bd8e521a333e475d0f6073d174"><code>cass_statement_bind_null_by_name()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a4f1cd9bd8e521a333e475d0f6073d174"><code>cass_statement_bind_null_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
+
+    </div>
+  </div>
+  
   
   <div class="panel panel-default member-definition" id="1a03913edf9981da1ffab2f9d7d0292472">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1a03913edf9981da1ffab2f9d7d0292472" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_int32_by_name <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * name, <a href="../cassandra_8h#1ac21422590e7f1d5e290c518d3af91f2c"><code>cass_int32_t</code></a> value <big>)</big>
+      CassError cass_statement_bind_int32_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, cass_int32_t value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds an “int” to all the values with the specified name.</p>
 
-<p>This can only be used with statements created by <a href="../struct_cass_prepared#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
-
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1438,7 +1723,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1456,39 +1741,113 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../cassandra_8h#1ac21422590e7f1d5e290c518d3af91f2c"><code>cass_int32_t</code></a></td>
+          <td>cass_int32_t</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
+  
+  <div class="panel panel-default member-definition" id="1a7b170dab5366535d8ddd67594e8b759a">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a7b170dab5366535d8ddd67594e8b759a" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_int32_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length, cass_int32_t value <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1a03913edf9981da1ffab2f9d7d0292472"><code>cass_statement_bind_int32_by_name()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value</var>
+</td>
+          <td>cass_int32_t</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1a03913edf9981da1ffab2f9d7d0292472"><code>cass_statement_bind_int32_by_name()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a03913edf9981da1ffab2f9d7d0292472"><code>cass_statement_bind_int32_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
 
+    </div>
+  </div>
+  
   
   <div class="panel panel-default member-definition" id="1a2f02492c60431097a9465c560d9f1c4a">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1a2f02492c60431097a9465c560d9f1c4a" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_int64_by_name <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * name, <a href="../cassandra_8h#1a47e6a6268d29e794a1286df7aba901ec"><code>cass_int64_t</code></a> value <big>)</big>
+      CassError cass_statement_bind_int64_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, cass_int64_t value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “bigint”, “counter” or “timestamp” to all values with the specified name.</p>
 
-<p>This can only be used with statements created by <a href="../struct_cass_prepared#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
-
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1507,7 +1866,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1525,39 +1884,113 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../cassandra_8h#1a47e6a6268d29e794a1286df7aba901ec"><code>cass_int64_t</code></a></td>
+          <td>cass_int64_t</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
+  
+  <div class="panel panel-default member-definition" id="1a316be0bd79d4996ebc0e51f13a7fc232">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a316be0bd79d4996ebc0e51f13a7fc232" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_int64_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length, cass_int64_t value <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1a2f02492c60431097a9465c560d9f1c4a"><code>cass_statement_bind_int64_by_name()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value</var>
+</td>
+          <td>cass_int64_t</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as cass_statement_bind_int64_by_name(0</p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a2f02492c60431097a9465c560d9f1c4a"><code>cass_statement_bind_int64_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
 
+    </div>
+  </div>
+  
   
   <div class="panel panel-default member-definition" id="1a89eb22e9b735e16c072e90d8b0060173">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1a89eb22e9b735e16c072e90d8b0060173" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_float_by_name <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * name, <a href="../cassandra_8h#1a8cf8ffc7ac8bb5ba8050ea0ce4da17a4"><code>cass_float_t</code></a> value <big>)</big>
+      CassError cass_statement_bind_float_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, cass_float_t value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “float” to all the values with the specified name.</p>
 
-<p>This can only be used with statements created by <a href="../struct_cass_prepared#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
-
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1576,7 +2009,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1594,39 +2027,113 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../cassandra_8h#1a8cf8ffc7ac8bb5ba8050ea0ce4da17a4"><code>cass_float_t</code></a></td>
+          <td>cass_float_t</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
+  
+  <div class="panel panel-default member-definition" id="1a5aac5c98d98897fafe81a1fea76bfb6c">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a5aac5c98d98897fafe81a1fea76bfb6c" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_float_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length, cass_float_t value <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1a89eb22e9b735e16c072e90d8b0060173"><code>cass_statement_bind_float_by_name()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value</var>
+</td>
+          <td>cass_float_t</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1a89eb22e9b735e16c072e90d8b0060173"><code>cass_statement_bind_float_by_name()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a89eb22e9b735e16c072e90d8b0060173"><code>cass_statement_bind_float_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
 
+    </div>
+  </div>
+  
   
   <div class="panel panel-default member-definition" id="1a9eccf3514b958cd04d896ea21b56d44c">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1a9eccf3514b958cd04d896ea21b56d44c" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_double_by_name <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * name, <a href="../cassandra_8h#1a45a7c54910eb25a4c9af6c859436f359"><code>cass_double_t</code></a> value <big>)</big>
+      CassError cass_statement_bind_double_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, cass_double_t value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “double” to all the values with the specified name.</p>
 
-<p>This can only be used with statements created by <a href="../struct_cass_prepared#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
-
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1645,7 +2152,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1663,39 +2170,113 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../cassandra_8h#1a45a7c54910eb25a4c9af6c859436f359"><code>cass_double_t</code></a></td>
+          <td>cass_double_t</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
+  
+  <div class="panel panel-default member-definition" id="1a24206c3bc7bfc6afd29d088fb030fced">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a24206c3bc7bfc6afd29d088fb030fced" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_double_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length, cass_double_t value <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1a9eccf3514b958cd04d896ea21b56d44c"><code>cass_statement_bind_double_by_name()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value</var>
+</td>
+          <td>cass_double_t</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1a9eccf3514b958cd04d896ea21b56d44c"><code>cass_statement_bind_double_by_name()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a9eccf3514b958cd04d896ea21b56d44c"><code>cass_statement_bind_double_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
 
+    </div>
+  </div>
+  
   
   <div class="panel panel-default member-definition" id="1a1079c16515d1f8b8164b828024a4b8b9">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1a1079c16515d1f8b8164b828024a4b8b9" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_bool_by_name <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * name, <a href="../cassandra_8h#1a1ca1b54dc9ef2904490e4ad940cea15c"><code>cass_bool_t</code></a> value <big>)</big>
+      CassError cass_statement_bind_bool_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, cass_bool_t value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “boolean” to all the values with the specified name.</p>
 
-<p>This can only be used with statements created by <a href="../struct_cass_prepared#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
-
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1714,7 +2295,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1732,39 +2313,113 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../cassandra_8h#1a1ca1b54dc9ef2904490e4ad940cea15c"><code>cass_bool_t</code></a></td>
+          <td>cass_bool_t</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1a1ee883899aa22c3755b00dd87289e065">
+  <div class="panel panel-default member-definition" id="1a3408a6e3d7bf2d427c2f87db45b0998b">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1a1ee883899aa22c3755b00dd87289e065" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_string_by_name <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * name, <a href="../struct_cass_string"><code>CassString</code></a> value <big>)</big>
+      <a class="anchor" href="#1a3408a6e3d7bf2d427c2f87db45b0998b" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_bool_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length, cass_bool_t value <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1a1079c16515d1f8b8164b828024a4b8b9"><code>cass_statement_bind_bool_by_name()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value</var>
+</td>
+          <td>cass_bool_t</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1a1079c16515d1f8b8164b828024a4b8b9"><code>cass_statement_bind_bool_by_name()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a1079c16515d1f8b8164b828024a4b8b9"><code>cass_statement_bind_bool_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1aa4cb95acf74d4506d7eada494481f463">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1aa4cb95acf74d4506d7eada494481f463" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_string_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, const char * value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “ascii”, “text” or “varchar” to all the values with the specified name.</p>
 
-<p>This can only be used with statements created by <a href="../struct_cass_prepared#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
-
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1783,7 +2438,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1801,39 +2456,124 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../struct_cass_string"><code>CassString</code></a></td>
-          <td><p>The value is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p></td>
+          <td>const char *</td>
+          <td>
+<p>The value is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p>
+</td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1a1f8b3e6ad94e02026e341c598275a313">
+  <div class="panel panel-default member-definition" id="1ac51536897e48c32a7d66ebc39955cbdd">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1a1f8b3e6ad94e02026e341c598275a313" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_bytes_by_name <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * name, <a href="../struct_cass_bytes"><code>CassBytes</code></a> value <big>)</big>
+      <a class="anchor" href="#1ac51536897e48c32a7d66ebc39955cbdd" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_string_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length, const char * value, size_t value_length <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1aa4cb95acf74d4506d7eada494481f463"><code>cass_statement_bind_string_by_name()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1aa4cb95acf74d4506d7eada494481f463"><code>cass_statement_bind_string_by_name()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1aa4cb95acf74d4506d7eada494481f463"><code>cass_statement_bind_string_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1a00495402b21472499bc2efa42dbb7bb3">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a00495402b21472499bc2efa42dbb7bb3" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_bytes_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, cass_byte_t * value, size_t value_size <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “blob” or “varint” to all the values with the specified name.</p>
 
-<p>This can only be used with statements created by <a href="../struct_cass_prepared#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
-
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1852,7 +2592,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1870,39 +2610,133 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../struct_cass_bytes"><code>CassBytes</code></a></td>
-          <td><p>The value is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p></td>
+          <td>cass_byte_t *</td>
+          <td>
+<p>The value is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p>
+</td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value_size</var>
+</td>
+          <td>size_t</td>
+          <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
+  
+  <div class="panel panel-default member-definition" id="1a41c1da778b4654b704ce9fac969965af">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a41c1da778b4654b704ce9fac969965af" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_bytes_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length, cass_byte_t * value, size_t value_size <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1a00495402b21472499bc2efa42dbb7bb3"><code>cass_statement_bind_bytes_by_name()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value</var>
+</td>
+          <td>cass_byte_t *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value_size</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1a00495402b21472499bc2efa42dbb7bb3"><code>cass_statement_bind_bytes_by_name()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a00495402b21472499bc2efa42dbb7bb3"><code>cass_statement_bind_bytes_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
 
+    </div>
+  </div>
+  
   
   <div class="panel panel-default member-definition" id="1a70db818829dc85be9451d63394c1ab89">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1a70db818829dc85be9451d63394c1ab89" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_uuid_by_name <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * name, <a href="../struct_cass_uuid"><code>CassUuid</code></a> value <big>)</big>
+      CassError cass_statement_bind_uuid_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, <a href="../struct_cass_uuid/"><code>CassUuid</code></a> value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “uuid” or “timeuuid” to all the values with the specified name.</p>
 
-<p>This can only be used with statements created by <a href="../struct_cass_prepared#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
-
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1921,7 +2755,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -1939,39 +2773,113 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../struct_cass_uuid"><code>CassUuid</code></a></td>
+          <td><a href="../struct_cass_uuid/"><code>CassUuid</code></a></td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
+  
+  <div class="panel panel-default member-definition" id="1af70be27f1d7bbb7f548f1be914219b37">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1af70be27f1d7bbb7f548f1be914219b37" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_uuid_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length, <a href="../struct_cass_uuid/"><code>CassUuid</code></a> value <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1a70db818829dc85be9451d63394c1ab89"><code>cass_statement_bind_uuid_by_name()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value</var>
+</td>
+          <td><a href="../struct_cass_uuid/"><code>CassUuid</code></a></td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1a70db818829dc85be9451d63394c1ab89"><code>cass_statement_bind_uuid_by_name()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a70db818829dc85be9451d63394c1ab89"><code>cass_statement_bind_uuid_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
 
+    </div>
+  </div>
+  
   
   <div class="panel panel-default member-definition" id="1a74f18c548f357595a181df321940b3f4">
     <div class="panel-heading public_func-heading">
       <a class="anchor" href="#1a74f18c548f357595a181df321940b3f4" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_inet_by_name <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * name, <a href="../struct_cass_inet"><code>CassInet</code></a> value <big>)</big>
+      CassError cass_statement_bind_inet_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, <a href="../struct_cass_inet/"><code>CassInet</code></a> value <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds an “inet” to all the values with the specified name.</p>
 
-<p>This can only be used with statements created by <a href="../struct_cass_prepared#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
-
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1990,7 +2898,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -2008,39 +2916,113 @@
           <td>
 <small>in</small> <var>value</var>
 </td>
-          <td><a href="../struct_cass_inet"><code>CassInet</code></a></td>
+          <td><a href="../struct_cass_inet/"><code>CassInet</code></a></td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1a73b0ad135ad84e1817bdcb55408fc341">
+  <div class="panel panel-default member-definition" id="1a1d940939daf46f4574f3fdc414794938">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1a73b0ad135ad84e1817bdcb55408fc341" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_decimal_by_name <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * name, <a href="../struct_cass_decimal"><code>CassDecimal</code></a> value <big>)</big>
+      <a class="anchor" href="#1a1d940939daf46f4574f3fdc414794938" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_inet_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length, <a href="../struct_cass_inet/"><code>CassInet</code></a> value <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1a74f18c548f357595a181df321940b3f4"><code>cass_statement_bind_inet_by_name()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>value</var>
+</td>
+          <td><a href="../struct_cass_inet/"><code>CassInet</code></a></td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1a74f18c548f357595a181df321940b3f4"><code>cass_statement_bind_inet_by_name()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a74f18c548f357595a181df321940b3f4"><code>cass_statement_bind_inet_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1aeb07d0029879ace27804eac279573947">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1aeb07d0029879ace27804eac279573947" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_decimal_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, const cass_byte_t * varint, size_t varint_size, cass_int32_t scale <big>)</big>
     </div>
     <div class="panel-body public_func-body">
       <p>Binds a “decimal” to all the values with the specified name.</p>
 
-<p>This can only be used with statements created by <a href="../struct_cass_prepared#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
-
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -2059,7 +3041,7 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -2075,41 +3057,53 @@
         
         <tr>
           <td>
-<small>in</small> <var>value</var>
+<small>in</small> <var>varint</var>
 </td>
-          <td><a href="../struct_cass_decimal"><code>CassDecimal</code></a></td>
-          <td><p>The value is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p></td>
+          <td>const cass_byte_t *</td>
+          <td>
+<p>The value is copied into the statement object; the memory pointed to by this parameter can be freed after this call.</p>
+</td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>varint_size</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>scale</var>
+</td>
+          <td>cass_int32_t</td>
+          <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1a6f8bdb7b2617c0d8436d27111fe6b61d">
+  <div class="panel panel-default member-definition" id="1a1dbd2f0334864179f4d633dff9157e08">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1a6f8bdb7b2617c0d8436d27111fe6b61d" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_custom_by_name <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * name, <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> size, <a href="../cassandra_8h#1adf466d51f018f454dad81726ca7663e9"><code>cass_byte_t</code></a> ** output <big>)</big>
+      <a class="anchor" href="#1a1dbd2f0334864179f4d633dff9157e08" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_decimal_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length, const cass_byte_t * varint, size_t varint_size, cass_int32_t scale <big>)</big>
     </div>
     <div class="panel-body public_func-body">
-      <p>Binds any type to all the values with the specified name. A value can be copied into the resulting output buffer. This is normally reserved for large values to avoid extra memory copies.</p>
-
-<p>This can only be used with statements created by <a href="../struct_cass_prepared#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
-
+      <p>Same as <a href="#1aeb07d0029879ace27804eac279573947"><code>cass_statement_bind_decimal_by_name()</code></a>, but with lengths for string parameters.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -2128,7 +3122,107 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>varint</var>
+</td>
+          <td>const cass_byte_t *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>varint_size</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>scale</var>
+</td>
+          <td>cass_int32_t</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1aeb07d0029879ace27804eac279573947"><code>cass_statement_bind_decimal_by_name()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1aeb07d0029879ace27804eac279573947"><code>cass_statement_bind_decimal_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1aea90febf0fd7ccb1c02a80d45908640c">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1aea90febf0fd7ccb1c02a80d45908640c" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_custom_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t size, cass_byte_t ** output <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Binds any type to all the values with the specified name. A value can be copied into the resulting output buffer. This is normally reserved for large values to avoid extra memory copies.</p>
+
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -2146,7 +3240,7 @@
           <td>
 <small>in</small> <var>size</var>
 </td>
-          <td><a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a></td>
+          <td>size_t</td>
           <td></td>
         </tr>
         
@@ -2155,40 +3249,31 @@
           <td>
 <small>out</small> <var>output</var>
 </td>
-          <td>
-<a href="../cassandra_8h#1adf466d51f018f454dad81726ca7663e9"><code>cass_byte_t</code></a> **</td>
+          <td>cass_byte_t **</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1a611ab006a841c5200b1386a777928305">
+  <div class="panel panel-default member-definition" id="1a5becd842ca4a04b34c53ce003a2e3e26">
     <div class="panel-heading public_func-heading">
-      <a class="anchor" href="#1a611ab006a841c5200b1386a777928305" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> cass_statement_bind_collection_by_name <big>(</big> <a href="."><code>CassStatement</code></a> * statement, const char * name, const <a href="../struct_cass_collection"><code>CassCollection</code></a> * collection <big>)</big>
+      <a class="anchor" href="#1a5becd842ca4a04b34c53ce003a2e3e26" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_custom_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length, size_t size, cass_byte_t ** output <big>)</big>
     </div>
     <div class="panel-body public_func-body">
-      <p>Bind a “list”, “map”, or “set” to all the values with the specified name.</p>
-
-<p>This can only be used with statements created by <a href="../struct_cass_prepared#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
-
+      <p>Same as <a href="#1aea90febf0fd7ccb1c02a80d45908640c"><code>cass_statement_bind_custom_by_name()</code></a>, but with lengths for string parameters.</p>
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -2207,7 +3292,98 @@
 <small>in</small> <var>statement</var>
 </td>
           <td>
-<a href="."><code>CassStatement</code></a> *</td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>size</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>out</small> <var>output</var>
+</td>
+          <td>cass_byte_t **</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1aea90febf0fd7ccb1c02a80d45908640c"><code>cass_statement_bind_custom_by_name()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1aea90febf0fd7ccb1c02a80d45908640c"><code>cass_statement_bind_custom_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1a611ab006a841c5200b1386a777928305">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a611ab006a841c5200b1386a777928305" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_collection_by_name <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, const <a href="../struct_cass_collection/"><code>CassCollection</code></a> * collection <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Bind a “list”, “map”, or “set” to all the values with the specified name.</p>
+
+<p>This can only be used with statements created by <a href="../struct_cass_prepared/#1abf70632ef2a8dcebdacae24ed4ff82c7"><code>cass_prepared_bind()</code></a>.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
           <td></td>
         </tr>
         
@@ -2225,167 +3401,133 @@
           <td>
 <small>in</small> <var>collection</var>
 </td>
-          <td>const <a href="../struct_cass_collection"><code>CassCollection</code></a> *</td>
-          <td><p>The collection can be freed after this call.</p></td>
+          <td>const <a href="../struct_cass_collection/"><code>CassCollection</code></a> *</td>
+          <td>
+<p>The collection can be freed after this call.</p>
+</td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>CASS_OK if successful, otherwise an error occurred.</p></dd>
-
-
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
+  
+  <div class="panel panel-default member-definition" id="1ab22408307cd27a78657c76178100c927">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1ab22408307cd27a78657c76178100c927" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_statement_bind_collection_by_name_n <big>(</big> <a href="./"><code>CassStatement</code></a> * statement, const char * name, size_t name_length, const <a href="../struct_cass_collection/"><code>CassCollection</code></a> * collection <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Same as <a href="#1a611ab006a841c5200b1386a777928305"><code>cass_statement_bind_collection_by_name()</code></a>, but with lengths for string parameters.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>statement</var>
+</td>
+          <td>
+<a href="./"><code>CassStatement</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name</var>
+</td>
+          <td>const char *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>name_length</var>
+</td>
+          <td>size_t</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>collection</var>
+</td>
+          <td>const <a href="../struct_cass_collection/"><code>CassCollection</code></a> *</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>same as <a href="#1a611ab006a841c5200b1386a777928305"><code>cass_statement_bind_collection_by_name()</code></a></p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="#1a611ab006a841c5200b1386a777928305"><code>cass_statement_bind_collection_by_name()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
 
+    </div>
+  </div>
+  
 </div>
 
 
         </div>
-        <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
+        <div class="col-md-3">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+            <div id="table-of-contents-panel" class="panel panel-default">
+              <div id="table-of-contents-heading" class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#table-of-contents" aria-expanded="true" aria-controls="table-of-contents">
+                    Contents<i class="pull-right glyphicon glyphicon-chevron-up"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="table-of-contents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="table-of-contents-heading">
+                <div class="panel-body">
+                  <ol class="nav nav-pills nav-stacked toc"><li><a href="#functions">Functions
+</a></li></ol>
+                </div>
+              </div>
+            </div>
+
             
-            
-            <li>
-              <a href="../cassandra_8h">cassandra.h</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_auth">CassAuth</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_auth_callbacks">CassAuthCallbacks</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_batch">CassBatch</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_bytes">CassBytes</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_cluster">CassCluster</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_collection">CassCollection</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_decimal">CassDecimal</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_future">CassFuture</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_inet">CassInet</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_iterator">CassIterator</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_log_message">CassLogMessage</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_prepared">CassPrepared</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_result">CassResult</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_row">CassRow</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_schema">CassSchema</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_schema_meta">CassSchemaMeta</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_schema_meta_field">CassSchemaMetaField</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_session">CassSession</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_ssl">CassSsl</a>
-            </li>
-            
-            <li class="active">
-              <a href=".">CassStatement</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_string">CassString</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_uuid">CassUuid</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_uuid_gen">CassUuidGen</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_value">CassValue</a>
-            </li>
-            
-            
-          </ol>
-        </nav>
+          </div>
+        </div>
       </div>
     </div>
 
-    <footer class="container text-muted">
-      <ul class="list-inline">
-        <li>
-          <a href="https://github.com/datastax/cpp-driver">Code</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="http://datastax.github.io/cpp-driver/">Docs</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://datastax-oss.atlassian.net/browse/CPP">Issues</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user">Mailing List</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://github.com/datastax/cpp-driver/releases">Releases</a>
-        </li>
-      </ul>
-    </footer>
+    
 
     <script src="../../js/jquery.js"></script>
     <script src="../../js/bootstrap.js"></script>

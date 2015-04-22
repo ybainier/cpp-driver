@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
+    <meta name="author" content="DataStax">
+
+    <title>DataStax C/C++ Driver - CassFuture</title>
+
+    <link rel="icon" href="../../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../../favicon.png">
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
+    <link href="../../../css/hotkeys.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-app="docs" data-spy="scroll" data-target=".side-nav">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../">DataStax C/C++ Driver</a>
+        </div>
+        <div class="collapse navbar-collapse" ng-controller="search">
+          <ul class="nav navbar-nav">
+            
+            
+            
+            <li>
+              <a href="../../topics/">Topics</a>
+            </li>
+            
+            
+            <li class="active">
+              <a href="../">API docs</a>
+            </li>
+            
+          </ul>
+          <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
+            <div class="form-group has-feedback">
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v1.0')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
+            </div>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="content">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              <li>
+                <div class="dropdown">
+                  <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    v1.0
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
+                  
+                    <li><a href="../../../api/struct_cass_future/">v2.0</a></li>
+                  
+                    <li class="disabled"><a href="./">v1.0</a></li>
+                  
+                  </ul>
+                </div>
+              </li>
+              
+              
+              
+              
+              <li><a href="../../">Home</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">API docs</a></li>
+              
+              
+              
+              
+              
+              <li class="active">CassFuture</li>
+              
+              
+              
+            </ol>
+          </nav>
+          
+
+<div class="page-header">
+  <h1 id="struct-cassfuture">
+    <small>struct</small>
+    CassFuture
+  <a class="anchor" href="#struct-cassfuture" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
+</div>
+<p>The future result of an operation.</p>
+
+<p>It can represent a result if the operation completed successfully or an error if the operation failed. It can be waited on, polled or a callback can be attached.</p>
+<h2 id="functions">Functions<a class="anchor" href="#functions" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+<div class="public_func-content">
+  
+  <div class="panel panel-default member-definition" id="1aeafa34919a63ac802659b2d9d44c5c9e">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1aeafa34919a63ac802659b2d9d44c5c9e" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      void cass_future_free <big>(</big> <a href="./"><code>CassFuture</code></a> * future <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Frees a future instance. A future can be freed anytime.</p>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1ab4f753db0aea9eea009ca4ac0f5a87f2">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1ab4f753db0aea9eea009ca4ac0f5a87f2" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_future_set_callback <big>(</big> <a href="./"><code>CassFuture</code></a> * future, <a href="../cassandra_8h/#1a2917f465f219bbc8a14afe3e421468c5"><code>CassFutureCallback</code></a> callback, void * data <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Sets a callback that is called when a future is set</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>future</var>
+</td>
+          <td>
+<a href="./"><code>CassFuture</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>callback</var>
+</td>
+          <td><a href="../cassandra_8h/#1a2917f465f219bbc8a14afe3e421468c5"><code>CassFutureCallback</code></a></td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>data</var>
+</td>
+          <td>void *</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred</p>
+</dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1a99cd3d056e65d466baafbf2205cb4802">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a99cd3d056e65d466baafbf2205cb4802" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      cass_bool_t cass_future_ready <big>(</big> <a href="./"><code>CassFuture</code></a> * future <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Gets the set status of the future.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>future</var>
+</td>
+          <td>
+<a href="./"><code>CassFuture</code></a> *</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>true if set</p>
+</dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1aebf53ac461e2f0f3d82168db3f569149">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1aebf53ac461e2f0f3d82168db3f569149" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      void cass_future_wait <big>(</big> <a href="./"><code>CassFuture</code></a> * future <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Wait for the future to be set with either a result or error.</p>
+
+<p>Important: Do not wait in a future callback. Waiting in a future callback will cause a deadlock.</p>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1a57a5509fb8ecde7eefb41092f8ded382">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a57a5509fb8ecde7eefb41092f8ded382" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      cass_bool_t cass_future_wait_timed <big>(</big> <a href="./"><code>CassFuture</code></a> * future, cass_duration_t timeout_us <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Wait for the future to be set or timeout.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>future</var>
+</td>
+          <td>
+<a href="./"><code>CassFuture</code></a> *</td>
+          <td></td>
+        </tr>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>timeout_us</var>
+</td>
+          <td>cass_duration_t</td>
+          <td>
+<p>wait time in microseconds</p>
+</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>false if returned due to timeout</p>
+</dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1ae22657a16b7417658de7419143298f62">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1ae22657a16b7417658de7419143298f62" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      const <a href="../struct_cass_result/"><code>CassResult</code></a> * cass_future_get_result <big>(</big> <a href="./"><code>CassFuture</code></a> * future <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Gets the result of a successful future. If the future is not ready this method will wait for the future to be set. The first successful call consumes the future, all subsequent calls will return NULL.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>future</var>
+</td>
+          <td>
+<a href="./"><code>CassFuture</code></a> *</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p><a href="../struct_cass_result/"><code>CassResult</code></a> instance if successful, otherwise NULL for error. The return instance must be freed using <a href="../struct_cass_result/#1aa3008dd52379f1261097636c3bea574f"><code>cass_result_free()</code></a>.</p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="../struct_cass_session/#1a0bbda64254415bb48675c66ce3c56999"><code>cass_session_execute()</code></a> and <a href="../struct_cass_session/#1a8a0dd4b44b2c95bc2107e4f5ad5fce4a"><code>cass_session_execute_batch()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1a908e2d8d96f6a87d6c00f31fafbe94c8">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a908e2d8d96f6a87d6c00f31fafbe94c8" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      const <a href="../struct_cass_prepared/"><code>CassPrepared</code></a> * cass_future_get_prepared <big>(</big> <a href="./"><code>CassFuture</code></a> * future <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Gets the result of a successful future. If the future is not ready this method will wait for the future to be set. The first successful call consumes the future, all subsequent calls will return NULL.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>future</var>
+</td>
+          <td>
+<a href="./"><code>CassFuture</code></a> *</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p><a href="../struct_cass_prepared/"><code>CassPrepared</code></a> instance if successful, otherwise NULL for error. The return instance must be freed using <a href="../struct_cass_prepared/#1a0d928de9310d4de961e83a9f169e2cc8"><code>cass_prepared_free()</code></a>.</p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="../struct_cass_session/#1a154943fcd44f8834d8fb36780977d5ac"><code>cass_session_prepare()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1a94ce2b7a511c09c093e998a6c414ba05">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a94ce2b7a511c09c093e998a6c414ba05" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CassError cass_future_error_code <big>(</big> <a href="./"><code>CassFuture</code></a> * future <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Gets the error code from future. If the future is not ready this method will wait for the future to be set.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>future</var>
+</td>
+          <td>
+<a href="./"><code>CassFuture</code></a> *</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</dd>
+  <dt class="tag-title">See also:</dt>
+  <dd class="tag-content">
+    <ul>
+    
+      <li>
+<p><a href="../cassandra_8h/#1a0e75ac97a9b2cc47a31b558ec8612027"><code>cass_error_desc()</code></a></p>
+</li>
+    
+    </ul>
+  </dd>
+</dl>
+
+    </div>
+  </div>
+  
+  
+  <div class="panel panel-default member-definition" id="1a808a53f170a93c9f36aafe8d8c920bb4">
+    <div class="panel-heading public_func-heading">
+      <a class="anchor" href="#1a808a53f170a93c9f36aafe8d8c920bb4" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <a href="../struct_cass_string/"><code>CassString</code></a> cass_future_error_message <big>(</big> <a href="./"><code>CassFuture</code></a> * future <big>)</big>
+    </div>
+    <div class="panel-body public_func-body">
+      <p>Gets the error message from future. If the future is not ready this method will wait for the future to be set.</p>
+<dl class="tags">
+  <dt class="tag-title">Parameters:</dt>
+  <dd class="tag-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="type">Type</th>
+          <th class="details">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td>
+<small>in</small> <var>future</var>
+</td>
+          <td>
+<a href="./"><code>CassFuture</code></a> *</td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </dd>
+  <dt class="tag-title">Return:</dt>
+  <dd class="tag-content">
+<p>Empty string returned if successful, otherwise a message describing the error is returned.</p>
+</dd>
+</dl>
+
+    </div>
+  </div>
+  
+</div>
+
+
+        </div>
+        <div class="col-md-3">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+            <div id="table-of-contents-panel" class="panel panel-default">
+              <div id="table-of-contents-heading" class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#table-of-contents" aria-expanded="true" aria-controls="table-of-contents">
+                    Contents<i class="pull-right glyphicon glyphicon-chevron-up"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="table-of-contents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="table-of-contents-heading">
+                <div class="panel-body">
+                  <ol class="nav nav-pills nav-stacked toc"><li><a href="#functions">Functions
+</a></li></ol>
+                </div>
+              </div>
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <script src="../../../js/jquery.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
+    <script src="../../../js/angular.js"></script>
+    <script src="../../../js/mousetrap.js"></script>
+    <script src="../../../js/hotkeys.js"></script>
+    <script src="../../../js/ZeroClipboard.js"></script>
+    <script src="../../../js/lunr.js"></script>
+    <script src="../../../js/app.js"></script>
+  </body>
+</html>

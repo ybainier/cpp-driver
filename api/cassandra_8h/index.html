@@ -9,19 +9,20 @@
     <meta name="description" content="DataStax C++ Driver for Apache Cassandra Documentation">
     <meta name="author" content="DataStax">
 
-    <title>DataStax C++ Driver for Apache Cassandra - cassandra.h</title>
+    <title>DataStax C/C++ Driver - cassandra.h</title>
 
-    <link rel="icon" href="../../favicons/favicon.ico">
-    <link rel="apple-touch-icon" href="../../favicons/favicon.png">
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../favicon.png">
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/pygments.css" rel="stylesheet">
+    <link href="../../css/hotkeys.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body ng-app="docs">
+  <body ng-app="docs" data-spy="scroll" data-target=".side-nav">
     <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -31,18 +32,26 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../">Cassandra C/C++ Driver</a>
+          <a class="navbar-brand" href="../../">DataStax C/C++ Driver</a>
         </div>
         <div class="collapse navbar-collapse" ng-controller="search">
           <ul class="nav navbar-nav">
-            <li><a href="../../">Introduction</a></li>
-            <li><a href="../../topics/">Topics</a></li>
-            <li class="active"><a href="../">API docs</a></li>
+            
+            
+            
+            <li>
+              <a href="../../topics/">Topics</a>
+            </li>
+            
+            
+            <li class="active">
+              <a href="../">API docs</a>
+            </li>
+            
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
-              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search()" data-toggle="dropdown" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
-              <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.0')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
             </div>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
@@ -58,9 +67,26 @@
           <nav class="crumbs">
             <ol class="breadcrumb">
               
+              <li>
+                <div class="dropdown">
+                  <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    v2.0
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
+                  
+                    <li class="disabled"><a href="./">v2.0</a></li>
+                  
+                    <li><a href="../../v1.0/api/cassandra_8h/">v1.0</a></li>
+                  
+                  </ul>
+                </div>
+              </li>
               
               
-              <li><a href="../../">Introduction</a></li>
+              
+              
+              <li><a href="../../">Home</a></li>
               
               
               
@@ -79,6 +105,7 @@
             </ol>
           </nav>
           
+
 <div class="page-header">
   <h1 id="file-cassandra-h">
     <small>file</small>
@@ -87,12 +114,9 @@
 </h1>
 </div>
 <p>C/C++ driver for Apache Cassandra. Uses the Cassandra Query Language versions 3 over the Cassandra Binary Protocol (versions 1 or 2).</p>
-
-
 <h2 id="macros">Macros<a class="anchor" href="#macros" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 <div class="define-content">
-
   
   <div class="panel panel-default member-definition" id="1aa171ddbcef9d4f5e808bb733e3ff36e9">
     <div class="panel-heading define-heading">
@@ -101,11 +125,10 @@
     </div>
     <div class="panel-body define-body">
       
-      <pre>#define CASS_VERSION_MAJOR 1</pre>
+      <pre>#define CASS_VERSION_MAJOR 2</pre>
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a780dd34077b5a4bc321e2328140941c5">
     <div class="panel-heading define-heading">
@@ -118,7 +141,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1aef389f3f2287bb6d82a3f7030358fa84">
     <div class="panel-heading define-heading">
@@ -127,11 +149,10 @@
     </div>
     <div class="panel-body define-body">
       
-      <pre>#define CASS_VERSION_PATCH 1</pre>
+      <pre>#define CASS_VERSION_PATCH 0</pre>
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a731d43503fd67cb97faf9ee7f94eb42d">
     <div class="panel-heading define-heading">
@@ -140,11 +161,10 @@
     </div>
     <div class="panel-body define-body">
       
-      <pre>#define CASS_VERSION_SUFFIX “”</pre>
+      <pre>#define CASS_VERSION_SUFFIX ""</pre>
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1aadc8c5427f9adefa279c70b487303c83">
     <div class="panel-heading define-heading">
@@ -153,11 +173,11 @@
     </div>
     <div class="panel-body define-body">
       <p>The size of a IPv4 address</p>
+
       <pre>#define CASS_INET_V4_LENGTH 4</pre>
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a3b975cd9161fd7ffd641670879a9af58">
     <div class="panel-heading define-heading">
@@ -166,11 +186,24 @@
     </div>
     <div class="panel-body define-body">
       <p>The size of a IPv6 address</p>
+
       <pre>#define CASS_INET_V6_LENGTH 16</pre>
     </div>
   </div>
   
+  
+  <div class="panel panel-default member-definition" id="1ae5f254887420f582189fa91853003708">
+    <div class="panel-heading define-heading">
+      <a class="anchor" href="#1ae5f254887420f582189fa91853003708" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      CASS_INET_STRING_LENGTH
+    </div>
+    <div class="panel-body define-body">
+      <p>The size of an inet string including a null terminator.</p>
 
+      <pre>#define CASS_INET_STRING_LENGTH 46</pre>
+    </div>
+  </div>
+  
   
   <div class="panel panel-default member-definition" id="1ab93cc3633baa00f214422352878fa12b">
     <div class="panel-heading define-heading">
@@ -179,11 +212,11 @@
     </div>
     <div class="panel-body define-body">
       <p>The size of a hexidecimal UUID string including a null terminator.</p>
+
       <pre>#define CASS_UUID_STRING_LENGTH 37</pre>
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1aa2b800e4e91b4b491d32e214facf7a8a">
     <div class="panel-heading define-heading">
@@ -192,17 +225,15 @@
     </div>
     <div class="panel-body define-body">
       <p>Maximum size of a log message</p>
+
       <pre>#define CASS_LOG_MAX_MESSAGE_SIZE 256</pre>
     </div>
   </div>
   
-
 </div>
-
 <h2 id="enums">Enums<a class="anchor" href="#enums" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 <div class="enum-content">
-
   
   <div class="panel panel-default member-definition" id="1a1ca1b54dc9ef2904490e4ad940cea15c">
     <div class="panel-heading enum-heading">
@@ -225,7 +256,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a980c762144275babf54e87a5b983f083">
     <div class="panel-heading enum-heading">
@@ -284,7 +314,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a8c414788a5b584431c1e61ea467c3543">
     <div class="panel-heading enum-heading">
@@ -383,7 +412,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a805c1350cc83f5efd1bb04f6b5ec7d0d">
     <div class="panel-heading enum-heading">
@@ -410,7 +438,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1adcc06c90d5c59d03adf6f34acbb9e127">
     <div class="panel-heading enum-heading">
@@ -437,7 +464,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a31715bd72f7662a8b9f5c20f5e733dd7">
     <div class="panel-heading enum-heading">
@@ -470,7 +496,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a54f601f20cb799834bc6db263bdf3b0e">
     <div class="panel-heading enum-heading">
@@ -494,7 +519,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a8a11ed43243acf45854ad5de38505abf">
     <div class="panel-heading enum-heading">
@@ -530,7 +554,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1ac67deaeabdbdd21f66ec0b93185ab981">
     <div class="panel-heading enum-heading">
@@ -557,7 +580,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a7ed76d0100adc8583ac5fc59fc46199e">
     <div class="panel-heading enum-heading">
@@ -587,7 +609,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a3c40d9bd5841f13d165f64f8b143232f">
     <div class="panel-heading enum-heading">
@@ -603,188 +624,185 @@
         
         
         <dt>
-<var>CASS_ERROR_LIB_BAD_PARAMS</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 1 )</small> </dt>
+<var>CASS_ERROR_LIB_BAD_PARAMS</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  1 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_NO_STREAMS</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 2 )</small> </dt>
+<var>CASS_ERROR_LIB_NO_STREAMS</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  2 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_UNABLE_TO_INIT</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 3 )</small> </dt>
+<var>CASS_ERROR_LIB_UNABLE_TO_INIT</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  3 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_MESSAGE_ENCODE</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 4 )</small> </dt>
+<var>CASS_ERROR_LIB_MESSAGE_ENCODE</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  4 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_HOST_RESOLUTION</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 5 )</small> </dt>
+<var>CASS_ERROR_LIB_HOST_RESOLUTION</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  5 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_UNEXPECTED_RESPONSE</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 6 )</small> </dt>
+<var>CASS_ERROR_LIB_UNEXPECTED_RESPONSE</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  6 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_REQUEST_QUEUE_FULL</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 7 )</small> </dt>
+<var>CASS_ERROR_LIB_REQUEST_QUEUE_FULL</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  7 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_NO_AVAILABLE_IO_THREAD</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 8 )</small> </dt>
+<var>CASS_ERROR_LIB_NO_AVAILABLE_IO_THREAD</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  8 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_WRITE_ERROR</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 9 )</small> </dt>
+<var>CASS_ERROR_LIB_WRITE_ERROR</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  9 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_NO_HOSTS_AVAILABLE</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 10 )</small> </dt>
+<var>CASS_ERROR_LIB_NO_HOSTS_AVAILABLE</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  10 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_INDEX_OUT_OF_BOUNDS</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 11 )</small> </dt>
+<var>CASS_ERROR_LIB_INDEX_OUT_OF_BOUNDS</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  11 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_INVALID_ITEM_COUNT</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 12 )</small> </dt>
+<var>CASS_ERROR_LIB_INVALID_ITEM_COUNT</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  12 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_INVALID_VALUE_TYPE</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 13 )</small> </dt>
+<var>CASS_ERROR_LIB_INVALID_VALUE_TYPE</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  13 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_REQUEST_TIMED_OUT</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 14 )</small> </dt>
+<var>CASS_ERROR_LIB_REQUEST_TIMED_OUT</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  14 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_UNABLE_TO_SET_KEYSPACE</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 15 )</small> </dt>
+<var>CASS_ERROR_LIB_UNABLE_TO_SET_KEYSPACE</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  15 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_CALLBACK_ALREADY_SET</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 16 )</small> </dt>
+<var>CASS_ERROR_LIB_CALLBACK_ALREADY_SET</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  16 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_INVALID_STATEMENT_TYPE</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 17 )</small> </dt>
+<var>CASS_ERROR_LIB_INVALID_STATEMENT_TYPE</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  17 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_NAME_DOES_NOT_EXIST</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 18 )</small> </dt>
+<var>CASS_ERROR_LIB_NAME_DOES_NOT_EXIST</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  18 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_UNABLE_TO_DETERMINE_PROTOCOL</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 19 )</small> </dt>
+<var>CASS_ERROR_LIB_UNABLE_TO_DETERMINE_PROTOCOL</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  19 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_NULL_VALUE</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 20 )</small> </dt>
+<var>CASS_ERROR_LIB_NULL_VALUE</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  20 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_NOT_IMPLEMENTED</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 21 )</small> </dt>
+<var>CASS_ERROR_LIB_NOT_IMPLEMENTED</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  21 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_UNABLE_TO_CONNECT</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 22 )</small> </dt>
+<var>CASS_ERROR_LIB_UNABLE_TO_CONNECT</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  22 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_LIB_UNABLE_TO_CLOSE</var> <small>= (( CASS_ERROR_SOURCE_LIB &lt;&lt; 24) | 23 )</small> </dt>
+<var>CASS_ERROR_LIB_UNABLE_TO_CLOSE</var> <small>= (( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  23 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_SERVER_ERROR</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x0000 )</small> </dt>
+<var>CASS_ERROR_SERVER_SERVER_ERROR</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x0000 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_PROTOCOL_ERROR</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x000A )</small> </dt>
+<var>CASS_ERROR_SERVER_PROTOCOL_ERROR</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x000A )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_BAD_CREDENTIALS</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x0100 )</small> </dt>
+<var>CASS_ERROR_SERVER_BAD_CREDENTIALS</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x0100 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_UNAVAILABLE</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x1000 )</small> </dt>
+<var>CASS_ERROR_SERVER_UNAVAILABLE</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x1000 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_OVERLOADED</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x1001 )</small> </dt>
+<var>CASS_ERROR_SERVER_OVERLOADED</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x1001 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_IS_BOOTSTRAPPING</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x1002 )</small> </dt>
+<var>CASS_ERROR_SERVER_IS_BOOTSTRAPPING</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x1002 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_TRUNCATE_ERROR</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x1003 )</small> </dt>
+<var>CASS_ERROR_SERVER_TRUNCATE_ERROR</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x1003 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_WRITE_TIMEOUT</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x1100 )</small> </dt>
+<var>CASS_ERROR_SERVER_WRITE_TIMEOUT</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x1100 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_READ_TIMEOUT</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x1200 )</small> </dt>
+<var>CASS_ERROR_SERVER_READ_TIMEOUT</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x1200 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_SYNTAX_ERROR</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x2000 )</small> </dt>
+<var>CASS_ERROR_SERVER_SYNTAX_ERROR</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x2000 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_UNAUTHORIZED</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x2100 )</small> </dt>
+<var>CASS_ERROR_SERVER_UNAUTHORIZED</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x2100 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_INVALID_QUERY</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x2200 )</small> </dt>
+<var>CASS_ERROR_SERVER_INVALID_QUERY</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x2200 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_CONFIG_ERROR</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x2300 )</small> </dt>
+<var>CASS_ERROR_SERVER_CONFIG_ERROR</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x2300 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_ALREADY_EXISTS</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x2400 )</small> </dt>
+<var>CASS_ERROR_SERVER_ALREADY_EXISTS</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x2400 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SERVER_UNPREPARED</var> <small>= (( CASS_ERROR_SOURCE_SERVER &lt;&lt; 24) | 0x2500 )</small> </dt>
+<var>CASS_ERROR_SERVER_UNPREPARED</var> <small>= (( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x2500 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SSL_INVALID_CERT</var> <small>= (( CASS_ERROR_SOURCE_SSL &lt;&lt; 24) | 1 )</small> </dt>
+<var>CASS_ERROR_SSL_INVALID_CERT</var> <small>= (( CASS_ERROR_SOURCE_SSL  &lt;&lt; 24) |  1 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SSL_INVALID_PRIVATE_KEY</var> <small>= (( CASS_ERROR_SOURCE_SSL &lt;&lt; 24) | 2 )</small> </dt>
+<var>CASS_ERROR_SSL_INVALID_PRIVATE_KEY</var> <small>= (( CASS_ERROR_SOURCE_SSL  &lt;&lt; 24) |  2 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SSL_NO_PEER_CERT</var> <small>= (( CASS_ERROR_SOURCE_SSL &lt;&lt; 24) | 3 )</small> </dt>
+<var>CASS_ERROR_SSL_NO_PEER_CERT</var> <small>= (( CASS_ERROR_SOURCE_SSL  &lt;&lt; 24) |  3 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SSL_INVALID_PEER_CERT</var> <small>= (( CASS_ERROR_SOURCE_SSL &lt;&lt; 24) | 4 )</small> </dt>
+<var>CASS_ERROR_SSL_INVALID_PEER_CERT</var> <small>= (( CASS_ERROR_SOURCE_SSL  &lt;&lt; 24) |  4 )</small> </dt>
         
         
         <dt>
-<var>CASS_ERROR_SSL_IDENTITY_MISMATCH</var> <small>= (( CASS_ERROR_SOURCE_SSL &lt;&lt; 24) | 5 )</small> </dt>
+<var>CASS_ERROR_SSL_IDENTITY_MISMATCH</var> <small>= (( CASS_ERROR_SOURCE_SSL  &lt;&lt; 24) |  5 )</small> </dt>
         
         
       </dl>
     </div>
   </div>
   
-
 </div>
-
 <h2 id="types">Types<a class="anchor" href="#types" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 <div class="typedef-content">
-
   
   <div class="panel panel-default member-definition" id="1a8cf8ffc7ac8bb5ba8050ea0ce4da17a4">
     <div class="panel-heading typedef-heading">
@@ -797,7 +815,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a45a7c54910eb25a4c9af6c859436f359">
     <div class="panel-heading typedef-heading">
@@ -810,7 +827,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a3801c9f6aa6d56b5f5d2aa355ae76d3e">
     <div class="panel-heading typedef-heading">
@@ -823,7 +839,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a5b571da505bbafe914b784fbbb3ad392">
     <div class="panel-heading typedef-heading">
@@ -836,7 +851,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a8dffb373ccad43c7b1762e9fdaa58ed1">
     <div class="panel-heading typedef-heading">
@@ -849,7 +863,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a50d6f91a99ec423d5df85a15e9cd2b74">
     <div class="panel-heading typedef-heading">
@@ -862,7 +875,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1ac21422590e7f1d5e290c518d3af91f2c">
     <div class="panel-heading typedef-heading">
@@ -875,7 +887,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a31c321291f4db03b30346940d82a85b6">
     <div class="panel-heading typedef-heading">
@@ -888,7 +899,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a47e6a6268d29e794a1286df7aba901ec">
     <div class="panel-heading typedef-heading">
@@ -901,7 +911,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1ae518c52d38d8c00065329d40691e8639">
     <div class="panel-heading typedef-heading">
@@ -914,20 +923,6 @@
     </div>
   </div>
   
-
-  
-  <div class="panel panel-default member-definition" id="1a5dcca69feb6938a985543b0c76c126fa">
-    <div class="panel-heading typedef-heading">
-      <a class="anchor" href="#1a5dcca69feb6938a985543b0c76c126fa" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      cass_size_t
-    </div>
-    <div class="panel-body typedef-body">
-      
-      <pre>typedef size_t cass_size_t</pre>
-    </div>
-  </div>
-  
-
   
   <div class="panel panel-default member-definition" id="1adf466d51f018f454dad81726ca7663e9">
     <div class="panel-heading typedef-heading">
@@ -936,11 +931,10 @@
     </div>
     <div class="panel-body typedef-body">
       
-      <pre>typedef <a href="../cassandra_8h#1a5b571da505bbafe914b784fbbb3ad392"><code>cass_uint8_t</code></a> cass_byte_t</pre>
+      <pre>typedef cass_uint8_t cass_byte_t</pre>
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1af5fd1550788b57fc279cc7a10d86bfbb">
     <div class="panel-heading typedef-heading">
@@ -949,11 +943,10 @@
     </div>
     <div class="panel-body typedef-body">
       
-      <pre>typedef <a href="../cassandra_8h#1ae518c52d38d8c00065329d40691e8639"><code>cass_uint64_t</code></a> cass_duration_t</pre>
+      <pre>typedef cass_uint64_t cass_duration_t</pre>
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a934e49501421ab310950ec9f52fb3e99">
     <div class="panel-heading typedef-heading">
@@ -966,7 +959,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a88d7174f991bf5a595a694cb7f52a870">
     <div class="panel-heading typedef-heading">
@@ -979,7 +971,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a9d0cf5e56d0fa2d29fbfcfe19090cdac">
     <div class="panel-heading typedef-heading">
@@ -992,7 +983,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1ab76801bd8fe698704f0c6611d920c2ff">
     <div class="panel-heading typedef-heading">
@@ -1005,7 +995,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a579f55f8e57e6f7e1a796c5ac1dfbcec">
     <div class="panel-heading typedef-heading">
@@ -1018,7 +1007,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a1e0591621ec95727574d3e5d51a7dc71">
     <div class="panel-heading typedef-heading">
@@ -1031,7 +1019,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1ae41e81d748f17bf41381dd8a2b825e54">
     <div class="panel-heading typedef-heading">
@@ -1044,7 +1031,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a9bc92b6ed4073f6653fd9a65ce90494b">
     <div class="panel-heading typedef-heading">
@@ -1057,7 +1043,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1aea8fb70aaba30c51179502fe7d4620fd">
     <div class="panel-heading typedef-heading">
@@ -1070,7 +1055,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1af05a331d3bf511a7a1b006102a86bbd0">
     <div class="panel-heading typedef-heading">
@@ -1083,7 +1067,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a34afddef91f90948652bdebf256a4497">
     <div class="panel-heading typedef-heading">
@@ -1096,7 +1079,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1abe96e921e4233b820c309cd871cc1e9d">
     <div class="panel-heading typedef-heading">
@@ -1109,7 +1091,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a1a1a51766c1bc9ebbb75566ceb532a8e">
     <div class="panel-heading typedef-heading">
@@ -1122,7 +1103,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a5eb7046f1b7eedab35ab143af53b213e">
     <div class="panel-heading typedef-heading">
@@ -1135,7 +1115,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1ada6da554e2402ebb48ba905e1a2ef9db">
     <div class="panel-heading typedef-heading">
@@ -1148,7 +1127,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1aa2bb5fdddde9ca5afc70b6a5b8e4a60f">
     <div class="panel-heading typedef-heading">
@@ -1161,7 +1139,6 @@
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a2917f465f219bbc8a14afe3e421468c5">
     <div class="panel-heading typedef-heading">
@@ -1170,11 +1147,11 @@
     </div>
     <div class="panel-body typedef-body">
       <p>A callback that’s notified when the future is set.</p>
+
       <pre>typedef void(*)(CassFuture *future, void *data) CassFutureCallback</pre>
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1af1199b2ceb30efc296f34efc268ac977">
     <div class="panel-heading typedef-heading">
@@ -1182,85 +1159,25 @@
       CassLogCallback
     </div>
     <div class="panel-body typedef-body">
-      <p>A callback used to handle logging.</p>
+      <p>A callback that’s used to handle logging.</p>
+
       <pre>typedef void(*)(const CassLogMessage *message, void *data) CassLogCallback</pre>
     </div>
   </div>
   
-
-  
-  <div class="panel panel-default member-definition" id="1a067c2c03a68738f6129d2577abf8306e">
-    <div class="panel-heading typedef-heading">
-      <a class="anchor" href="#1a067c2c03a68738f6129d2577abf8306e" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      CassAuthInitalCallback
-    </div>
-    <div class="panel-body typedef-body">
-      <p>A callback used to initiate an authentication exchange.</p>
-
-<p>If the number of bytes exceeds response_size then immediately return the number of required bytes. The callback will then be recalled with a new buffer of the correct size.</p>
-      <pre>typedef size_t(*)(CassAuth *auth, void *data, char *response, size_t response_size) CassAuthInitalCallback</pre>
-    </div>
-  </div>
-  
-
-  
-  <div class="panel panel-default member-definition" id="1add76ef2658b5c85bbdaf906981d63c61">
-    <div class="panel-heading typedef-heading">
-      <a class="anchor" href="#1add76ef2658b5c85bbdaf906981d63c61" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      CassAuthChallengeCallback
-    </div>
-    <div class="panel-body typedef-body">
-      <p>A callback used when an authentication challenge initiated by the server.</p>
-
-<p>If the number of bytes exceeds response_size then immediately return the number of required bytes. The callback will then be recalled with a new buffer of the correct size.</p>
-      <pre>typedef size_t(*)(CassAuth *auth, void *data, const char *challenge, size_t challenge_size, char *response, size_t response_size) CassAuthChallengeCallback</pre>
-    </div>
-  </div>
-  
-
-  
-  <div class="panel panel-default member-definition" id="1a3c36b67b8956c1634796ca03f2b68555">
-    <div class="panel-heading typedef-heading">
-      <a class="anchor" href="#1a3c36b67b8956c1634796ca03f2b68555" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      CassAuthSuccessCallback
-    </div>
-    <div class="panel-body typedef-body">
-      <p>A callback used to indicate the success of the authentication exchange.</p>
-      <pre>typedef void(*)(CassAuth *auth, void *data, const char *token, size_t token_size) CassAuthSuccessCallback</pre>
-    </div>
-  </div>
-  
-
-  
-  <div class="panel panel-default member-definition" id="1ae814df4b9105b3f89db0b4c9459020ab">
-    <div class="panel-heading typedef-heading">
-      <a class="anchor" href="#1ae814df4b9105b3f89db0b4c9459020ab" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      CassAuthCleanupCallback
-    </div>
-    <div class="panel-body typedef-body">
-      <p>A callback used to cleanup resources that were acquired during the process of the authentication exchange. This is called after the termination of the exchange regardless of the outcome.</p>
-      <pre>typedef void(*)(CassAuth *auth, void *data) CassAuthCleanupCallback</pre>
-    </div>
-  </div>
-  
-
 </div>
-
 <h2 id="functions">Functions<a class="anchor" href="#functions" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 <div class="func-content">
-
   
   <div class="panel panel-default member-definition" id="1a0e75ac97a9b2cc47a31b558ec8612027">
     <div class="panel-heading func-heading">
       <a class="anchor" href="#1a0e75ac97a9b2cc47a31b558ec8612027" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      const char * cass_error_desc <big>(</big> <a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a> error <big>)</big>
+      const char * cass_error_desc <big>(</big> CassError error <big>)</big>
     </div>
     <div class="panel-body func-body">
       <p>Gets a description for an error code.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1278,26 +1195,22 @@
           <td>
 <small>in</small> <var>error</var>
 </td>
-          <td><a href="../cassandra_8h#1a3c40d9bd5841f13d165f64f8b143232f"><code>CassError</code></a></td>
+          <td>CassError</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>A null-terminated string describing the error.</p></dd>
-
-
+  <dd class="tag-content">
+<p>A null-terminated string describing the error.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a92fe9922fdcc4d62babf7e16f89bb9ed">
     <div class="panel-heading func-heading">
@@ -1305,78 +1218,68 @@
       void cass_log_cleanup <big>(</big>  <big>)</big>
     </div>
     <div class="panel-body func-body">
-      <p>Explicty wait for the log to flush and deallocate resources. This <em>MUST</em> be the last call using the library. It is an error to call any cass_*() functions after this call.</p>
-
+      <p>Explicitly wait for the log to flush and deallocate resources. This <em>MUST</em> be the last call using the library. It is an error to call any cass_*() functions after this call.</p>
 
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1ad07e3b685e350f21097ae1be7ea8ce01">
     <div class="panel-heading func-heading">
       <a class="anchor" href="#1ad07e3b685e350f21097ae1be7ea8ce01" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      void cass_log_set_level <big>(</big> <a href="../cassandra_8h#1a8a11ed43243acf45854ad5de38505abf"><code>CassLogLevel</code></a> log_level <big>)</big>
+      void cass_log_set_level <big>(</big> CassLogLevel log_level <big>)</big>
     </div>
     <div class="panel-body func-body">
       <p>Sets the log level.</p>
 
-<p>Note: This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
+<p><strong>Note:</strong>: This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
 
 <p>Default: CASS_LOG_WARN</p>
-
 
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a3e4b8d4216bfcb8b4361197e2eeead4c">
     <div class="panel-heading func-heading">
       <a class="anchor" href="#1a3e4b8d4216bfcb8b4361197e2eeead4c" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      void cass_log_set_callback <big>(</big> <a href="../cassandra_8h#1af1199b2ceb30efc296f34efc268ac977"><code>CassLogCallback</code></a> callback, void * data <big>)</big>
+      void cass_log_set_callback <big>(</big> <a href="#1af1199b2ceb30efc296f34efc268ac977"><code>CassLogCallback</code></a> callback, void * data <big>)</big>
     </div>
     <div class="panel-body func-body">
       <p>Sets a callback for handling logging events.</p>
 
-<p>Note: This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
+<p><strong>Note:</strong>: This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
 
 <p>Default: An internal callback that prints to stderr</p>
-
 
     </div>
   </div>
   
-
   
-  <div class="panel panel-default member-definition" id="1aac3a3e310ba4ee8beda55d743a8f0a00">
+  <div class="panel panel-default member-definition" id="1ada67a82e7dbada5ec04957972b4f1e4b">
     <div class="panel-heading func-heading">
-      <a class="anchor" href="#1aac3a3e310ba4ee8beda55d743a8f0a00" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      void cass_log_set_queue_size <big>(</big> <a href="../cassandra_8h#1a5dcca69feb6938a985543b0c76c126fa"><code>cass_size_t</code></a> queue_size <big>)</big>
+      <a class="anchor" href="#1ada67a82e7dbada5ec04957972b4f1e4b" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      void cass_log_set_queue_size <big>(</big> size_t queue_size <big>)</big>
     </div>
     <div class="panel-body func-body">
       <p>Sets the log queue size.</p>
 
-<p>Note: This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
+<p><strong>Note:</strong>: This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
 
 <p>Default: 2048</p>
-
 
     </div>
   </div>
   
-
   
   <div class="panel panel-default member-definition" id="1a350ff62e38b04126731e1de6a8e8c750">
     <div class="panel-heading func-heading">
       <a class="anchor" href="#1a350ff62e38b04126731e1de6a8e8c750" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-      const char * cass_log_level_string <big>(</big> <a href="../cassandra_8h#1a8a11ed43243acf45854ad5de38505abf"><code>CassLogLevel</code></a> log_level <big>)</big>
+      const char * cass_log_level_string <big>(</big> CassLogLevel log_level <big>)</big>
     </div>
     <div class="panel-body func-body">
       <p>Gets the string for a log level.</p>
-
 <dl class="tags">
-
   <dt class="tag-title">Parameters:</dt>
   <dd class="tag-content">
     <table class="table table-striped">
@@ -1394,167 +1297,59 @@
           <td>
 <small>in</small> <var>log_level</var>
 </td>
-          <td><a href="../cassandra_8h#1a8a11ed43243acf45854ad5de38505abf"><code>CassLogLevel</code></a></td>
+          <td>CassLogLevel</td>
           <td></td>
         </tr>
         
       </tbody>
     </table>
   </dd>
-
-
   <dt class="tag-title">Return:</dt>
-  <dd class="tag-content"><p>A null-terminated string for the log level. Example: “ERROR”, “WARN”, “INFO”, etc.</p></dd>
-
-
+  <dd class="tag-content">
+<p>A null-terminated string for the log level. Example: “ERROR”, “WARN”, “INFO”, etc.</p>
+</dd>
 </dl>
-
 
     </div>
   </div>
   
-
 </div>
 
 
         </div>
-        <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
+        <div class="col-md-3">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+            <div id="table-of-contents-panel" class="panel panel-default">
+              <div id="table-of-contents-heading" class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#table-of-contents" aria-expanded="true" aria-controls="table-of-contents">
+                    Contents<i class="pull-right glyphicon glyphicon-chevron-up"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="table-of-contents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="table-of-contents-heading">
+                <div class="panel-body">
+                  <ol class="nav nav-pills nav-stacked toc">
+<li><a href="#macros">Macros
+</a></li>
+<li><a href="#enums">Enums
+</a></li>
+<li><a href="#types">Types
+</a></li>
+<li><a href="#functions">Functions
+</a></li>
+</ol>
+                </div>
+              </div>
+            </div>
+
             
-            
-            <li class="active">
-              <a href=".">cassandra.h</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_auth">CassAuth</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_auth_callbacks">CassAuthCallbacks</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_batch">CassBatch</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_bytes">CassBytes</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_cluster">CassCluster</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_collection">CassCollection</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_decimal">CassDecimal</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_future">CassFuture</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_inet">CassInet</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_iterator">CassIterator</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_log_message">CassLogMessage</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_prepared">CassPrepared</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_result">CassResult</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_row">CassRow</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_schema">CassSchema</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_schema_meta">CassSchemaMeta</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_schema_meta_field">CassSchemaMetaField</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_session">CassSession</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_ssl">CassSsl</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_statement">CassStatement</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_string">CassString</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_uuid">CassUuid</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_uuid_gen">CassUuidGen</a>
-            </li>
-            
-            <li>
-              <a href="../struct_cass_value">CassValue</a>
-            </li>
-            
-            
-          </ol>
-        </nav>
+          </div>
+        </div>
       </div>
     </div>
 
-    <footer class="container text-muted">
-      <ul class="list-inline">
-        <li>
-          <a href="https://github.com/datastax/cpp-driver">Code</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="http://datastax.github.io/cpp-driver/">Docs</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://datastax-oss.atlassian.net/browse/CPP">Issues</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user">Mailing List</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
-        </li>
-        <li>·</li>
-        <li>
-          <a href="https://github.com/datastax/cpp-driver/releases">Releases</a>
-        </li>
-      </ul>
-    </footer>
+    
 
     <script src="../../js/jquery.js"></script>
     <script src="../../js/bootstrap.js"></script>
