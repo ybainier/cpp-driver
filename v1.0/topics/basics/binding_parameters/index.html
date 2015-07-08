@@ -44,10 +44,6 @@
             </li>
             
             
-            <li>
-              <a href="../../../api/">API docs</a>
-            </li>
-            
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
@@ -75,7 +71,9 @@
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
                   
-                    <li><a href="../../../../topics/basics/binding_parameters/">v2.0</a></li>
+                    <li><a href="../../../../topics/basics/binding_parameters/">v2.1</a></li>
+                  
+                    <li><a href="../../../../v2.0/topics/basics/binding_parameters/">v2.0</a></li>
                   
                     <li class="disabled"><a href="./">v1.0</a></li>
                   
@@ -244,7 +242,7 @@
 <h2 id="constructing-collections">Constructing Collections<a class="anchor" href="#constructing-collections" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>Collections are supported using <a href="../../../api/struct_cass_collection/"><code>CassCollection</code></a> objects; supporting <code>list</code>, <code>map</code> and <code>set</code> Cassandra types. The code below shows how to construct a <code>list</code> collection; however, a set can be constructed in a very similiar way. The only difference is the type <code>CASS_COLLECTION_TYPE_SET</code> is used to create the collection instead of <code>CASS_COLLECTION_TYPE_LIST</code>. </p>
+<p>Collections are supported using <a href="http://datastax.github.io/cpp-driver/api/struct_cass_collection/"><code>CassCollection</code></a> objects; supporting <code>list</code>, <code>map</code> and <code>set</code> Cassandra types. The code below shows how to construct a <code>list</code> collection; however, a set can be constructed in a very similiar way. The only difference is the type <code>CASS_COLLECTION_TYPE_SET</code> is used to create the collection instead of <code>CASS_COLLECTION_TYPE_LIST</code>. </p>
 
 <p><strong>Important</strong>: Values appended to the colleciton can be freed immediately afterward because the values are copied.</p>
 <pre class="highlight"><code><span class="nc">CassStatement</span><span class="o">*</span> <span class="n">statement</span> <span class="o">=</span> <span class="nb">cass_statement_new</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
@@ -282,7 +280,7 @@
 
         </div>
         <div class="col-md-3">
-          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="80" role="tablist" aria-multiselectable="true">
             <div id="table-of-contents-panel" class="panel panel-default">
               <div id="table-of-contents-heading" class="panel-heading" role="tab">
                 <h4 class="panel-title">

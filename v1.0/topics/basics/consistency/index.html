@@ -44,10 +44,6 @@
             </li>
             
             
-            <li>
-              <a href="../../../api/">API docs</a>
-            </li>
-            
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
@@ -75,7 +71,9 @@
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
                   
-                    <li><a href="../../../../topics/basics/consistency/">v2.0</a></li>
+                    <li><a href="../../../../topics/basics/consistency/">v2.1</a></li>
+                  
+                    <li><a href="../../../../v2.0/topics/basics/consistency/">v2.0</a></li>
                   
                     <li class="disabled"><a href="./">v1.0</a></li>
                   
@@ -195,7 +193,7 @@
 <h2 id="setting-consistency-level">Setting Consistency Level<a class="anchor" href="#setting-consistency-level" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>A <a href="../../../api/struct_cass_future/">‘CassStatement’</a> object can have its consistency level altered at anytime before the statement is executed by the session.</p>
+<p>A <a href="http://datastax.github.io/cpp-driver/api/struct_cass_future/">‘CassStatement’</a> object can have its consistency level altered at anytime before the statement is executed by the session.</p>
 <pre class="highlight"><code><span class="cm">/* Create a simple or prepared statment */</span>
 
 <span class="cm">/* Ensure the session executed statement has strong consistency */</span>
@@ -206,7 +204,7 @@
 
         </div>
         <div class="col-md-3">
-          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="80" role="tablist" aria-multiselectable="true">
             <div id="table-of-contents-panel" class="panel panel-default">
               <div id="table-of-contents-heading" class="panel-heading" role="tab">
                 <h4 class="panel-title">

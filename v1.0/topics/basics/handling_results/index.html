@@ -44,10 +44,6 @@
             </li>
             
             
-            <li>
-              <a href="../../../api/">API docs</a>
-            </li>
-            
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
@@ -75,7 +71,9 @@
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
                   
-                    <li><a href="../../../../topics/basics/handling_results/">v2.0</a></li>
+                    <li><a href="../../../../topics/basics/handling_results/">v2.1</a></li>
+                  
+                    <li><a href="../../../../v2.0/topics/basics/handling_results/">v2.0</a></li>
                   
                     <li class="disabled"><a href="./">v1.0</a></li>
                   
@@ -115,7 +113,7 @@
 <h1 id="handling-results">Handling Results<a class="anchor" href="#handling-results" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 
-<p>The <a href="../../../api/struct_cass_result/"><code>CassResult</code></a> object is typically returned for <code>SELECT</code> statments. For mutations (<code>INSERT</code>, <code>UPDATE</code>, and <code>DELETE</code>) only a status code will be present and can be accessed using <code>cass_future_error_code()</code>. However, when using lightweight transactions a result object will be available to check the status of the transaction. The result object is obtained from executed statements’ future object.</p>
+<p>The <a href="http://datastax.github.io/cpp-driver/api/struct_cass_result/"><code>CassResult</code></a> object is typically returned for <code>SELECT</code> statments. For mutations (<code>INSERT</code>, <code>UPDATE</code>, and <code>DELETE</code>) only a status code will be present and can be accessed using <code>cass_future_error_code()</code>. However, when using lightweight transactions a result object will be available to check the status of the transaction. The result object is obtained from executed statements’ future object.</p>
 
 <p><strong>Important</strong>: Rows, column values, collections, decimals, strings, and bytes objects are all invalidated when the result object is freed. All of these objects point to memory held by the result. This allows the driver to avoid unneccessarily copying data.</p>
 <pre class="highlight"><code><span class="k">const</span> <span class="nc">CassResult</span><span class="o">*</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">cass_future_get_result</span><span class="p">(</span><span class="n">future</span><span class="p">);</span>
@@ -129,7 +127,7 @@
 <h2 id="rows-and-column-values">Rows and Column Values<a class="anchor" href="#rows-and-column-values" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>The result object represents a collection of rows. The first row, if present, can be obtained using <code>cass_result_first_row()</code>. Multiple rows are accessed using a <a href="../../../api/struct_cass_iterator/"><code>CassIterator</code></a> object. After a row has been retrieved, the column value(s) can be accessed from a row by either index or by name. The iterator object can also be used with enumerated column values.</p>
+<p>The result object represents a collection of rows. The first row, if present, can be obtained using <code>cass_result_first_row()</code>. Multiple rows are accessed using a <a href="http://datastax.github.io/cpp-driver/api/struct_cass_iterator/"><code>CassIterator</code></a> object. After a row has been retrieved, the column value(s) can be accessed from a row by either index or by name. The iterator object can also be used with enumerated column values.</p>
 <pre class="highlight"><code><span class="k">const</span> <span class="nc">CassRow</span><span class="o">*</span> <span class="n">row</span> <span class="o">=</span> <span class="nb">cass_result_first_row</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
 
 <span class="cm">/* Get the first column value using the index */</span>
@@ -192,7 +190,7 @@
 <h2 id="paging">Paging<a class="anchor" href="#paging" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>When communicating with Cassandra 2.0 or later, large result sets can be divided into multiple pages automatically. The <a href="../../../api/struct_cass_result/"><code>CassResult</code></a> object keeps track of the pagination state for the sequence of paging queries. When paging through the result set, the result object is checked to see if more pages exist where it is then attached to the statement before re-executing the query to get the next page.</p>
+<p>When communicating with Cassandra 2.0 or later, large result sets can be divided into multiple pages automatically. The <a href="http://datastax.github.io/cpp-driver/api/struct_cass_result/"><code>CassResult</code></a> object keeps track of the pagination state for the sequence of paging queries. When paging through the result set, the result object is checked to see if more pages exist where it is then attached to the statement before re-executing the query to get the next page.</p>
 <pre class="highlight"><code><span class="nc">CassString</span> <span class="n">query</span> <span class="o">=</span> <span class="nb">cass_string_init</span><span class="p">(</span><span class="s">"SELECT * FROM table1"</span><span class="p">);</span>
 <span class="nc">CassStatement</span><span class="o">*</span> <span class="n">statement</span> <span class="o">=</span> <span class="nb">cass_statement_new</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 
@@ -229,7 +227,7 @@
 
         </div>
         <div class="col-md-3">
-          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="80" role="tablist" aria-multiselectable="true">
             <div id="table-of-contents-panel" class="panel panel-default">
               <div id="table-of-contents-heading" class="panel-heading" role="tab">
                 <h4 class="panel-title">
