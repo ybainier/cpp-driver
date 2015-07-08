@@ -2255,9 +2255,11 @@
 </h3> <big>(</big>  <big>)</big>
     </div>
     <div class="panel-body function-body">
-      <p><strong>Deprecated:</strong> This is no longer useful and does nothing. Expect this to be removed in a few releases.</p>
+      <p>Explicitly wait for the log to flush and deallocate resources. This <em>MUST</em> be the last call using the library. It is an error to call any cass_*() functions after this call.</p>
 
-<p>Explicitly wait for the log to flush and deallocate resources. This <em>MUST</em> be the last call using the library. It is an error to call any cass_*() functions after this call.</p>
+<p><strong>Deprecated</strong>:</p>
+
+<p>This is no longer useful and does nothing. Expect this to be removed in a few releases.</p>
 
       
     </div>
@@ -2270,9 +2272,9 @@
     <div class="panel-body function-body">
       <p>Sets the log level.</p>
 
-<p><strong>Note:</strong>: This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
+<p><strong>Note:</strong> This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
 
-<p>Default: CASS_LOG_WARN</p>
+<p><strong>Default:</strong> CASS_LOG_WARN</p>
 
       <dl class="tags">
 <dt class="tag-title">Parameters:</dt>
@@ -2301,9 +2303,9 @@
     <div class="panel-body function-body">
       <p>Sets a callback for handling logging events.</p>
 
-<p><strong>Note:</strong>: This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
+<p><strong>Note:</strong> This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
 
-<p>Default: An internal callback that prints to stderr</p>
+<p><strong>Default:</strong> An internal callback that prints to stderr</p>
 
       <dl class="tags">
 <dt class="tag-title">Parameters:</dt>
@@ -2343,13 +2345,15 @@
 </h3> <big>(</big> <code>size_t</code> queue_size <big>)</big>
     </div>
     <div class="panel-body function-body">
-      <p><strong>Deprecated:</strong> This is no longer useful and does nothing. Expect this to be removed in a few releases.</p>
+      <p>Sets the log queue size.</p>
 
-<p>Sets the log queue size.</p>
+<p><strong>Note:</strong> This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
 
-<p>Note: This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
+<p><strong>Default:</strong> 2048</p>
 
-<p>Default: 2048</p>
+<p><strong>Deprecated</strong>:</p>
+
+<p>This is no longer useful and does nothing. Expect this to be removed in a few releases.</p>
 
       <dl class="tags">
 <dt class="tag-title">Parameters:</dt>
