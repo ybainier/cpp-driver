@@ -149,7 +149,7 @@
     <div class="panel-heading macro-heading">
       <h3 id="cass-version-patch">CASS_VERSION_PATCH<a class="anchor" href="#cass-version-patch" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
-<big>=</big> <code>1</code>
+<big>=</big> <code>2</code>
     </div>
     <div class="panel-body macro-body">
       
@@ -1098,6 +1098,10 @@
 <code>CASS_ERROR_SSL_IDENTITY_MISMATCH</code> <big>=</big> <var>(( CASS_ERROR_SOURCE_SSL  &lt;&lt; 24) |  5 )</var>
 </dt>
         
+        <dt>
+<code>CASS_ERROR_SSL_PROTOCOL_ERROR</code> <big>=</big> <var>(( CASS_ERROR_SOURCE_SSL  &lt;&lt; 24) |  6 )</var>
+</dt>
+        
       </dl>
       
       
@@ -1156,7 +1160,11 @@
 </h3> <big>(</big>  <big>)</big>
     </div>
     <div class="panel-body function-body">
-      <p>Explicty wait for the log to flush and deallocate resources. This <em>MUST</em> be the last call using the library. It is an error to call any cass_*() functions after this call.</p>
+      <p><strong>Deprecated</strong>:</p>
+
+<p>This is no longer useful and does nothing. Expect this to be removed in a few releases.</p>
+
+<p>Explicty wait for the log to flush and deallocate resources. This <em>MUST</em> be the last call using the library. It is an error to call any cass_*() functions after this call.</p>
 
       
     </div>
@@ -1219,7 +1227,7 @@
 </td>
 <td><code><a href="#cass-log-callback">cassandra.h::CassLogCallback</a></code></td>
 <td>
-<p>A callback that handles logging events. This is called in a separate thread so access to shared data must be synchronized.</p>
+<p>A callback that handles logging events. This can be called by several threads concurrently so access to shared resources must be synchronized.</p>
 </td>
 </tr>
 <tr>
@@ -1242,7 +1250,11 @@
 </h3> <big>(</big> <code><a href="#cass-size-t">cassandra.h::cass_size_t</a></code> queue_size <big>)</big>
     </div>
     <div class="panel-body function-body">
-      <p>Sets the log queue size.</p>
+      <p><strong>Deprecated</strong>:</p>
+
+<p>This is no longer useful and does nothing. Expect this to be removed in a few releases.</p>
+
+<p>Sets the log queue size.</p>
 
 <p>Note: This needs to be done before any call that might log, such as any of the cass_cluster_*() or cass_ssl_*() functions.</p>
 
