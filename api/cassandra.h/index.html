@@ -217,6 +217,44 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading macro-heading">
+      <h3 id="cass-consistency-map">CASS_CONSISTENCY_MAP<a class="anchor" href="#cass-consistency-map" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+<big>=</big> <code>XX(CASS_CONSISTENCY_UNKNOWN, "UNKNOWN") \
+  XX(CASS_CONSISTENCY_ANY, "ANY") \
+  XX(CASS_CONSISTENCY_ONE, "ONE") \
+  XX(CASS_CONSISTENCY_TWO, "TWO") \
+  XX(CASS_CONSISTENCY_THREE, "THREE") \
+  XX(CASS_CONSISTENCY_QUORUM, "QUORUM") \
+  XX(CASS_CONSISTENCY_ALL, "ALL") \
+  XX(CASS_CONSISTENCY_LOCAL_QUORUM, "LOCAL_QUORUM") \
+  XX(CASS_CONSISTENCY_EACH_QUORUM, "EACH_QUORUM") \
+  XX(CASS_CONSISTENCY_SERIAL, "SERIAL") \
+  XX(CASS_CONSISTENCY_LOCAL_SERIAL, "LOCAL_SERIAL") \
+  XX(CASS_CONSISTENCY_LOCAL_ONE, "LOCAL_ONE")</code>
+    </div>
+    <div class="panel-body macro-body">
+      
+      
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading macro-heading">
+      <h3 id="cass-write-type-map">CASS_WRITE_TYPE_MAP<a class="anchor" href="#cass-write-type-map" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+<big>=</big> <code>XX(CASS_WRITE_TYPE_SIMPLE, "SIMPLE") \
+  XX(CASS_WRITE_TYPE_BATCH, "BATCH") \
+  XX(CASS_WRITE_TYPE_UNLOGGED_BATCH, "UNLOGGED_BATCH") \
+  XX(CASS_WRITE_TYPE_COUNTER, "COUNTER") \
+  XX(CASS_WRITE_TYPE_BATCH_LOG, "BATCH_LOG") \
+  XX(CASS_WRITE_TYPE_CAS, "CAS")</code>
+    </div>
+    <div class="panel-body macro-body">
+      
+      
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading macro-heading">
       <h3 id="cass-log-max-message-size">CASS_LOG_MAX_MESSAGE_SIZE<a class="anchor" href="#cass-log-max-message-size" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
 <big>=</big> <code>256</code>
@@ -444,6 +482,17 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading type-heading">
+      <h3 id="cass-error-result">CassErrorResult<a class="anchor" href="#cass-error-result" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+    </div>
+    <div class="panel-body type-body">
+      <pre>typedef struct CassErrorResult_ CassErrorResult</pre>
+      
+      
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading type-heading">
       <h3 id="cass-iterator">CassIterator<a class="anchor" href="#cass-iterator" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
     </div>
@@ -576,6 +625,28 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading type-heading">
+      <h3 id="cass-timestamp-gen">CassTimestampGen<a class="anchor" href="#cass-timestamp-gen" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+    </div>
+    <div class="panel-body type-body">
+      <pre>typedef struct CassTimestampGen_ CassTimestampGen</pre>
+      
+      
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading type-heading">
+      <h3 id="cass-retry-policy">CassRetryPolicy<a class="anchor" href="#cass-retry-policy" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+    </div>
+    <div class="panel-body type-body">
+      <pre>typedef struct CassRetryPolicy_ CassRetryPolicy</pre>
+      
+      
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading type-heading">
       <h3 id="cass-future-callback">CassFutureCallback<a class="anchor" href="#cass-future-callback" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>
     </div>
@@ -641,6 +712,10 @@
       <dl class="values">
         
         <dt>
+<code>CASS_CONSISTENCY_UNKNOWN</code> <big>=</big> <var>0xFFFF</var>
+</dt>
+        
+        <dt>
 <code>CASS_CONSISTENCY_ANY</code> <big>=</big> <var>0x0000</var>
 </dt>
         
@@ -683,6 +758,33 @@
         <dt>
 <code>CASS_CONSISTENCY_LOCAL_ONE</code> <big>=</big> <var>0x000A</var>
 </dt>
+        
+      </dl>
+      
+      
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading enum-heading">
+      <h3 id="cass-write-type">CassWriteType<a class="anchor" href="#cass-write-type" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+    </div>
+    <div class="panel-body enum-body">
+      <dl class="values">
+        
+        <dt><code>CASS_WRITE_TYPE_UKNOWN</code></dt>
+        
+        <dt><code>CASS_WRITE_TYPE_SIMPLE</code></dt>
+        
+        <dt><code>CASS_WRITE_TYPE_BATCH</code></dt>
+        
+        <dt><code>CASS_WRITE_TYPE_UNLOGGED_BATCH</code></dt>
+        
+        <dt><code>CASS_WRITE_TYPE_COUNTER</code></dt>
+        
+        <dt><code>CASS_WRITE_TYPE_BATCH_LOG</code></dt>
+        
+        <dt><code>CASS_WRITE_TYPE_CAS</code></dt>
         
       </dl>
       
@@ -927,17 +1029,11 @@
     <div class="panel-body enum-body">
       <dl class="values">
         
-        <dt>
-<code>CASS_SSL_VERIFY_NONE</code> <big>=</big> <var>0</var>
-</dt>
+        <dt><code>CASS_SSL_VERIFY_NONE</code></dt>
         
-        <dt>
-<code>CASS_SSL_VERIFY_PEER_CERT</code> <big>=</big> <var>1</var>
-</dt>
+        <dt><code>CASS_SSL_VERIFY_PEER_CERT</code></dt>
         
-        <dt>
-<code>CASS_SSL_VERIFY_PEER_IDENTITY</code> <big>=</big> <var>2</var>
-</dt>
+        <dt><code>CASS_SSL_VERIFY_PEER_IDENTITY</code></dt>
         
       </dl>
       
@@ -1072,6 +1168,10 @@
 </dt>
         
         <dt>
+<code>CASS_ERROR_NO_PAGING_STATE</code> <big>=</big> <var>(( CASS_ERROR_SOURCE_LIB  &lt;&lt; 24) |  24 )</var>
+</dt>
+        
+        <dt>
 <code>CASS_ERROR_SERVER_SERVER_ERROR</code> <big>=</big> <var>(( CASS_ERROR_SOURCE_SERVER  &lt;&lt; 24) |  0x0000 )</var>
 </dt>
         
@@ -1169,7 +1269,7 @@
 <div class="attributes-content">
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassValueType</code> <h3 id="cass-data-type-type">cass_data_type_type<a class="anchor" href="#cass-data-type-type" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="#cass-value-type">cassandra.h::CassValueType</a></code> <h3 id="cass-data-type-type">cass_data_type_type<a class="anchor" href="#cass-data-type-type" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code>const <a href="../CassDataType/">CassDataType</a> *</code> data_type <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -1198,7 +1298,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassValueType</code></td>
+<td><code><a href="#cass-value-type">cassandra.h::CassValueType</a></code></td>
 <td>
 <p>The value type</p>
 </td>
@@ -1209,7 +1309,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-type-name">cass_data_type_type_name<a class="anchor" href="#cass-data-type-type-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-type-name">cass_data_type_type_name<a class="anchor" href="#cass-data-type-type-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code>const <a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const char **</code> type_name, <code>size_t *</code> type_name_length <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -1256,7 +1356,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -1267,7 +1367,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-set-type-name">cass_data_type_set_type_name<a class="anchor" href="#cass-data-type-set-type-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-set-type-name">cass_data_type_set_type_name<a class="anchor" href="#cass-data-type-set-type-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const char *</code> type_name <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -1307,7 +1407,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -1318,7 +1418,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-keyspace">cass_data_type_keyspace<a class="anchor" href="#cass-data-type-keyspace" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-keyspace">cass_data_type_keyspace<a class="anchor" href="#cass-data-type-keyspace" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code>const <a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const char **</code> keyspace, <code>size_t *</code> keyspace_length <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -1365,7 +1465,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -1376,7 +1476,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-set-keyspace">cass_data_type_set_keyspace<a class="anchor" href="#cass-data-type-set-keyspace" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-set-keyspace">cass_data_type_set_keyspace<a class="anchor" href="#cass-data-type-set-keyspace" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const char *</code> keyspace <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -1416,7 +1516,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -1427,7 +1527,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-class-name">cass_data_type_class_name<a class="anchor" href="#cass-data-type-class-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-class-name">cass_data_type_class_name<a class="anchor" href="#cass-data-type-class-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const char **</code> class_name, <code>size_t *</code> class_name_length <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -1474,7 +1574,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -1485,7 +1585,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-set-class-name">cass_data_type_set_class_name<a class="anchor" href="#cass-data-type-set-class-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-set-class-name">cass_data_type_set_class_name<a class="anchor" href="#cass-data-type-set-class-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const char *</code> class_name <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -1525,7 +1625,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -1638,7 +1738,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-sub-type-name">cass_data_type_sub_type_name<a class="anchor" href="#cass-data-type-sub-type-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-sub-type-name">cass_data_type_sub_type_name<a class="anchor" href="#cass-data-type-sub-type-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code>const <a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>size_t</code> index, <code>const char **</code> name, <code>size_t *</code> name_length <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -1692,7 +1792,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -1703,7 +1803,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-add-sub-type">cass_data_type_add_sub_type<a class="anchor" href="#cass-data-type-add-sub-type" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-add-sub-type">cass_data_type_add_sub_type<a class="anchor" href="#cass-data-type-add-sub-type" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const <a href="../CassDataType/">CassDataType</a> *</code> sub_data_type <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -1743,7 +1843,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -1754,7 +1854,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-add-sub-type-by-name">cass_data_type_add_sub_type_by_name<a class="anchor" href="#cass-data-type-add-sub-type-by-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-add-sub-type-by-name">cass_data_type_add_sub_type_by_name<a class="anchor" href="#cass-data-type-add-sub-type-by-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const char *</code> name, <code>const <a href="../CassDataType/">CassDataType</a> *</code> sub_data_type <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -1801,7 +1901,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -1812,7 +1912,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-add-sub-type-by-name-n">cass_data_type_add_sub_type_by_name_n<a class="anchor" href="#cass-data-type-add-sub-type-by-name-n" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-add-sub-type-by-name-n">cass_data_type_add_sub_type_by_name_n<a class="anchor" href="#cass-data-type-add-sub-type-by-name-n" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const char *</code> name, <code>size_t</code> name_length, <code>const <a href="../CassDataType/">CassDataType</a> *</code> sub_data_type <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -1866,7 +1966,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -1877,8 +1977,8 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-add-sub-value-type">cass_data_type_add_sub_value_type<a class="anchor" href="#cass-data-type-add-sub-value-type" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>CassValueType</code> sub_value_type <big>)</big>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-add-sub-value-type">cass_data_type_add_sub_value_type<a class="anchor" href="#cass-data-type-add-sub-value-type" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code><a href="#cass-value-type">cassandra.h::CassValueType</a></code> sub_value_type <big>)</big>
     </div>
     <div class="panel-body function-body">
       <p>Adds a sub-data type to a tuple or collection using a value type.</p>
@@ -1905,7 +2005,7 @@
 <td>
 <small>in</small> <var>sub_value_type</var>
 </td>
-<td><code>CassValueType</code></td>
+<td><code><a href="#cass-value-type">cassandra.h::CassValueType</a></code></td>
 <td></td>
 </tr>
 </tbody>
@@ -1917,7 +2017,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -1928,8 +2028,8 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-add-sub-value-type-by-name">cass_data_type_add_sub_value_type_by_name<a class="anchor" href="#cass-data-type-add-sub-value-type-by-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const char *</code> name, <code>CassValueType</code> sub_value_type <big>)</big>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-add-sub-value-type-by-name">cass_data_type_add_sub_value_type_by_name<a class="anchor" href="#cass-data-type-add-sub-value-type-by-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const char *</code> name, <code><a href="#cass-value-type">cassandra.h::CassValueType</a></code> sub_value_type <big>)</big>
     </div>
     <div class="panel-body function-body">
       <p>Adds a sub-data type to a UDT (user defined type) using a value type.</p>
@@ -1963,7 +2063,7 @@
 <td>
 <small>in</small> <var>sub_value_type</var>
 </td>
-<td><code>CassValueType</code></td>
+<td><code><a href="#cass-value-type">cassandra.h::CassValueType</a></code></td>
 <td></td>
 </tr>
 </tbody>
@@ -1975,7 +2075,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -1986,8 +2086,8 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-data-type-add-sub-value-type-by-name-n">cass_data_type_add_sub_value_type_by_name_n<a class="anchor" href="#cass-data-type-add-sub-value-type-by-name-n" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const char *</code> name, <code>size_t</code> name_length, <code>CassValueType</code> sub_value_type <big>)</big>
+      <code><a href="#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-data-type-add-sub-value-type-by-name-n">cass_data_type_add_sub_value_type_by_name_n<a class="anchor" href="#cass-data-type-add-sub-value-type-by-name-n" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3> <big>(</big> <code><a href="../CassDataType/">CassDataType</a> *</code> data_type, <code>const char *</code> name, <code>size_t</code> name_length, <code><a href="#cass-value-type">cassandra.h::CassValueType</a></code> sub_value_type <big>)</big>
     </div>
     <div class="panel-body function-body">
       <p>Same as <code><a href="#cass-data-type-add-sub-value-type-by-name">cassandra.h::cass_data_type_add_sub_value_type_by_name</a></code>, but with lengths for string parameters.</p>
@@ -2028,7 +2128,7 @@
 <td>
 <small>in</small> <var>sub_value_type</var>
 </td>
-<td><code>CassValueType</code></td>
+<td><code><a href="#cass-value-type">cassandra.h::CassValueType</a></code></td>
 <td></td>
 </tr>
 </tbody>
@@ -2040,7 +2140,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -2211,8 +2311,88 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
+      <code>const char *</code> <h3 id="cass-consistency-string">cass_consistency_string<a class="anchor" href="#cass-consistency-string" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3> <big>(</big> <code><a href="#cass-consistency">cassandra.h::CassConsistency</a></code> consistency <big>)</big>
+    </div>
+    <div class="panel-body function-body">
+      <p>Gets the string for a consistency.</p>
+
+      <dl class="tags">
+<dt class="tag-title">Parameters:</dt>
+<dd class="tag-content"><table class="table table-striped param">
+<thead><tr>
+<th class="name">Name</th>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody><tr>
+<td>
+<small>in</small> <var>consistency</var>
+</td>
+<td><code><a href="#cass-consistency">cassandra.h::CassConsistency</a></code></td>
+<td></td>
+</tr></tbody>
+</table></dd>
+<dt class="tag-title">Returns:</dt>
+<dd class="tag-content"><table class="table table-striped return">
+<thead><tr>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody><tr>
+<td><code>const char *</code></td>
+<td>
+<p>A null-terminated string for the consistency. Example: “ALL”, “ONE”, “QUORUM”, etc.</p>
+</td>
+</tr></tbody>
+</table></dd>
+</dl>
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading function-heading">
+      <code>const char *</code> <h3 id="cass-write-type-string">cass_write_type_string<a class="anchor" href="#cass-write-type-string" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3> <big>(</big> <code><a href="#cass-write-type">cassandra.h::CassWriteType</a></code> write_type <big>)</big>
+    </div>
+    <div class="panel-body function-body">
+      <p>Gets the string for a write type.</p>
+
+      <dl class="tags">
+<dt class="tag-title">Parameters:</dt>
+<dd class="tag-content"><table class="table table-striped param">
+<thead><tr>
+<th class="name">Name</th>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody><tr>
+<td>
+<small>in</small> <var>write_type</var>
+</td>
+<td><code><a href="#cass-write-type">cassandra.h::CassWriteType</a></code></td>
+<td></td>
+</tr></tbody>
+</table></dd>
+<dt class="tag-title">Returns:</dt>
+<dd class="tag-content"><table class="table table-striped return">
+<thead><tr>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody><tr>
+<td><code>const char *</code></td>
+<td>
+<p>A null-terminated string for the write type. Example: “BATCH”, “SIMPLE”, “COUNTER”, etc.</p>
+</td>
+</tr></tbody>
+</table></dd>
+</dl>
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading function-heading">
       <code>const char *</code> <h3 id="cass-error-desc">cass_error_desc<a class="anchor" href="#cass-error-desc" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h3> <big>(</big> <code>CassError</code> error <big>)</big>
+</h3> <big>(</big> <code><a href="#cass-error">cassandra.h::CassError</a></code> error <big>)</big>
     </div>
     <div class="panel-body function-body">
       <p>Gets a description for an error code.</p>
@@ -2229,7 +2409,7 @@
 <td>
 <small>in</small> <var>error</var>
 </td>
-<td><code>CassError</code></td>
+<td><code><a href="#cass-error">cassandra.h::CassError</a></code></td>
 <td></td>
 </tr></tbody>
 </table></dd>
@@ -2267,7 +2447,7 @@
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
       <code>void</code> <h3 id="cass-log-set-level">cass_log_set_level<a class="anchor" href="#cass-log-set-level" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h3> <big>(</big> <code>CassLogLevel</code> log_level <big>)</big>
+</h3> <big>(</big> <code><a href="#cass-log-level">cassandra.h::CassLogLevel</a></code> log_level <big>)</big>
     </div>
     <div class="panel-body function-body">
       <p>Sets the log level.</p>
@@ -2288,7 +2468,7 @@
 <td>
 <small>in</small> <var>log_level</var>
 </td>
-<td><code>CassLogLevel</code></td>
+<td><code><a href="#cass-log-level">cassandra.h::CassLogLevel</a></code></td>
 <td></td>
 </tr></tbody>
 </table></dd>
@@ -2377,7 +2557,7 @@
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
       <code>const char *</code> <h3 id="cass-log-level-string">cass_log_level_string<a class="anchor" href="#cass-log-level-string" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h3> <big>(</big> <code>CassLogLevel</code> log_level <big>)</big>
+</h3> <big>(</big> <code><a href="#cass-log-level">cassandra.h::CassLogLevel</a></code> log_level <big>)</big>
     </div>
     <div class="panel-body function-body">
       <p>Gets the string for a log level.</p>
@@ -2394,7 +2574,7 @@
 <td>
 <small>in</small> <var>log_level</var>
 </td>
-<td><code>CassLogLevel</code></td>
+<td><code><a href="#cass-log-level">cassandra.h::CassLogLevel</a></code></td>
 <td></td>
 </tr></tbody>
 </table></dd>
@@ -2450,6 +2630,10 @@
 </a></li>
 <li><a href="#cass-uuid-string-length">CASS_UUID_STRING_LENGTH
 </a></li>
+<li><a href="#cass-consistency-map">CASS_CONSISTENCY_MAP
+</a></li>
+<li><a href="#cass-write-type-map">CASS_WRITE_TYPE_MAP
+</a></li>
 <li><a href="#cass-log-max-message-size">CASS_LOG_MAX_MESSAGE_SIZE
 </a></li>
 </ol>
@@ -2495,6 +2679,8 @@
 </a></li>
 <li><a href="#cass-result">CassResult
 </a></li>
+<li><a href="#cass-error-result">CassErrorResult
+</a></li>
 <li><a href="#cass-iterator">CassIterator
 </a></li>
 <li><a href="#cass-row">CassRow
@@ -2519,6 +2705,10 @@
 </a></li>
 <li><a href="#cass-uuid-gen">CassUuidGen
 </a></li>
+<li><a href="#cass-timestamp-gen">CassTimestampGen
+</a></li>
+<li><a href="#cass-retry-policy">CassRetryPolicy
+</a></li>
 <li><a href="#cass-future-callback">CassFutureCallback
 </a></li>
 <li><a href="#cass-log-callback">CassLogCallback
@@ -2531,6 +2721,8 @@
 <li><a href="#cass-bool-t">cass_bool_t
 </a></li>
 <li><a href="#cass-consistency">CassConsistency
+</a></li>
+<li><a href="#cass-write-type">CassWriteType
 </a></li>
 <li><a href="#cass-value-type">CassValueType
 </a></li>
@@ -2594,6 +2786,10 @@
 <li><a href="#cass-user-type-data-type">cass_user_type_data_type
 </a></li>
 <li><a href="#cass-value-data-type">cass_value_data_type
+</a></li>
+<li><a href="#cass-consistency-string">cass_consistency_string
+</a></li>
+<li><a href="#cass-write-type-string">cass_write_type_string
 </a></li>
 <li><a href="#cass-error-desc">cass_error_desc
 </a></li>

@@ -236,7 +236,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-result-column-name">cass_result_column_name<a class="anchor" href="#cass-result-column-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-result-column-name">cass_result_column_name<a class="anchor" href="#cass-result-column-name" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code>const <a href="./">CassResult</a> *</code> result, <code>size_t</code> index, <code>const char **</code> name, <code>size_t *</code> name_length <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -290,7 +290,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise error occurred</p>
 </td>
@@ -301,7 +301,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassValueType</code> <h3 id="cass-result-column-type">cass_result_column_type<a class="anchor" href="#cass-result-column-type" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="../cassandra.h/#cass-value-type">cassandra.h::CassValueType</a></code> <h3 id="cass-result-column-type">cass_result_column_type<a class="anchor" href="#cass-result-column-type" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code>const <a href="./">CassResult</a> *</code> result, <code>size_t</code> index <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -339,7 +339,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassValueType</code></td>
+<td><code><a href="../cassandra.h/#cass-value-type">cassandra.h::CassValueType</a></code></td>
 <td>
 <p>The column type at the specified index. CASS_VALUE_TYPE_UNKNOWN is returned if the index is out of bounds.</p>
 </td>
@@ -439,7 +439,7 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>cass_bool_t</code> <h3 id="cass-result-has-more-pages">cass_result_has_more_pages<a class="anchor" href="#cass-result-has-more-pages" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="../cassandra.h/#cass-bool-t">cassandra.h::cass_bool_t</a></code> <h3 id="cass-result-has-more-pages">cass_result_has_more_pages<a class="anchor" href="#cass-result-has-more-pages" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code>const <a href="./">CassResult</a> *</code> result <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -468,12 +468,72 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>cass_bool_t</code></td>
+<td><code><a href="../cassandra.h/#cass-bool-t">cassandra.h::cass_bool_t</a></code></td>
 <td>
 <p>cass_true if there are more pages</p>
 </td>
 </tr></tbody>
 </table></dd>
+</dl>
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading function-heading">
+      <code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-result-paging-state">cass_result_paging_state<a class="anchor" href="#cass-result-paging-state" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3> <big>(</big> <code>const <a href="./">CassResult</a> *</code> result, <code>const char **</code> paging_state, <code>size_t *</code> paging_state_size <big>)</big>
+    </div>
+    <div class="panel-body function-body">
+      <p>Gets the raw paging state from the result. The paging state is bound to the lifetime of the result object. If paging state needs to live beyond the lifetime of the result object it must be copied.</p>
+
+<p><strong>Warning:</strong> The paging state should not be exposed to or come from untrusted environments. The paging state could be spoofed and potentially used to gain access to other data.</p>
+
+      <dl class="tags">
+<dt class="tag-title">Parameters:</dt>
+<dd class="tag-content"><table class="table table-striped param">
+<thead><tr>
+<th class="name">Name</th>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<small>in</small> <var>result</var>
+</td>
+<td><code>const <a href="./">CassResult</a> *</code></td>
+<td></td>
+</tr>
+<tr>
+<td>
+<small>out</small> <var>paging_state</var>
+</td>
+<td><code>const char **</code></td>
+<td></td>
+</tr>
+<tr>
+<td>
+<small>out</small> <var>paging_state_size</var>
+</td>
+<td><code>size_t *</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></dd>
+<dt class="tag-title">Returns:</dt>
+<dd class="tag-content"><table class="table table-striped return">
+<thead><tr>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody><tr>
+<td><code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code></td>
+<td>
+<p>CASS_OK if successful, otherwise error occurred</p>
+</td>
+</tr></tbody>
+</table></dd>
+<dt class="tag-title">See Also:</dt>
+<dd class="tag-content"><ul class="see"><li><code><a href="../CassStatement/#cass-statement-set-paging-state-raw">CassStatement::cass_statement_set_paging_state_raw</a></code></li></ul></dd>
 </dl>
     </div>
   </div>
@@ -553,6 +613,8 @@
 <li><a href="#cass-result-first-row">cass_result_first_row
 </a></li>
 <li><a href="#cass-result-has-more-pages">cass_result_has_more_pages
+</a></li>
+<li><a href="#cass-result-paging-state">cass_result_paging_state
 </a></li>
 <li><a href="#cass-iterator-from-result">cass_iterator_from_result
 </a></li>

@@ -128,7 +128,7 @@
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
       <code><a href="./">CassBatch</a> *</code> <h3 id="cass-batch-new">cass_batch_new<a class="anchor" href="#cass-batch-new" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h3> <big>(</big> <code>CassBatchType</code> type <big>)</big>
+</h3> <big>(</big> <code><a href="../cassandra.h/#cass-batch-type">cassandra.h::CassBatchType</a></code> type <big>)</big>
     </div>
     <div class="panel-body function-body">
       <p>Creates a new batch statement with batch type.</p>
@@ -145,7 +145,7 @@
 <td>
 <small>in</small> <var>type</var>
 </td>
-<td><code>CassBatchType</code></td>
+<td><code><a href="../cassandra.h/#cass-batch-type">cassandra.h::CassBatchType</a></code></td>
 <td></td>
 </tr></tbody>
 </table></dd>
@@ -196,8 +196,8 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-batch-set-consistency">cass_batch_set_consistency<a class="anchor" href="#cass-batch-set-consistency" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
-</h3> <big>(</big> <code><a href="./">CassBatch</a> *</code> batch, <code>CassConsistency</code> consistency <big>)</big>
+      <code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-batch-set-consistency">cass_batch_set_consistency<a class="anchor" href="#cass-batch-set-consistency" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3> <big>(</big> <code><a href="./">CassBatch</a> *</code> batch, <code><a href="../cassandra.h/#cass-consistency">cassandra.h::CassConsistency</a></code> consistency <big>)</big>
     </div>
     <div class="panel-body function-body">
       <p>Sets the batch’s consistency level</p>
@@ -222,7 +222,7 @@
 <td>
 <small>in</small> <var>consistency</var>
 </td>
-<td><code>CassConsistency</code></td>
+<td><code><a href="../cassandra.h/#cass-consistency">cassandra.h::CassConsistency</a></code></td>
 <td>
 <p>The batch’s write consistency.</p>
 </td>
@@ -236,7 +236,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -247,7 +247,156 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
-      <code>CassError</code> <h3 id="cass-batch-add-statement">cass_batch_add_statement<a class="anchor" href="#cass-batch-add-statement" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+      <code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-batch-set-serial-consistency">cass_batch_set_serial_consistency<a class="anchor" href="#cass-batch-set-serial-consistency" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3> <big>(</big> <code><a href="./">CassBatch</a> *</code> batch, <code><a href="../cassandra.h/#cass-consistency">cassandra.h::CassConsistency</a></code> serial_consistency <big>)</big>
+    </div>
+    <div class="panel-body function-body">
+      <p>Sets the batch’s serial consistency level.</p>
+
+<p><strong>Default:</strong> Not set</p>
+
+      <dl class="tags">
+<dt class="tag-title">Parameters:</dt>
+<dd class="tag-content"><table class="table table-striped param">
+<thead><tr>
+<th class="name">Name</th>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<small>in</small> <var>batch</var>
+</td>
+<td><code><a href="./">CassBatch</a> *</code></td>
+<td></td>
+</tr>
+<tr>
+<td>
+<small>in</small> <var>serial_consistency</var>
+</td>
+<td><code><a href="../cassandra.h/#cass-consistency">cassandra.h::CassConsistency</a></code></td>
+<td></td>
+</tr>
+</tbody>
+</table></dd>
+<dt class="tag-title">Returns:</dt>
+<dd class="tag-content"><table class="table table-striped return">
+<thead><tr>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody><tr>
+<td><code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code></td>
+<td>
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</td>
+</tr></tbody>
+</table></dd>
+</dl>
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading function-heading">
+      <code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-batch-set-timestamp">cass_batch_set_timestamp<a class="anchor" href="#cass-batch-set-timestamp" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3> <big>(</big> <code><a href="./">CassBatch</a> *</code> batch, <code><a href="../cassandra.h/#cass-int64-t">cassandra.h::cass_int64_t</a></code> timestamp <big>)</big>
+    </div>
+    <div class="panel-body function-body">
+      <p>Sets the batch’s timestamp.</p>
+
+      <dl class="tags">
+<dt class="tag-title">Parameters:</dt>
+<dd class="tag-content"><table class="table table-striped param">
+<thead><tr>
+<th class="name">Name</th>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<small>in</small> <var>batch</var>
+</td>
+<td><code><a href="./">CassBatch</a> *</code></td>
+<td></td>
+</tr>
+<tr>
+<td>
+<small>in</small> <var>timestamp</var>
+</td>
+<td><code><a href="../cassandra.h/#cass-int64-t">cassandra.h::cass_int64_t</a></code></td>
+<td></td>
+</tr>
+</tbody>
+</table></dd>
+<dt class="tag-title">Returns:</dt>
+<dd class="tag-content"><table class="table table-striped return">
+<thead><tr>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody><tr>
+<td><code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code></td>
+<td>
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</td>
+</tr></tbody>
+</table></dd>
+</dl>
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading function-heading">
+      <code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-batch-set-retry-policy">cass_batch_set_retry_policy<a class="anchor" href="#cass-batch-set-retry-policy" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3> <big>(</big> <code><a href="./">CassBatch</a> *</code> batch, <code><a href="../CassRetryPolicy/">CassRetryPolicy</a> *</code> retry_policy <big>)</big>
+    </div>
+    <div class="panel-body function-body">
+      <p>Sets the batch’s retry policy.</p>
+
+      <dl class="tags">
+<dt class="tag-title">Parameters:</dt>
+<dd class="tag-content"><table class="table table-striped param">
+<thead><tr>
+<th class="name">Name</th>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<small>in</small> <var>batch</var>
+</td>
+<td><code><a href="./">CassBatch</a> *</code></td>
+<td></td>
+</tr>
+<tr>
+<td>
+<small>in</small> <var>retry_policy</var>
+</td>
+<td><code><a href="../CassRetryPolicy/">CassRetryPolicy</a> *</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></dd>
+<dt class="tag-title">Returns:</dt>
+<dd class="tag-content"><table class="table table-striped return">
+<thead><tr>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody><tr>
+<td><code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code></td>
+<td>
+<p>CASS_OK if successful, otherwise an error occurred.</p>
+</td>
+</tr></tbody>
+</table></dd>
+</dl>
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading function-heading">
+      <code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-batch-add-statement">cass_batch_add_statement<a class="anchor" href="#cass-batch-add-statement" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code><a href="./">CassBatch</a> *</code> batch, <code><a href="../CassStatement/">CassStatement</a> *</code> statement <big>)</big>
     </div>
     <div class="panel-body function-body">
@@ -285,7 +434,7 @@
 <th class="details">Details</th>
 </tr></thead>
 <tbody><tr>
-<td><code>CassError</code></td>
+<td><code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code></td>
 <td>
 <p>CASS_OK if successful, otherwise an error occurred.</p>
 </td>
@@ -318,6 +467,12 @@
 <li><a href="#cass-batch-free">cass_batch_free
 </a></li>
 <li><a href="#cass-batch-set-consistency">cass_batch_set_consistency
+</a></li>
+<li><a href="#cass-batch-set-serial-consistency">cass_batch_set_serial_consistency
+</a></li>
+<li><a href="#cass-batch-set-timestamp">cass_batch_set_timestamp
+</a></li>
+<li><a href="#cass-batch-set-retry-policy">cass_batch_set_retry_policy
 </a></li>
 <li><a href="#cass-batch-add-statement">cass_batch_add_statement
 </a></li>
