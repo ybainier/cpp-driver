@@ -117,12 +117,12 @@
 <h1 id="futures">Futures<a class="anchor" href="#futures" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 
-<p>Futures are returned from any driver call that would result in blocking the client application/thread. This allows the client application to continue processing and/or also submit multiple queries in succession. Although the driver has an asynchronous design it can be used sychronously by immediately attempting to get result or explicting waiting on the future.</p>
+<p>Futures are returned from any driver call that would result in blocking the client application/thread. This allows the client application to continue processing and/or also submit multiple queries in succession. Although the driver has an asynchronous design it can be used synchronously by immediately attempting to get result or explicitly waiting on the future.</p>
 
 <h2 id="waiting-for-results">Waiting for Results<a class="anchor" href="#waiting-for-results" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>Futures results can be waited on indefinately by either calling a wait method or by attempting to get the result. They can also be waited on for an explict amount of time or periodically polled without waiting to execute application code.</p>
+<p>Futures results can be waited on indefinitely by either calling a wait method or by attempting to get the result. They can also be waited on for an explicit amount of time or periodically polled without waiting to execute application code.</p>
 
 <h3 id="synchronously-waiting-on-the-future">Synchronously Waiting on the Future<a class="anchor" href="#synchronously-waiting-on-the-future" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3>

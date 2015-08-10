@@ -117,7 +117,8 @@
 <h1 id="schema-metadata">Schema Metadata<a class="anchor" href="#schema-metadata" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h1>
 
-<p>The driver provides access to keyspace and table metadata. This schema metadata is monitored by the control conneciton and automatically kept up-to-date.</p>
+<p>The driver provides access to keyspace and table metadata. This schema metadata
+is monitored by the control connection and automatically kept up-to-date.</p>
 <pre class="highlight"><code><span class="cm">/* Create session */</span>
 
 <span class="cm">/* Get snapshot of the schema */</span>
@@ -155,7 +156,24 @@
 <span class="cm">/* All values derived from the schema are cleaned up */</span>
 <span class="nb">cass_schema_free</span><span class="p">(</span><span class="n">schema</span><span class="p">);</span>
 </code></pre>
-<p>The snapshot obtained by <code>cass_session_get_schema()</code> will not see schema changes that happened after the call. A new snapshot needs to be obtained to see subsequent updates to the schema.</p>
+<p>The snapshot obtained by <a href="../../../api/CassSession/#cass-session-get-schema"><code>cass_session_get_schema()</code></a> will not see schema changes
+that happened after the call. A new snapshot needs to be obtained to see
+subsequent updates to the schema.</p>
+
+<h2 id="enabling-disabling-schema-metadata">Enabling/Disabling Schema Metadata<a class="anchor" href="#enabling-disabling-schema-metadata" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>Retrieving and updating schema metadata can be enabled or disabled. It is
+enabled by default. However, some application might wish to reduce this
+overhead. This can be useful to improve the startup performance of the
+short-lived sessions or an environment where up-to-date schema metadata is
+unnecessary.</p>
+
+<p><strong>Important</strong>: This also disables token-aware routing because it depends on
+schema metadata.</p>
+<pre class="highlight"><code><span class="cm">/* Disable schema metdata */</span>
+<span class="nb">cass_cluster_set_use_schema</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="nb">cass_false</span><span class="p">);</span>
+</code></pre>
 
 
         </div>
@@ -171,7 +189,8 @@
               </div>
               <div id="table-of-contents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="table-of-contents-heading">
                 <div class="panel-body">
-                  
+                  <ol class="nav nav-pills nav-stacked toc"><li><a href="#enabling-disabling-schema-metadata">Enabling/Disabling Schema Metadata
+</a></li></ol>
                 </div>
               </div>
             </div>

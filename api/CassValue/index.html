@@ -293,6 +293,46 @@
   </div>
   <div class="panel panel-default member-definition">
     <div class="panel-heading function-heading">
+      <code>const <a href="../CassDataType/">CassDataType</a> *</code> <h3 id="cass-value-data-type">cass_value_data_type<a class="anchor" href="#cass-value-data-type" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3> <big>(</big> <code>const <a href="./">CassValue</a> *</code> value <big>)</big>
+    </div>
+    <div class="panel-body function-body">
+      <p>Gets the data type of a value.</p>
+
+      <dl class="tags">
+<dt class="tag-title">Parameters:</dt>
+<dd class="tag-content"><table class="table table-striped param">
+<thead><tr>
+<th class="name">Name</th>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody><tr>
+<td>
+<small>in</small> <var>value</var>
+</td>
+<td><code>const <a href="./">CassValue</a> *</code></td>
+<td></td>
+</tr></tbody>
+</table></dd>
+<dt class="tag-title">Returns:</dt>
+<dd class="tag-content"><table class="table table-striped return">
+<thead><tr>
+<th class="type">Type</th>
+<th class="details">Details</th>
+</tr></thead>
+<tbody><tr>
+<td><code>const <a href="../CassDataType/">CassDataType</a> *</code></td>
+<td>
+<p>Returns a reference to the data type of the value. Do not free this reference as it is bound to the lifetime of the value.</p>
+</td>
+</tr></tbody>
+</table></dd>
+</dl>
+    </div>
+  </div>
+  <div class="panel panel-default member-definition">
+    <div class="panel-heading function-heading">
       <code><a href="../cassandra.h/#cass-error">cassandra.h::CassError</a></code> <h3 id="cass-value-get-int32">cass_value_get_int32<a class="anchor" href="#cass-value-get-int32" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h3> <big>(</big> <code>const <a href="./">CassValue</a> *</code> value, <code><a href="../cassandra.h/#cass-int32-t">cassandra.h::cass_int32_t</a> *</code> output <big>)</big>
     </div>
@@ -1075,6 +1115,8 @@
 <li><a href="#cass-iterator-from-tuple">cass_iterator_from_tuple
 </a></li>
 <li><a href="#cass-iterator-from-user-type">cass_iterator_from_user_type
+</a></li>
+<li><a href="#cass-value-data-type">cass_value_data_type
 </a></li>
 <li><a href="#cass-value-get-int32">cass_value_get_int32
 </a></li>

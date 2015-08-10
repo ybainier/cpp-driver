@@ -161,9 +161,9 @@
 <h2 id="constructing-collections">Constructing Collections<a class="anchor" href="#constructing-collections" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
-<p>Collections are supported using <a href="../../../api/CassCollection/"><code>CassCollection</code></a> objects; supporting <code>list</code>, <code>map</code> and <code>set</code> Cassandra types. The code below shows how to construct a <code>list</code> collection; however, a set can be constructed in a very similiar way. The only difference is the type <code>CASS_COLLECTION_TYPE_SET</code> is used to create the collection instead of <code>CASS_COLLECTION_TYPE_LIST</code>.</p>
+<p>Collections are supported using <a href="../../../api/CassCollection/"><code>CassCollection</code></a> objects; supporting <code>list</code>, <code>map</code> and <code>set</code> Cassandra types. The code below shows how to construct a <code>list</code> collection; however, a set can be constructed in a very similar way. The only difference is the type <code>CASS_COLLECTION_TYPE_SET</code> is used to create the collection instead of <code>CASS_COLLECTION_TYPE_LIST</code>.</p>
 
-<p><strong>Important</strong>: Values appended to the colleciton can be freed immediately afterward because the values are copied.</p>
+<p><strong>Important</strong>: Values appended to the collection can be freed immediately afterward because the values are copied.</p>
 <pre class="highlight"><code><span class="nc">CassStatement</span><span class="o">*</span> <span class="n">statement</span> <span class="o">=</span> <span class="nb">cass_statement_new</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 
 <span class="nc">CassCollection</span><span class="o">*</span> <span class="n">list</span> <span class="o">=</span> <span class="nb">cass_collection_new</span><span class="p">(</span><span class="n">CASS_COLLECTION_TYPE_LIST</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
@@ -177,7 +177,7 @@
 <span class="cm">/* The colleciton can be freed after binding */</span>
 <span class="nb">cass_collection_free</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
 </code></pre>
-<p>Maps are built similarly, but the key and value need to be interleaved as they are appended to the collecion.</p>
+<p>Maps are built similarly, but the key and value need to be interleaved as they are appended to the collection.</p>
 <pre class="highlight"><code><span class="nc">CassStatement</span><span class="o">*</span> <span class="n">statement</span> <span class="o">=</span> <span class="nb">cass_statement_new</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 
 <span class="nc">CassCollection</span><span class="o">*</span> <span class="n">map</span> <span class="o">=</span> <span class="nb">cass_collection_new</span><span class="p">(</span><span class="n">CASS_COLLECTION_TYPE_MAP</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
@@ -195,6 +195,11 @@
 <span class="cm">/* The colleciton can be freed after binding */</span>
 <span class="nb">cass_collection_free</span><span class="p">(</span><span class="n">map</span><span class="p">);</span>
 </code></pre>
+<h2 id="nested-collections">Nested Collections<a class="anchor" href="#nested-collections" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+
+<p>When using Cassandra 2.1+ it is possible to nest collections. A collection can
+be added to another collection using <a href="../../../api/CassCollection/#cass-collection-append-collection"><code>cass_collection_append_collection()</code></a>.</p>
 
 
         </div>
@@ -214,6 +219,8 @@
 <li><a href="#large-values">Large Values
 </a></li>
 <li><a href="#constructing-collections">Constructing Collections
+</a></li>
+<li><a href="#nested-collections">Nested Collections
 </a></li>
 </ol>
                 </div>

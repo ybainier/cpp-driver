@@ -203,6 +203,29 @@ load balancing and routing policies.</p>
                                                 <span class="n">update_rate_ms</span><span class="p">,</span>
                                                 <span class="n">min_measured</span><span class="p">);</span>
 </code></pre>
+<h3 id="connection-heartbeats">Connection Heartbeats<a class="anchor" href="#connection-heartbeats" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h3>
+
+<p>To prevent intermediate network devices (routers, switches, etc.) from
+disconnecting pooled connections the driver sends a lightweight heartbeat
+request (using an <a href="https://github.com/apache/cassandra/blob/trunk/doc/native_protocol_v3.spec#L278-L282"><code>OPTIONS</code></a> protocol request) periodically. By default the
+driver sends a heartbeat every 30 seconds. This can be changed or disabled (0
+second interval) using the following:</p>
+<pre class="highlight"><code><span class="cm">/* Change the heartbeat interval to 1 minute */</span>
+<span class="nb">cass_cluster_set_connection_heartbeat_interval</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span>
+
+<span class="cm">/* Disable heartbeat requests */</span>
+<span class="nb">cass_cluster_set_connection_heartbeat_interval</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</code></pre>
+<p>Heartbeats are also used to detect unresponsive connections. An idle timeout
+setting controls the amount of time a connection is allowed to be without a
+successful heartbeat before being terminated and scheduled for reconnection. This
+interval can be changed from the default of 60 seconds:</p>
+<pre class="highlight"><code><span class="cm">/* Change the idle timeout to 2 minute */</span>
+<span class="nb">cass_cluster_set_connection_idle_timeout</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="mi">120</span><span class="p">);</span>
+</code></pre>
+<p>It can be disabled by setting the value to a very long timeout or by disabling
+heartbeats.</p>
 
 
         </div>
@@ -229,12 +252,35 @@ load balancing and routing policies.</p>
 </a></li>
 <li><a href="#latency-aware-routing">Latency-aware Routing
 </a></li>
+<li><a href="#connection-heartbeats">Connection Heartbeats
+</a></li>
 </ol>
 </li></ol>
                 </div>
               </div>
             </div>
 
+            
+            <div id="read-more-panel" class="panel panel-default">
+              <div id="read-more-heading" class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#read-more" aria-expanded="true" aria-controls="read-more">
+                    Read More<i class="pull-right glyphicon glyphicon-chevron-up"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="read-more" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="read-more-heading">
+                <div class="panel-body">
+                  <ol class="nav nav-pills nav-stacked">
+                  
+                    <li>
+                      <a href="retry_policies/">Retry policies</a>
+                    </li>
+                  
+                  </ol>
+                </div>
+              </div>
+            </div>
             
           </div>
         </div>
