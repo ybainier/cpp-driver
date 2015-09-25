@@ -442,19 +442,20 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   # Clang/Intel specific compiler options
   # I disabled long-long warning because boost generates about 50 such warnings
-  set(WARNING_COMPILER_FLAGS "-Wall -pedantic -Wextra -Wno-long-long -Wno-unused-parameter -Wno-variadic-macros -Wno-zero-length-array")
+  set(WARNING_COMPILER_FLAGS "-Wall -pedantic -Wextra -Wno-long-long -Wno-unused-parameter")
+  set(WARNING_COMPILER_FLAGS "${WARNING_COMPILER_FLAGS} -Wno-variadic-macros -Wno-zero-length-array")
+  set(WARNING_COMPILER_FLAGS "${WARNING_COMPILER_FLAGS} -Wno-unused-local-typedef -Wno-unknown-warning-option")
 
   # Detect if this is Apple's clang
-  execute_process(COMMAND ${CMAKE_CXX_COMPILER} -v ERROR_VARIABLE CLANG_VERSION_INFO)
-  if (${CLANG_VERSION_INFO} MATCHES ".*based on LLVM ([0-9]+\\.[0-9]+).*")
-    string (REGEX REPLACE ".*based on LLVM ([0-9]+\\.[0-9]+).*" "\\1" CLANG_VERSION ${CLANG_VERSION_INFO})
-  else()
-    string (REGEX REPLACE ".*clang version ([0-9]+\\.[0-9]+).*" "\\1" CLANG_VERSION ${CLANG_VERSION_INFO})
-  endif()
-  message("Clang version: ${CLANG_VERSION}")
-  if (CLANG_VERSION VERSION_GREATER "3.6")
-    set(WARNING_COMPILER_FLAGS "${WARNING_COMPILER_FLAGS} -Wno-unused-local-typedef ")
-  endif()
+  #execute_process(COMMAND ${CMAKE_CXX_COMPILER} --version OUTPUT_VARIABLE CLANG_VERSION_INFO)
+  #if (${CLANG_VERSION_INFO} MATCHES ".*based on LLVM ([0-9]+\\.[0-9]+).*")
+  #  string (REGEX REPLACE ".*based on LLVM ([0-9]+\\.[0-9]+).*" "\\1" CLANG_VERSION ${CLANG_VERSION_INFO})
+  #else()
+  #  string (REGEX REPLACE ".*clang version ([0-9]+\\.[0-9]+).*" "\\1" CLANG_VERSION ${CLANG_VERSION_INFO})
+  #endif()
+  #message("Clang version: ${CLANG_VERSION}")
+  #if (CLANG_VERSION VERSION_GREATER "3.6" OR CLANG_VERSION VERSION_EQUAL "3.6")
+  #endif()
 
   # OpenSSL is deprecated on later versions of Mac OS X. The long-term solution
   # is to provide a CommonCryto implementation.
