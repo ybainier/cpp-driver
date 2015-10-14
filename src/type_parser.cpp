@@ -257,7 +257,7 @@ SharedRefPtr<DataType> TypeParser::parse_one(const std::string& type) {
       return SharedRefPtr<DataType>();
     }
 
-    DataTypeVec types;
+    DataType::Vec types;
     for (TypeParamsVec::const_iterator i = raw_types.begin(),
          end = raw_types.end(); i != end; ++i) {
       SharedRefPtr<DataType> data_type = parse_one(*i);
@@ -323,7 +323,7 @@ SharedRefPtr<ParseResult> TypeParser::parse_with_composite(const std::string& ty
     }
   }
 
-  DataTypeVec types;
+  DataType::Vec types;
   ParseResult::ReversedVec reversed;
   for (size_t i = 0; i < count; ++i) {
     SharedRefPtr<DataType> data_type = parse_one(sub_class_names[i]);

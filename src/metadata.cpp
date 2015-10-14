@@ -350,6 +350,12 @@ void Metadata::update_types(ResultResponse* result) {
   }
 }
 
+void Metadata::update_functions(ResultResponse* result) {
+}
+
+void Metadata::update_aggregates(ResultResponse* result) {
+}
+
 void Metadata::drop_keyspace(const std::string& keyspace_name) {
   schema_snapshot_version_++;
 
@@ -380,6 +386,28 @@ void Metadata::drop_type(const std::string& keyspace_name, const std::string& ty
     updating_->drop_type(keyspace_name, type_name);
   } else {
     updating_->drop_type(keyspace_name, type_name);
+  }
+}
+
+void Metadata::drop_function(const std::string& keyspace_name, const std::string& function_name) {
+  schema_snapshot_version_++;
+
+  if (is_front_buffer()) {
+    ScopedMutex l(&mutex_);
+    updating_->drop_function(keyspace_name, function_name);
+  } else {
+    updating_->drop_function(keyspace_name, function_name);
+  }
+}
+
+void Metadata::drop_aggregate(const std::string& keyspace_name, const std::string& aggregate_name) {
+  schema_snapshot_version_++;
+
+  if (is_front_buffer()) {
+    ScopedMutex l(&mutex_);
+    updating_->drop_aggregate(keyspace_name, aggregate_name);
+  } else {
+    updating_->drop_aggregate(keyspace_name, aggregate_name);
   }
 }
 
@@ -868,6 +896,33 @@ void Metadata::InternalData::update_types(ResultResponse* result) {
   }
 }
 
+void Metadata::InternalData::update_functions(ResultResponse* result) {
+  result->decode_first_row();
+  ResultIterator rows(result);
+
+  while (rows.next()) {
+    std::string keyspace_name;
+    std::string function_name;
+    const Row* row = rows.row();
+
+    const Value* signature_value = row->get_by_name("signature");
+    if (!row->get_string_by_name("keyspace_name", &keyspace_name) ||
+        !row->get_string_by_name("function_name", &function_name) ||
+        signature_value == NULL) {
+      LOG_ERROR("Unable to column value for 'keyspace_name', 'function_name' or 'signature'");
+      continue;
+    }
+
+    CollectionIterator iterator(signature_value);
+    while (iterator.next()) {
+      //arg_types_.push_back(TypeParser::parse_one(iterator.value()->to_string()));
+    }
+  }
+}
+
+void Metadata::InternalData::update_aggregates(ResultResponse* result) {
+}
+
 void Metadata::InternalData::drop_keyspace(const std::string& keyspace_name) {
   keyspaces_->erase(keyspace_name);
 }
@@ -882,6 +937,12 @@ void Metadata::InternalData::drop_type(const std::string& keyspace_name, const s
   KeyspaceMetadata::Map::iterator i = keyspaces_->find(keyspace_name);
   if (i == keyspaces_->end()) return;
   i->second.drop_type(type_name);
+}
+
+void Metadata::InternalData::drop_function(const std::string& keyspace_name, const std::string& function_name) {
+}
+
+void Metadata::InternalData::drop_aggregate(const std::string& keyspace_name, const std::string& aggregate_name) {
 }
 
 void Metadata::InternalData::update_columns(int version, ResultResponse* result) {

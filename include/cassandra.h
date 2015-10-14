@@ -288,6 +288,16 @@ typedef struct CassValue_ CassValue;
 typedef struct CassDataType_ CassDataType;
 
 /**
+ * @struct CassFunctionType
+ */
+typedef struct CassFunctionMeta_ CassFunctionMeta;
+
+/**
+ * @struct CassAggregateType
+ */
+typedef struct CassAggregateMeta_ CassAggregateMeta;
+
+/**
  * @struct CassCollection
  *
  *  A collection of values.

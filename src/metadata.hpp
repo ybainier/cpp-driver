@@ -174,6 +174,27 @@ protected:
   IteratorImpl impl_;
 };
 
+class FunctionMetadata : public MetadataBase, public RefCounted<FunctionMetadata> {
+public:
+  typedef SharedRefPtr<FunctionMetadata> Ptr;
+  typedef std::map<std::string, Ptr> Map;
+  typedef std::vector<Ptr> Vec;
+
+private:
+  Vec overloads_;
+  DataType::Vec arg_types_;
+  DataType::Ptr return_type_;
+};
+
+class AggregateMetadata : public MetadataBase, public RefCounted<AggregateMetadata> {
+public:
+  typedef SharedRefPtr<AggregateMetadata> Ptr;
+  typedef std::map<std::string, Ptr> Map;
+  typedef std::vector<Ptr> Vec;
+
+private:
+};
+
 class ColumnMetadata : public MetadataBase, public RefCounted<ColumnMetadata> {
 public:
   typedef SharedRefPtr<ColumnMetadata> Ptr;
@@ -343,10 +364,14 @@ public:
   void update_keyspaces(ResultResponse* result);
   void update_tables(ResultResponse* tables_result, ResultResponse* columns_result);
   void update_types(ResultResponse* result);
+  void update_functions(ResultResponse* result);
+  void update_aggregates(ResultResponse* result);
 
   void drop_keyspace(const std::string& keyspace_name);
   void drop_table(const std::string& keyspace_name, const std::string& table_name);
   void drop_type(const std::string& keyspace_name, const std::string& type_name);
+  void drop_function(const std::string& keyspace_name, const std::string& function_name);
+  void drop_aggregate(const std::string& keyspace_name, const std::string& aggregate_name);
 
   // This clears and allows updates to the back buffer while preserving
   // the front buffer for snapshots.
@@ -381,10 +406,14 @@ private:
     void update_keyspaces(int version, ResultResponse* result, KeyspaceMetadata::Map& updates);
     void update_tables(int version, ResultResponse* tables_result, ResultResponse* columns_result);
     void update_types(ResultResponse* result);
+    void update_functions(ResultResponse* result);
+    void update_aggregates(ResultResponse* result);
 
     void drop_keyspace(const std::string& keyspace_name);
     void drop_table(const std::string& keyspace_name, const std::string& table_name);
     void drop_type(const std::string& keyspace_name, const std::string& type_name);
+    void drop_function(const std::string& keyspace_name, const std::string& function_name);
+    void drop_aggregate(const std::string& keyspace_name, const std::string& aggregate_name);
 
     void clear() { keyspaces_->clear(); }
 

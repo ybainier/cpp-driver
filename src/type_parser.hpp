@@ -40,7 +40,7 @@ public:
   }
 
   ParseResult(bool is_composite,
-              const DataTypeVec& types,
+              const DataType::Vec& types,
               ReversedVec reversed,
               CollectionMap collections)
     : is_composite_(is_composite)
@@ -49,13 +49,13 @@ public:
     , collections_(collections) { }
 
   bool is_composite() const { return is_composite_; }
-  const DataTypeVec& types() const { return types_; }
+  const DataType::Vec& types() const { return types_; }
   const ReversedVec& reversed() const  { return reversed_; }
   const CollectionMap& collections() const  { return collections_; }
 
 private:
   bool is_composite_;
-  DataTypeVec types_;
+  DataType::Vec types_;
   ReversedVec reversed_;
   CollectionMap collections_;
 };

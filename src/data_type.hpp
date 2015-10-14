@@ -65,6 +65,9 @@ inline bool equals_both_not_empty(const std::string& s1,
 
 class DataType : public RefCounted<DataType> {
 public:
+  typedef SharedRefPtr<const DataType> Ptr;
+  typedef std::vector<Ptr> Vec;
+
   static const SharedRefPtr<const DataType> NIL;
 
   DataType(CassValueType value_type)
@@ -120,8 +123,6 @@ private:
  DISALLOW_COPY_AND_ASSIGN(DataType);
 };
 
-typedef std::vector<SharedRefPtr<const DataType> > DataTypeVec;
-
 class CustomType : public DataType {
 public:
   CustomType()
@@ -159,15 +160,15 @@ public:
   SubTypesDataType(CassValueType type)
    : DataType(type) { }
 
-  SubTypesDataType(CassValueType type, const DataTypeVec& types)
+  SubTypesDataType(CassValueType type, const DataType::Vec& types)
     : DataType(type)
     , types_(types) { }
 
-  DataTypeVec& types() { return types_; }
-  const DataTypeVec& types() const { return types_; }
+  DataType::Vec& types() { return types_; }
+  const DataType::Vec& types() const { return types_; }
 
 protected:
-  DataTypeVec types_;
+  DataType::Vec types_;
 };
 
 class CollectionType : public SubTypesDataType {
@@ -181,7 +182,7 @@ public:
     types_.reserve(types_count);
   }
 
-  CollectionType(CassValueType collection_type, const DataTypeVec& types)
+  CollectionType(CassValueType collection_type, const DataType::Vec& types)
     : SubTypesDataType(collection_type, types) { }
 
   virtual bool equals(const SharedRefPtr<const DataType>& data_type) const {
@@ -216,19 +217,19 @@ public:
 
 public:
   static SharedRefPtr<DataType> list(SharedRefPtr<DataType> element_type) {
-    DataTypeVec types;
+    DataType::Vec types;
     types.push_back(element_type);
     return SharedRefPtr<DataType>(new CollectionType(CASS_VALUE_TYPE_LIST, types));
   }
 
   static SharedRefPtr<DataType> set(SharedRefPtr<DataType> element_type) {
-    DataTypeVec types;
+    DataType::Vec types;
     types.push_back(element_type);
     return SharedRefPtr<DataType>(new CollectionType(CASS_VALUE_TYPE_SET, types));
   }
 
   static SharedRefPtr<DataType> map(SharedRefPtr<DataType> key_type, SharedRefPtr<DataType> value_type) {
-    DataTypeVec types;
+    DataType::Vec types;
     types.push_back(key_type);
     types.push_back(value_type);
     return SharedRefPtr<DataType>(new CollectionType(CASS_VALUE_TYPE_MAP, types));
@@ -240,7 +241,7 @@ public:
   TupleType()
     : SubTypesDataType(CASS_VALUE_TYPE_TUPLE) { }
 
-  TupleType(const DataTypeVec& types)
+  TupleType(const DataType::Vec& types)
     : SubTypesDataType(CASS_VALUE_TYPE_TUPLE, types) { }
 
   virtual bool equals(const SharedRefPtr<const DataType>& data_type) const {
