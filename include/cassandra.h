@@ -1612,7 +1612,6 @@ cass_keyspace_meta_table_by_name_n(const CassKeyspaceMeta* keyspace_meta,
                                    const char* table,
                                    size_t table_length);
 
-
 /**
  * Gets the data type for the provided type name.
  *
@@ -1644,6 +1643,80 @@ CASS_EXPORT const CassDataType*
 cass_keyspace_meta_type_by_name_n(const CassKeyspaceMeta* keyspace_meta,
                                   const char* type,
                                   size_t type_length);
+
+/**
+ * Gets the function metadata for the provided function name.
+ *
+ * @public @memberof CassKeyspaceMeta
+ *
+ * @param[in] keyspace_meta
+ * @param[in] name
+ * @param[in] arguments
+ *
+ * @return The data function for a user defined function. NULL if function does not exist.
+ */
+CASS_EXPORT const CassDataType*
+cass_keyspace_meta_function_by_name(const CassKeyspaceMeta* keyspace_meta,
+                                    const char* name,
+                                    const char* arguments);
+
+/**
+ * Same as cass_keyspace_meta_function_by_name(), but with lengths for string
+ * parameters.
+ *
+ * @public @memberof CassKeyspaceMeta
+ *
+ * @param[in] keyspace_meta
+ * @param[in] name
+ * @param[in] name_length
+ * @param[in] arguments
+ * @param[in] argument_length
+ * @return same as cass_keyspace_meta_function_by_name()
+ *
+ * @see cass_keyspace_meta_function_by_name()
+ */
+CASS_EXPORT const CassDataType*
+cass_keyspace_meta_function_by_name_n(const CassKeyspaceMeta* keyspace_meta,
+                                      const char* name,
+                                      size_t name_length,
+                                      const char* arguments,
+                                      size_t arguments_length);
+
+/**
+ * Gets the aggregate metadata for the provided aggregate name.
+ *
+ * @public @memberof CassKeyspaceMeta
+ *
+ * @param[in] keyspace_meta
+ * @param[in] name
+ * @param[in] arguments
+ *
+ * @return The data aggregate for a user defined aggregate. NULL if aggregate does not exist.
+ */
+CASS_EXPORT const CassDataType*
+cass_keyspace_meta_aggregate_by_name(const CassKeyspaceMeta* keyspace_meta,
+                                     const char* name,
+                                     const char* arguments);
+
+/**
+ * Same as cass_keyspace_meta_aggregate_by_name(), but with lengths for string
+ * parameters.
+ *
+ * @public @memberof CassKeyspaceMeta
+ *
+ * @param[in] keyspace_meta
+ * @param[in] name
+ * @param[in] name_length
+ * @return same as cass_keyspace_meta_aggregate_by_name()
+ *
+ * @see cass_keyspace_meta_aggregate_by_name()
+ */
+CASS_EXPORT const CassDataType*
+cass_keyspace_meta_aggregate_by_name_n(const CassKeyspaceMeta* keyspace_meta,
+                                       const char* name,
+                                       size_t name_length,
+                                       const char* arguments,
+                                       size_t arguments_length);
 
 /**
  * Gets the name of the keyspace.
@@ -1883,7 +1956,7 @@ cass_column_meta_type(const CassColumnMeta* column_meta);
  * @param[in] column_meta
  * @return The column's data type.
  */
-CASS_EXPORT CassDataType*
+CASS_EXPORT const CassDataType*
 cass_column_meta_data_type(const CassColumnMeta* column_meta);
 
 /**

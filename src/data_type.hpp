@@ -115,6 +115,36 @@ public:
     return new DataType(value_type_);
   }
 
+  virtual std::string to_string() const {
+    switch (value_type_) {
+      case CASS_VALUE_TYPE_ASCII: return "ascii";
+      case CASS_VALUE_TYPE_BIGINT: return "bigint";
+      case CASS_VALUE_TYPE_BLOB: return "blob";
+      case CASS_VALUE_TYPE_BOOLEAN: return "boolean";
+      case CASS_VALUE_TYPE_COUNTER: return "counter";
+      case CASS_VALUE_TYPE_DECIMAL: return "decimal";
+      case CASS_VALUE_TYPE_DOUBLE: return "double";
+      case CASS_VALUE_TYPE_FLOAT: return "float";
+      case CASS_VALUE_TYPE_INT: return "int";
+      case CASS_VALUE_TYPE_TEXT: return "text";
+      case CASS_VALUE_TYPE_TIMESTAMP: return "timestamp";
+      case CASS_VALUE_TYPE_UUID: return "uuid";
+      case CASS_VALUE_TYPE_VARCHAR: return "varchar";
+      case CASS_VALUE_TYPE_VARINT: return "varint";
+      case CASS_VALUE_TYPE_TIMEUUID: return "timeuuid";
+      case CASS_VALUE_TYPE_INET: return "inet";
+      case CASS_VALUE_TYPE_DATE: return "date";
+      case CASS_VALUE_TYPE_TIME: return "time";
+      case CASS_VALUE_TYPE_SMALL_INT: return "smallint";
+      case CASS_VALUE_TYPE_TINY_INT: return "tinyint";
+      case CASS_VALUE_TYPE_LIST: return "list";
+      case CASS_VALUE_TYPE_MAP: return "map";
+      case CASS_VALUE_TYPE_SET: return "set";
+      case CASS_VALUE_TYPE_TUPLE: return "tuple";
+      default: return "";
+    }
+  }
+
 private:
   int protocol_version_;
   CassValueType value_type_;
@@ -151,6 +181,10 @@ public:
     return new CustomType(class_name_);
   }
 
+  virtual std::string to_string() const {
+    return class_name_;
+  }
+
 private:
   std::string class_name_;
 };
@@ -166,6 +200,20 @@ public:
 
   DataType::Vec& types() { return types_; }
   const DataType::Vec& types() const { return types_; }
+
+  virtual std::string to_string() const {
+    std::string str(DataType::to_string());
+    str.push_back('<');
+    bool first = true;
+    for (DataType::Vec::const_iterator i = types_.begin(),
+         end = types_.end();
+         i != end; ++i) {
+      if (!first) str.append(", ");
+      str.append((*i)->to_string());
+    }
+    str.push_back('>');
+    return str;
+  }
 
 protected:
   DataType::Vec types_;
@@ -216,23 +264,24 @@ public:
   }
 
 public:
-  static SharedRefPtr<DataType> list(SharedRefPtr<DataType> element_type) {
+  static SharedRefPtr<const DataType> list(SharedRefPtr<const DataType> element_type) {
     DataType::Vec types;
     types.push_back(element_type);
-    return SharedRefPtr<DataType>(new CollectionType(CASS_VALUE_TYPE_LIST, types));
+    return SharedRefPtr<const DataType>(new CollectionType(CASS_VALUE_TYPE_LIST, types));
   }
 
-  static SharedRefPtr<DataType> set(SharedRefPtr<DataType> element_type) {
+  static SharedRefPtr<const DataType> set(SharedRefPtr<const DataType> element_type) {
     DataType::Vec types;
     types.push_back(element_type);
-    return SharedRefPtr<DataType>(new CollectionType(CASS_VALUE_TYPE_SET, types));
+    return SharedRefPtr<const DataType>(new CollectionType(CASS_VALUE_TYPE_SET, types));
   }
 
-  static SharedRefPtr<DataType> map(SharedRefPtr<DataType> key_type, SharedRefPtr<DataType> value_type) {
+  static SharedRefPtr<const DataType> map(SharedRefPtr<const DataType> key_type,
+                                          SharedRefPtr<const DataType> value_type) {
     DataType::Vec types;
     types.push_back(key_type);
     types.push_back(value_type);
-    return SharedRefPtr<DataType>(new CollectionType(CASS_VALUE_TYPE_MAP, types));
+    return SharedRefPtr<const DataType>(new CollectionType(CASS_VALUE_TYPE_MAP, types));
   }
 };
 
@@ -358,6 +407,10 @@ public:
 
   virtual DataType* copy() const {
     return new UserType(keyspace_, type_name_, fields_.entries());
+  }
+
+  virtual std::string to_string() const {
+    return type_name_;
   }
 
 private:

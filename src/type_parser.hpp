@@ -31,9 +31,9 @@ namespace cass {
 class ParseResult : public RefCounted<ParseResult> {
 public:
   typedef std::vector<bool> ReversedVec;
-  typedef std::map<std::string, SharedRefPtr<DataType> > CollectionMap;
+  typedef std::map<std::string, SharedRefPtr<const DataType> > CollectionMap;
 
-  ParseResult(SharedRefPtr<DataType> type, bool reversed)
+  ParseResult(SharedRefPtr<const DataType> type, bool reversed)
     : is_composite_(false) {
     types_.push_back(type);
     reversed_.push_back(reversed);
@@ -70,7 +70,7 @@ public:
   static bool is_user_type(const std::string& type);
   static bool is_tuple_type(const std::string& type);
 
-  static SharedRefPtr<DataType> parse_one(const std::string& type);
+  static SharedRefPtr<const DataType> parse_one(const std::string& type);
   static SharedRefPtr<ParseResult> parse_with_composite(const std::string& type);
 
 private:

@@ -180,10 +180,28 @@ public:
   typedef std::map<std::string, Ptr> Map;
   typedef std::vector<Ptr> Vec;
 
+  FunctionMetadata(const std::string& name, const Value* signature,
+                   const SharedRefPtr<RefBuffer>& buffer, const Row* row);
+
 private:
-  Vec overloads_;
-  DataType::Vec arg_types_;
+  struct Argument {
+    typedef std::vector<Argument> Vec;
+    typedef std::map<StringRef, DataType::Ptr> Map;
+
+    Argument(const StringRef& name, const DataType::Ptr& type)
+      : name(name)
+      , type(type) { }
+    const StringRef name;
+    const DataType::Ptr type;
+  };
+
+  StringRef short_name_;
+  Argument::Vec args_;
+  Argument::Map args_by_name_;
   DataType::Ptr return_type_;
+  StringRef body_;
+  StringRef language_;
+  bool called_on_null_input_;
 };
 
 class AggregateMetadata : public MetadataBase, public RefCounted<AggregateMetadata> {
@@ -192,7 +210,18 @@ public:
   typedef std::map<std::string, Ptr> Map;
   typedef std::vector<Ptr> Vec;
 
+  AggregateMetadata(const std::string& name, const Value* signature,
+                    const FunctionMetadata::Map& functions,
+                    int version, const SharedRefPtr<RefBuffer>& buffer, const Row* row);
+
 private:
+  StringRef short_name_;
+  DataType::Vec arg_types_;
+  DataType::Ptr return_type_;
+  DataType::Ptr state_type_;
+  FunctionMetadata::Ptr state_func_;
+  FunctionMetadata::Ptr final_func_;
+  Value init_cond_;
 };
 
 class ColumnMetadata : public MetadataBase, public RefCounted<ColumnMetadata> {
@@ -212,13 +241,13 @@ public:
 
   CassColumnType type() const { return type_; }
   int32_t position() const { return position_; }
-  const SharedRefPtr<DataType>& data_type() const { return data_type_; }
+  const SharedRefPtr<const DataType>& data_type() const { return data_type_; }
   bool is_reversed() const { return is_reversed_; }
 
 private:
   CassColumnType type_;
   int32_t position_;
-  SharedRefPtr<DataType> data_type_;
+  SharedRefPtr<const DataType> data_type_;
   bool is_reversed_;
 
 private:
@@ -291,9 +320,13 @@ public:
   KeyspaceMetadata(const std::string& name)
     : MetadataBase(name)
     , tables_(new TableMetadata::Map)
-    , types_(new TypeMap) { }
+    , types_(new TypeMap)
+    , functions_(new FunctionMetadata::Map)
+    , aggregates_(new AggregateMetadata::Map) { }
 
   void update(int version, const SharedRefPtr<RefBuffer>& buffer, const Row* row);
+
+  const FunctionMetadata::Map& functions() const { return *functions_; }
 
   Iterator* iterator_tables() const { return new TableIterator(*tables_); }
   const TableMetadata* get_table(const std::string& table_name) const;
@@ -306,12 +339,20 @@ public:
   void add_type(const SharedRefPtr<UserType>& user_type);
   void drop_type(const std::string& type_name);
 
+  void add_function(const FunctionMetadata::Ptr& function);
+  void drop_function(const std::string& full_function_name);
+
+  void add_aggregate(const AggregateMetadata::Ptr& aggregate);
+  void drop_aggregate(const std::string& full_aggregate_name);
+
   std::string strategy_class() const { return get_string_field("strategy_class"); }
   const MetadataField* strategy_options() const { return get_field("strategy_options"); }
 
 private:
   CopyOnWritePtr<TableMetadata::Map> tables_;
   CopyOnWritePtr<TypeMap> types_;
+  CopyOnWritePtr<FunctionMetadata::Map> functions_;
+  CopyOnWritePtr<AggregateMetadata::Map> aggregates_;
 };
 
 class Metadata {
@@ -341,11 +382,12 @@ public:
                                const std::string& cf_name,
                                std::vector<std::string>* output) const;
 
-
   private:
     uint32_t version_;
     KeyspaceMetadata::MapPtr keyspaces_;
   };
+
+  static std::string full_function_name(StringRef name, const StringRefVec& signature);
 
 public:
   Metadata()
@@ -370,8 +412,8 @@ public:
   void drop_keyspace(const std::string& keyspace_name);
   void drop_table(const std::string& keyspace_name, const std::string& table_name);
   void drop_type(const std::string& keyspace_name, const std::string& type_name);
-  void drop_function(const std::string& keyspace_name, const std::string& function_name);
-  void drop_aggregate(const std::string& keyspace_name, const std::string& aggregate_name);
+  void drop_function(const std::string& keyspace_name, const std::string& full_function_name);
+  void drop_aggregate(const std::string& keyspace_name, const std::string& full_aggregate_name);
 
   // This clears and allows updates to the back buffer while preserving
   // the front buffer for snapshots.
@@ -407,13 +449,13 @@ private:
     void update_tables(int version, ResultResponse* tables_result, ResultResponse* columns_result);
     void update_types(ResultResponse* result);
     void update_functions(ResultResponse* result);
-    void update_aggregates(ResultResponse* result);
+    void update_aggregates(int version, ResultResponse* result);
 
     void drop_keyspace(const std::string& keyspace_name);
     void drop_table(const std::string& keyspace_name, const std::string& table_name);
     void drop_type(const std::string& keyspace_name, const std::string& type_name);
-    void drop_function(const std::string& keyspace_name, const std::string& function_name);
-    void drop_aggregate(const std::string& keyspace_name, const std::string& aggregate_name);
+    void drop_function(const std::string& keyspace_name, const std::string& full_function_name);
+    void drop_aggregate(const std::string& keyspace_name, const std::string& full_aggregate_name);
 
     void clear() { keyspaces_->clear(); }
 

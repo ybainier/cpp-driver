@@ -77,6 +77,23 @@ const CassDataType* cass_keyspace_meta_type_by_name_n(const CassKeyspaceMeta* ke
   return CassDataType::to(keyspace_meta->get_type(std::string(type, type_length)));
 }
 
+const CassDataType* cass_keyspace_meta_function_by_name(const CassKeyspaceMeta* keyspace_meta,
+                                                        const char* function) {
+}
+
+const CassDataType* cass_keyspace_meta_function_by_name_n(const CassKeyspaceMeta* keyspace_meta,
+                                                          const char* function, size_t function_length) {
+}
+
+const CassDataType* cass_keyspace_meta_aggregate_by_name(const CassKeyspaceMeta* keyspace_meta,
+                                                         const char* aggregate) {
+}
+
+const CassDataType* cass_keyspace_meta_aggregate_by_name_n(const CassKeyspaceMeta* keyspace_meta,
+                                                           const char* aggregate,
+                                                           size_t aggregate_length) {
+}
+
 void cass_keyspace_meta_name(const CassKeyspaceMeta* keyspace_meta,
                              const char** name, size_t* name_length) {
   *name = keyspace_meta->name().data();
@@ -171,7 +188,7 @@ CassColumnType cass_column_meta_type(const CassColumnMeta* column_meta) {
   return column_meta->type();
 }
 
-CassDataType* cass_column_meta_data_type(const CassColumnMeta* column_meta) {
+const CassDataType* cass_column_meta_data_type(const CassColumnMeta* column_meta) {
   return CassDataType::to(column_meta->data_type().get());
 }
 
@@ -306,6 +323,21 @@ const UserType* Metadata::SchemaSnapshot::get_type(const std::string& keyspace_n
   return i->second.get_type(type_name);
 }
 
+std::string Metadata::full_function_name(StringRef name, const StringRefVec& signature) {
+  std::string full_name;
+  bool first = true;
+  full_name.append(name.begin(), name.end());
+  full_name.push_back('(');
+  for (StringRefVec::const_iterator i = signature.begin(),
+       end = signature.end(); i != end; ++i) {
+    if (!first) full_name.push_back(',');
+    first = false;
+    full_name.append(i->begin(), i->end());
+  }
+  full_name.push_back(')');
+  return full_name;
+}
+
 Metadata::SchemaSnapshot Metadata::schema_snapshot() const {
   ScopedMutex l(&mutex_);
   return SchemaSnapshot(schema_snapshot_version_, front_.keyspaces());
@@ -389,25 +421,25 @@ void Metadata::drop_type(const std::string& keyspace_name, const std::string& ty
   }
 }
 
-void Metadata::drop_function(const std::string& keyspace_name, const std::string& function_name) {
+void Metadata::drop_function(const std::string& keyspace_name, const std::string& full_function_name) {
   schema_snapshot_version_++;
 
   if (is_front_buffer()) {
     ScopedMutex l(&mutex_);
-    updating_->drop_function(keyspace_name, function_name);
+    updating_->drop_function(keyspace_name, full_function_name);
   } else {
-    updating_->drop_function(keyspace_name, function_name);
+    updating_->drop_function(keyspace_name, full_function_name);
   }
 }
 
-void Metadata::drop_aggregate(const std::string& keyspace_name, const std::string& aggregate_name) {
+void Metadata::drop_aggregate(const std::string& keyspace_name, const std::string& full_aggregate_name) {
   schema_snapshot_version_++;
 
   if (is_front_buffer()) {
     ScopedMutex l(&mutex_);
-    updating_->drop_aggregate(keyspace_name, aggregate_name);
+    updating_->drop_aggregate(keyspace_name, full_aggregate_name);
   } else {
-    updating_->drop_aggregate(keyspace_name, aggregate_name);
+    updating_->drop_aggregate(keyspace_name, full_aggregate_name);
   }
 }
 
@@ -599,6 +631,22 @@ void KeyspaceMetadata::drop_type(const std::string& type_name) {
   types_->erase(type_name);
 }
 
+void KeyspaceMetadata::add_function(const FunctionMetadata::Ptr& function) {
+
+}
+
+void KeyspaceMetadata::drop_function(const std::string& full_function_name) {
+
+}
+
+void KeyspaceMetadata::add_aggregate(const AggregateMetadata::Ptr& aggregate) {
+
+}
+
+void KeyspaceMetadata::drop_aggregate(const std::string& full_aggregate_name) {
+
+}
+
 TableMetadata::TableMetadata(const std::string& name,
                              int version, const SharedRefPtr<RefBuffer>& buffer, const Row* row)
   : MetadataBase(name) {
@@ -720,6 +768,121 @@ void TableMetadata::key_aliases(KeyAliases* output) const {
       }
       output->push_back(ss.str());
     }
+  }
+}
+
+FunctionMetadata::FunctionMetadata(const std::string& name, const Value* signature,
+                                   const SharedRefPtr<RefBuffer>& buffer, const Row* row)
+  : MetadataBase(Metadata::full_function_name(name, signature->as_stringlist()))
+  , short_name_(name) {
+  const Value* value1;
+  const Value* value2;
+
+  add_field(buffer, row, "keyspace_name");
+  add_field(buffer, row, "function_name");
+
+  value1 = add_field(buffer, row, "argument_names");
+  value2 = add_field(buffer, row, "argument_types");
+  if (value1 != NULL &&
+      value1->value_type() == CASS_VALUE_TYPE_LIST &&
+      value1->primary_value_type() == CASS_VALUE_TYPE_VARCHAR &&
+      value2 != NULL &&
+      value2->value_type() == CASS_VALUE_TYPE_LIST &&
+      value2->primary_value_type() == CASS_VALUE_TYPE_VARCHAR) {
+    CollectionIterator iterator1(value1);
+    CollectionIterator iterator2(value1);
+    while (iterator1.next() && iterator2.next()) {
+      StringRef arg_name(iterator1.value()->to_string_ref());
+      DataType::Ptr arg_type(TypeParser::parse_one(iterator2.value()->to_string()));
+      args_.push_back(Argument(arg_name, arg_type));
+      args_by_name_[arg_name] = arg_type;
+    }
+  }
+
+  value1 = add_field(buffer, row, "return_type");
+  if (value1 != NULL &&
+      value1->value_type() == CASS_VALUE_TYPE_VARCHAR) {
+    return_type_ = TypeParser::parse_one(value1->to_string());
+  }
+
+  value1 = add_field(buffer, row, "body");
+  if (value1 != NULL &&
+      value1->value_type() == CASS_VALUE_TYPE_VARCHAR) {
+     body_ = value1->to_string_ref();
+  }
+
+  value1 = add_field(buffer, row, "language");
+  if (value1 != NULL &&
+      value1->value_type() == CASS_VALUE_TYPE_VARCHAR) {
+     language_ = value1->to_string_ref();
+  }
+
+  value1 = add_field(buffer, row, "called_on_null_input");
+  if (value1 != NULL &&
+      value1->value_type() == CASS_VALUE_TYPE_BOOLEAN) {
+    called_on_null_input_ = value1->as_bool();
+  }
+}
+
+AggregateMetadata::AggregateMetadata(const std::string& name, const Value* signature,
+                                     const FunctionMetadata::Map& functions,
+                                     int version, const SharedRefPtr<RefBuffer>& buffer, const Row* row)
+  : MetadataBase(Metadata::full_function_name(name, signature->as_stringlist()))
+  , short_name_(name) {
+  const Value* value;
+
+  add_field(buffer, row, "keyspace_name");
+  add_field(buffer, row, "aggregate_name");
+
+  value = add_field(buffer, row, "argument_types");
+  if (value != NULL &&
+      value->value_type() == CASS_VALUE_TYPE_LIST &&
+      value->primary_value_type() == CASS_VALUE_TYPE_VARCHAR) {
+    CollectionIterator iterator(value);
+    while (iterator.next()) {
+      arg_types_.push_back(TypeParser::parse_one(iterator.value()->to_string()));
+    }
+  }
+
+  value = add_field(buffer, row, "return_type");
+  if (value != NULL &&
+      value->value_type() == CASS_VALUE_TYPE_VARCHAR) {
+    return_type_ = TypeParser::parse_one(value->to_string());
+  }
+
+  value = add_field(buffer, row, "state_type");
+  if (value != NULL &&
+      value->value_type() == CASS_VALUE_TYPE_VARCHAR) {
+    state_type_ = TypeParser::parse_one(value->to_string());
+  }
+
+  value = add_field(buffer, row, "final_func");
+  if (value != NULL &&
+      value->value_type() == CASS_VALUE_TYPE_VARCHAR) {
+    StringRefVec final_func_signature(1, state_type_->to_string());
+    std::string full_final_func_name(Metadata::full_function_name(value->to_string(), final_func_signature));
+    FunctionMetadata::Map::const_iterator i = functions.find(full_final_func_name);
+    if (i != functions.end()) final_func_ = i->second;
+  }
+
+  value = add_field(buffer, row, "state_func");
+  if (value != NULL &&
+      value->value_type() == CASS_VALUE_TYPE_VARCHAR) {
+    StringRefVec state_func_signature;
+    state_func_signature.push_back(state_type_->to_string());
+    CollectionIterator iterator(signature);
+    while (iterator.next()) {
+      state_func_signature.push_back(iterator.value()->to_string_ref());
+    }
+    std::string full_state_func_name(Metadata::full_function_name(value->to_string(), state_func_signature));
+    FunctionMetadata::Map::const_iterator i = functions.find(full_state_func_name);
+    if (i != functions.end()) state_func_ = i->second;
+  }
+
+  value = add_field(buffer, row, "initcond");
+  if (value != NULL &&
+      value->value_type() == CASS_VALUE_TYPE_BLOB) {
+      init_cond_ = Value(version, state_type_, value->data(), value->size());
   }
 }
 
@@ -879,7 +1042,7 @@ void Metadata::InternalData::update_types(ResultResponse* result) {
 
       std::string field_name(name->to_string());
 
-      SharedRefPtr<DataType> data_type = TypeParser::parse_one(type->to_string());
+      SharedRefPtr<const DataType> data_type = TypeParser::parse_one(type->to_string());
       if (!data_type) {
         LOG_ERROR("Invalid 'field_type' for field \"%s\", keyspace \"%s\" and type \"%s\"",
                   field_name.c_str(),
@@ -897,6 +1060,8 @@ void Metadata::InternalData::update_types(ResultResponse* result) {
 }
 
 void Metadata::InternalData::update_functions(ResultResponse* result) {
+  SharedRefPtr<RefBuffer> buffer = result->buffer();
+
   result->decode_first_row();
   ResultIterator rows(result);
 
@@ -905,22 +1070,44 @@ void Metadata::InternalData::update_functions(ResultResponse* result) {
     std::string function_name;
     const Row* row = rows.row();
 
-    const Value* signature_value = row->get_by_name("signature");
+    const Value* signature = row->get_by_name("signature");
     if (!row->get_string_by_name("keyspace_name", &keyspace_name) ||
         !row->get_string_by_name("function_name", &function_name) ||
-        signature_value == NULL) {
+        signature == NULL) {
       LOG_ERROR("Unable to column value for 'keyspace_name', 'function_name' or 'signature'");
       continue;
     }
 
-    CollectionIterator iterator(signature_value);
-    while (iterator.next()) {
-      //arg_types_.push_back(TypeParser::parse_one(iterator.value()->to_string()));
-    }
+    get_or_create_keyspace(keyspace_name)->add_function(FunctionMetadata::Ptr(new FunctionMetadata(function_name,
+                                                                                                   signature, buffer, row)));
+
   }
 }
 
-void Metadata::InternalData::update_aggregates(ResultResponse* result) {
+void Metadata::InternalData::update_aggregates(int version, ResultResponse* result) {
+  SharedRefPtr<RefBuffer> buffer = result->buffer();
+
+  result->decode_first_row();
+  ResultIterator rows(result);
+
+  while (rows.next()) {
+    std::string keyspace_name;
+    std::string aggregate_name;
+    const Row* row = rows.row();
+
+    const Value* signature = row->get_by_name("signature");
+    if (!row->get_string_by_name("keyspace_name", &keyspace_name) ||
+        !row->get_string_by_name("aggregate_name", &aggregate_name) ||
+        signature == NULL) {
+      LOG_ERROR("Unable to column value for 'keyspace_name', 'aggregate_name' or 'signature'");
+      continue;
+    }
+
+    KeyspaceMetadata* keyspace = get_or_create_keyspace(keyspace_name);
+    keyspace->add_aggregate(AggregateMetadata::Ptr(new AggregateMetadata(aggregate_name, signature,
+                                                                         keyspace->functions(),
+                                                                         version, buffer, row)));
+  }
 }
 
 void Metadata::InternalData::drop_keyspace(const std::string& keyspace_name) {
@@ -939,10 +1126,10 @@ void Metadata::InternalData::drop_type(const std::string& keyspace_name, const s
   i->second.drop_type(type_name);
 }
 
-void Metadata::InternalData::drop_function(const std::string& keyspace_name, const std::string& function_name) {
+void Metadata::InternalData::drop_function(const std::string& keyspace_name, const std::string& full_function_name) {
 }
 
-void Metadata::InternalData::drop_aggregate(const std::string& keyspace_name, const std::string& aggregate_name) {
+void Metadata::InternalData::drop_aggregate(const std::string& keyspace_name, const std::string& full_aggregate_name) {
 }
 
 void Metadata::InternalData::update_columns(int version, ResultResponse* result) {
