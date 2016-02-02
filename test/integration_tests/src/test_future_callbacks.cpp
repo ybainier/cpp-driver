@@ -14,10 +14,6 @@
   limitations under the License.
 */
 
-#ifdef STAND_ALONE
-#   define BOOST_TEST_MODULE cassandra
-#endif
-
 #include <boost/test/unit_test.hpp>
 #include <boost/test/debug.hpp>
 #include <boost/lexical_cast.hpp>
@@ -30,6 +26,8 @@
 
 #include "cassandra.h"
 #include "test_utils.hpp"
+
+#include <sstream>
 
 namespace {
 
@@ -127,7 +125,9 @@ BOOST_AUTO_TEST_CASE(result)
 
   test_utils::CassResultPtr result;
 
-  test_utils::CassStatementPtr statement(cass_statement_new("SELECT * FROM system.schema_keyspaces", 0));
+  std::stringstream query;
+  query << "SELECT * FROM " << (version >= "3.0.0" ? "system_schema.keyspaces" : "system.schema_keyspaces");
+  test_utils::CassStatementPtr statement(cass_statement_new(query.str().c_str(), 0));
   test_utils::CassFuturePtr future(cass_session_execute(session.get(), statement.get()));
 
   cass_future_set_callback(future.get(), check_result_callback, callback_data.get());

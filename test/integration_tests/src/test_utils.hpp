@@ -35,9 +35,7 @@
 #include <uv.h>
 
 #include "cassandra.h"
-
-#include "cql_ccm_bridge.hpp"
-#include "cql_ccm_bridge_configuration.hpp"
+#include "bridge.hpp"
 
 #ifdef min
 #undef min
@@ -140,6 +138,10 @@ public:
     log_data_.reset(msg);
   }
 
+  static void add(const std::string& msg) {
+    log_data_.add(msg);
+  }
+
   static size_t message_count();
 
   static void set_output_log_level(CassLogLevel log_level) {
@@ -154,12 +156,17 @@ private:
 
     void reset(const std::string& msg) {
       boost::lock_guard<LogData> l(*this);
-      message = msg;
+      messages.clear();
+      add(msg);
       message_count = 0;
     }
 
+    void add(const std::string& msg) {
+      messages.push_back(msg);
+    }
+
     boost::mutex m;
-    std::string message;
+    std::vector<std::string> messages;
     size_t message_count;
     CassLogLevel output_log_level;
   };
@@ -367,10 +374,10 @@ struct Deleter<CassUuidGen> {
 };
 
 template<>
-struct Deleter<const CassSchema> {
-  void operator()(const CassSchema* ptr) {
+struct Deleter<const CassSchemaMeta> {
+  void operator()(const CassSchemaMeta* ptr) {
     if (ptr != NULL) {
-      cass_schema_free(ptr);
+      cass_schema_meta_free(ptr);
     }
   }
 };
@@ -404,7 +411,7 @@ typedef CassSharedPtr<CassUserType> CassUserTypePtr;
 typedef CassSharedPtr<const CassPrepared> CassPreparedPtr;
 typedef CassSharedPtr<CassBatch> CassBatchPtr;
 typedef CassSharedPtr<CassUuidGen> CassUuidGenPtr;
-typedef CassSharedPtr<const CassSchema> CassSchemaPtr;
+typedef CassSharedPtr<const CassSchemaMeta> CassSchemaMetaPtr;
 typedef CassSharedPtr<CassCustomPayload> CassCustomPayloadPtr;
 
 template<class T>
@@ -1097,18 +1104,17 @@ struct Value<CassDecimal> {
     parametrized ctor. Derive from it to use it in your tests.
  */
 struct MultipleNodesTest {
-  MultipleNodesTest(unsigned int num_nodes_dc1, unsigned int num_nodes_dc2, unsigned int protocol_version = 4, bool isSSL = false);
+  MultipleNodesTest(unsigned int num_nodes_dc1, unsigned int num_nodes_dc2, unsigned int protocol_version = 4, bool is_ssl = false);
   virtual ~MultipleNodesTest();
 
-  boost::shared_ptr<cql::cql_ccm_bridge_t> ccm;
-  static CassVersion version;
-  const cql::cql_ccm_bridge_configuration_t& conf;
+  boost::shared_ptr<CCM::Bridge> ccm;
+  static CCM::CassVersion version;
   CassUuidGen* uuid_gen;
   CassCluster* cluster;
 };
 
 struct SingleSessionTest : public MultipleNodesTest {
-  SingleSessionTest(unsigned int num_nodes_dc1, unsigned int num_nodes_dc2, unsigned int protocol_version = 4, bool isSSL = false);
+  SingleSessionTest(unsigned int num_nodes_dc1, unsigned int num_nodes_dc2, unsigned int protocol_version = 4, bool is_ssl = false);
   virtual ~SingleSessionTest();
   void create_session();
   void close_session();
@@ -1205,7 +1211,7 @@ inline std::string generate_random_uuid_str(CassUuidGen* uuid_gen) {
  *                configuration file)
  * @return Cassandra version from session or configuration file
  */
-CassVersion get_version(CassSession* session = NULL);
+CCM::CassVersion get_version(CassSession* session = NULL);
 
 /*
  * Generate a random string of a certain size using alpha numeric characters
@@ -1220,6 +1226,37 @@ std::string generate_random_string(unsigned int size = 1024);
  * @return String representing the PEM certificate
  */
 std::string load_ssl_certificate(const std::string filename);
+
+/**
+ * Concatenate an array/vector into a string
+ *
+ * @param elements Array/Vector elements to concatenate
+ * @param delimiter Character to use between elements (default: <space>)
+ * @param delimiter_prefix Character to use before delimiter (default: <empty>)
+ * @param delimiter_suffix Character to use after delimiter (default: <empty>)
+ * @return A string representation of all the array/vector elements
+ */
+std::string implode(const std::vector<std::string>& elements, const char delimiter = ' ',
+  const char* delimiter_prefix = NULL, const char* delimiter_suffix = NULL);
+
+/**
+ * Wait for the driver to establish connection to a given node
+ *
+ * @param ip_prefix IPv4 prefix for node
+ * @param node Node to wait for
+ * @param total_attempts Total number of attempts to wait on connection
+ */
+void wait_for_node_connection(const std::string& ip_prefix, int node, int total_attempts = 10);
+
+/**
+ * Wait for the driver to establish connection to a given set of nodes
+ *
+ * @param ip_prefix IPv4 prefix for node(s)
+ * @param nodes List of nodes to wait for
+ * @param total_attempts Total number of attempts to wait on connection
+ *                       (default: 10)
+ */
+void wait_for_node_connections(const std::string& ip_prefix, std::vector<int> nodes, int total_attempts = 10);
 
 extern const char* CREATE_TABLE_ALL_TYPES;
 extern const char* CREATE_TABLE_ALL_TYPES_V4;

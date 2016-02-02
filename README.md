@@ -13,17 +13,28 @@ Cassandra's native protocol and Cassandra Query Language v3.
 - Mailing List: https://groups.google.com/a/lists.datastax.com/forum/#!forum/cpp-driver-user
 - IRC: [#datastax-drivers on `irc.freenode.net <http://freenode.net>`](http://webchat.freenode.net/?channels=datastax-drivers)
 
-## What's New in 2.2 Beta1
+## What's New in 2.2
 
 - Support for new Cassandra 2.2 datatypes: `tinyint`, `smallint`, `date` and
   `time`
 - Support for custom payloads
 - Support for server-side warnings
+- UDF/UDA metadata
+- Whitelist load balancing policy
+- Default consistency has been changed from `ONE` to `LOCAL_QUORUM`
 
-## Upgrading from 1.0 to 2.0
+## Upgrading from 2.0 or 2.1 to 2.2+
 
-There were a couple breaking API changes between 1.0 and 2.0 that are
-documented [here](http://www.datastax.com/dev/blog/datastax-c-driver-2-0-released).
+The new schema metadata API in 2.2 required some breaking API changes.
+Applications that used the previous schema metadata API from 2.0 and 2.1 will
+require some small modifications to use the new API. More information about the
+new schema metadata API can be found in this
+[blog post](http://www.datastax.com/dev/blog/datastax-c-driver-2-2-ga-released).
+
+## Upgrading from 1.0 to 2.0+
+
+There were a couple breaking API changes between 1.0 and 2.0 that are documented
+[here](http://www.datastax.com/dev/blog/datastax-c-driver-2-0-released).
 
 ## Features
 - [Asynchronous API]

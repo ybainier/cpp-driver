@@ -108,9 +108,11 @@ void CassLog::callback(const CassLogMessage* message, void* data) {
             message->message);
   }
   boost::lock_guard<LogData> l(*log_data);
-  if (log_data->message.empty()) return;
-  if (str.find(log_data->message) != std::string::npos) {
-    log_data->message_count++;
+  if (log_data->messages.empty()) return;
+  for (std::vector<std::string>::const_iterator iterator = log_data->messages.begin(); iterator != log_data->messages.end(); ++iterator) {
+    if (str.find(*iterator) != std::string::npos) {
+      log_data->message_count++;
+    }
   }
 }
 
@@ -197,17 +199,18 @@ const char ALPHA_NUMERIC[] = { "01234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJK
 
 //-----------------------------------------------------------------------------------
 
-CassVersion MultipleNodesTest::version;
+CCM::CassVersion MultipleNodesTest::version("0.0.0");
 
-MultipleNodesTest::MultipleNodesTest(unsigned int num_nodes_dc1, unsigned int num_nodes_dc2, unsigned int protocol_version, bool isSSL /* = false */)
-  : conf(cql::get_ccm_bridge_configuration()) {
-  boost::debug::detect_memory_leaks(false);
-  ccm = cql::cql_ccm_bridge_t::create_and_start(conf, "test", num_nodes_dc1, num_nodes_dc2, isSSL);
-  version.from_string(ccm->version().to_string());
+MultipleNodesTest::MultipleNodesTest(unsigned int num_nodes_dc1, unsigned int num_nodes_dc2, unsigned int protocol_version, bool is_ssl /* = false */)
+  : ccm(new CCM::Bridge("config.txt")) {
+  if (ccm->create_cluster(num_nodes_dc1, num_nodes_dc2, is_ssl)) { // Only start the cluster if it wasn't the active cluster
+    ccm->start_cluster();
+  }
+  version = ccm->get_cassandra_version("config.txt");
 
   uuid_gen = cass_uuid_gen_new();
   cluster = cass_cluster_new();
-  initialize_contact_points(cluster, conf.ip_prefix(), num_nodes_dc1, num_nodes_dc2);
+  initialize_contact_points(cluster, ccm->get_ip_prefix(), num_nodes_dc1, num_nodes_dc2);
 
   cass_cluster_set_connect_timeout(cluster, 10 * ONE_SECOND_IN_MICROS);
   cass_cluster_set_request_timeout(cluster, 30 * ONE_SECOND_IN_MICROS);
@@ -223,10 +226,10 @@ MultipleNodesTest::~MultipleNodesTest() {
   cass_cluster_free(cluster);
 }
 
-SingleSessionTest::SingleSessionTest(unsigned int num_nodes_dc1, unsigned int num_nodes_dc2, unsigned int protocol_version, bool isSSL /* = false */)
-  : MultipleNodesTest(num_nodes_dc1, num_nodes_dc2, protocol_version, isSSL), session(NULL), ssl(NULL) {
+SingleSessionTest::SingleSessionTest(unsigned int num_nodes_dc1, unsigned int num_nodes_dc2, unsigned int protocol_version, bool is_ssl /* = false */)
+  : MultipleNodesTest(num_nodes_dc1, num_nodes_dc2, protocol_version, is_ssl), session(NULL), ssl(NULL) {
   //SSL verification flags must be set before establishing session
-  if (!isSSL) {
+  if (!is_ssl) {
     create_session();
   } else {
     ssl = cass_ssl_new();
@@ -345,7 +348,7 @@ std::string string_from_uuid(CassUuid uuid) {
   return std::string(buffer);
 }
 
-CassVersion get_version(CassSession* session /* = NULL */) {
+CCM::CassVersion get_version(CassSession* session /* = NULL */) {
   // Determine if we should get the version from C* or the configuration file
   std::string version_string;
   if (session) {
@@ -362,13 +365,11 @@ CassVersion get_version(CassSession* session /* = NULL */) {
     cass_value_get_string(value, &version_cass_string.data, &version_cass_string.length);
     version_string = std::string(version_cass_string.data, version_cass_string.length); // Needed for null termination
   } else {
-    // Get the version string from the configuration
-    const cql::cql_ccm_bridge_configuration_t& conf(cql::get_ccm_bridge_configuration());
-    version_string = std::string(conf.cassandara_version());
+    return CCM::Bridge::get_cassandra_version("config.txt");
   }
 
   // Return the version information
-  CassVersion version(version_string);
+  CCM::CassVersion version(version_string);
   return version;
 }
 
@@ -401,6 +402,49 @@ std::string load_ssl_certificate(const std::string filename) {
 
   std::string certificate(&bytes[0], file_size);
   return certificate;
+}
+
+std::string implode(const std::vector<std::string>& elements, const char delimiter /*= ' '*/,
+  const char* delimiter_prefix /*= NULL*/, const char* delimiter_suffix /*= NULL*/) {
+  std::string result;
+  for (std::vector<std::string>::const_iterator iterator = elements.begin(); iterator < elements.end(); ++iterator) {
+    result += *iterator;
+    if ((iterator + 1) != elements.end()) {
+      if (delimiter_prefix) {
+        result += delimiter_prefix;
+      }
+      result += delimiter;
+      if (delimiter_suffix) {
+        result += delimiter_suffix;
+      }
+    }
+  }
+  return result;
+}
+
+void wait_for_node_connection(const std::string& ip_prefix, int node, int total_attempts /*= 10*/) {
+  std::vector<int> nodes;
+  nodes.push_back(node);
+  wait_for_node_connections(ip_prefix, nodes, total_attempts);
+}
+
+void wait_for_node_connections(const std::string& ip_prefix, std::vector<int> nodes, int total_attempts /*= 10*/) {
+  // Build the log messages to look for
+  for (std::vector<int>::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator) {
+    std::stringstream log_message;
+    log_message << "Connected to host " << ip_prefix << *iterator;
+    if (iterator == nodes.begin()) {
+      test_utils::CassLog::reset(log_message.str().c_str());
+    } else {
+      test_utils::CassLog::add(log_message.str().c_str());
+    }
+  }
+
+  int num_of_attempts = 0;
+  while (num_of_attempts < total_attempts && test_utils::CassLog::message_count() < nodes.size()) {
+    boost::this_thread::sleep_for(boost::chrono::seconds(1));
+    ++num_of_attempts;
+  }
 }
 
 //-----------------------------------------------------------------------------------

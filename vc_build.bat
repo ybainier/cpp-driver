@@ -1,5 +1,5 @@
 @ECHO OFF
-REM Copyright 2015 DataStax
+REM Copyright 2014-2015 DataStax
 REM
 REM Licensed under the Apache License, Version 2.0 (the "License");
 REM you may not use this file except in compliance with the License.
@@ -64,7 +64,8 @@ SET NO=2
 
 REM Determine the system architecture (32/64 bit)
 SET ARCHITECTURE_REGISTRY_LOCATION_QUERY=HKLM\HARDWARE\DESCRIPTION\System\CentralProcessor\0
-REG QUERY %ARCHITECTURE_REGISTRY_LOCATION_QUERY% | FIND /I "x86" > NUL && SET SYSTEM_ARCHITECTURE=%ARCHITECTURE_32BIT% || SET SYSTEM_ARCHITECTURE=%ARCHITECTURE_64BIT%
+SET ARCHITECTURE_REGISTRY_LOCATION_KEY=Identifier
+REG QUERY %ARCHITECTURE_REGISTRY_LOCATION_QUERY% /V %ARCHITECTURE_REGISTRY_LOCATION_KEY% | FIND /I "x86" > NUL && SET SYSTEM_ARCHITECTURE=%ARCHITECTURE_32BIT% || SET SYSTEM_ARCHITECTURE=%ARCHITECTURE_64BIT%
 
 REM Dependency executable constants
 SET CMAKE=cmake.exe
@@ -83,7 +84,7 @@ SET ZIP=7z.exe
 SET "DOWNLOAD_URL_ZIP=http://www.7-zip.org/download.html"
 
 REM Minimum version build dependency constants
-SET MINIMUM_VERSION_REQUIRED_CMAKE=2.8.0
+SET MINIMUM_VERSION_REQUIRED_CMAKE=3.1.2
 SET MINIMUM_VERSION_REQUIRED_PYTHON=2.7.0
 
 REM Build constants
@@ -104,8 +105,8 @@ SET BOOST_DIRECTORY=boost
 SET BOOST_BRANCH_TAG_VERSION=boost-1.59.0
 SET LIBUV_REPOSITORY_URL=https://github.com/libuv/libuv.git
 SET LIBUV_DIRECTORY=libuv
-SET LIBUV_BRANCH_TAG_VERSION=v1.7.4
-SET LIBUV_PACKAGE_VERSION=1.7.4
+SET LIBUV_BRANCH_TAG_VERSION=v1.7.5
+SET LIBUV_PACKAGE_VERSION=1.7.5
 SET GYP_REPOSITORY_URL=https://chromium.googlesource.com/external/gyp.git
 SET LIBSSH2_REPOSITORY_URL=https://github.com/libssh2/libssh2.git
 SET LIBSSH2_DIRECTORY=libssh2
@@ -1304,7 +1305,7 @@ REM @param log-filename Absolute path and filename for log output
 	)
 	ECHO done.
 	ECHO | SET /P=Building zlib ... 
-	!CMAKE! --build . >> "!ZLIB_LOG_FILENAME!" 2>&1
+	!CMAKE! --build . --config !BUILD_TYPE_RELEASE! >> "!ZLIB_LOG_FILENAME!" 2>&1
 	IF NOT !ERRORLEVEL! EQU 0 (
 		ECHO FAILED!
 		ECHO 	See!ZLIB_LOG_FILENAME! for more details
@@ -1312,7 +1313,7 @@ REM @param log-filename Absolute path and filename for log output
 	)
 	ECHO done.
 	ECHO | SET /P=Installing zlib ... 
-	!CMAKE! --build . --target install\fast >> "!ZLIB_LOG_FILENAME!" 2>&1
+	!CMAKE! --build . --config !BUILD_TYPE_RELEASE! --target install\fast >> "!ZLIB_LOG_FILENAME!" 2>&1
 	IF NOT !ERRORLEVEL! EQU 0 (
 		ECHO FAILED!
 		ECHO 	See !ZLIB_LOG_FILENAME! for more details
@@ -1374,7 +1375,7 @@ REM @param log-filename Absolute path and filename for log output
 	)
 	ECHO done.
 	ECHO | SET /P=Building libssh2 ... 
-	!CMAKE! --build . >> "!LIBSSH2_LOG_FILENAME!" 2>&1
+	!CMAKE! --build . --config !BUILD_TYPE_RELEASE! >> "!LIBSSH2_LOG_FILENAME!" 2>&1
 	IF NOT !ERRORLEVEL! EQU 0 (
 		ECHO FAILED!
 		ECHO 	See !LIBSSH2_LOG_FILENAME! for more details
@@ -1382,7 +1383,7 @@ REM @param log-filename Absolute path and filename for log output
 	)
 	ECHO done.
 	ECHO | SET /P=Installing libssh2 ... 
-	!CMAKE! --build . --target install >> "!LIBSSH2_LOG_FILENAME!" 2>&1
+	!CMAKE! --build . --config !BUILD_TYPE_RELEASE! --target install >> "!LIBSSH2_LOG_FILENAME!" 2>&1
 	IF NOT !ERRORLEVEL! EQU 0 (
 		ECHO FAILED!
 		ECHO 	See !LIBSSH2_LOG_FILENAME! for more details
@@ -1513,7 +1514,7 @@ REM @param log-filename Absolute path and filename for log output
 		EXIT /B
 	)
 	ECHO | SET /P=Building driver ... 
-	!CMAKE! --build . >> "!DRIVER_LOG_FILENAME!" 2>&1
+	!CMAKE! --build . --config !DRIVER_BUILD_TYPE! >> "!DRIVER_LOG_FILENAME!" 2>&1
 	IF NOT !ERRORLEVEL! EQU 0 (
 		ECHO FAILED!
 		ECHO 	See !DRIVER_LOG_FILENAME! for more details
@@ -1521,7 +1522,7 @@ REM @param log-filename Absolute path and filename for log output
 	)
 	ECHO done.
 	ECHO | SET /P=Installing driver ...
-	!CMAKE! --build . --target install >> "!DRIVER_LOG_FILENAME!" 2>&1
+	!CMAKE! --build . --config !DRIVER_BUILD_TYPE! --target install >> "!DRIVER_LOG_FILENAME!" 2>&1
 	IF NOT !ERRORLEVEL! EQU 0 (
 		ECHO FAILED!
 		ECHO 	See !DRIVER_LOG_FILENAME! for more details

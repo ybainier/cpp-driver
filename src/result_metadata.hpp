@@ -14,8 +14,8 @@
   limitations under the License.
 */
 
-#ifndef __CASS_METADATA_HPP_INCLUDED__
-#define __CASS_METADATA_HPP_INCLUDED__
+#ifndef __CASS_RESULT_METADATA_HPP_INCLUDED__
+#define __CASS_RESULT_METADATA_HPP_INCLUDED__
 
 #include "cassandra.h"
 #include "data_type.hpp"
@@ -38,7 +38,7 @@ struct ColumnDefinition : public HashTableEntry<ColumnDefinition> {
   StringRef name;
   StringRef keyspace;
   StringRef table;
-  SharedRefPtr<const DataType> data_type;
+  DataType::ConstPtr data_type;
 };
 
 class ResultMetadata : public RefCounted<ResultMetadata> {

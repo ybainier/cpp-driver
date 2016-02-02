@@ -106,7 +106,7 @@ private:
     std::string table_name;
   };
 
-  struct QueryMetadataAllData {};
+  struct UnusedData {};
 
   template<class T>
   class ControlHandler : public Handler {
@@ -153,6 +153,24 @@ private:
     bool is_new_node;
   };
 
+  struct RefreshFunctionData {
+    typedef std::vector<std::string> StringVec;
+
+    RefreshFunctionData(StringRef keyspace,
+                        StringRef function,
+                        const StringRefVec& arg_types,
+                        bool is_aggregate)
+      : keyspace(keyspace.to_string())
+      , function(function.to_string())
+      , arg_types(to_strings(arg_types))
+      , is_aggregate(is_aggregate) { }
+
+    std::string keyspace;
+    std::string function;
+    StringVec arg_types;
+    bool is_aggregate;
+  };
+
   void schedule_reconnect(uint64_t ms = 0);
   void reconnect(bool retry_current_host);
 
@@ -162,28 +180,32 @@ private:
   virtual void on_availability_change(Connection* connection) {}
   virtual void on_event(EventResponse* response);
 
-  //TODO: possibly reorder callback functions to pair with initiator
-  static void on_query_meta_all(ControlConnection* control_connection,
-                                const QueryMetadataAllData& data,
-                                const MultipleRequestHandler::ResponseVec& responses);
-  static void on_refresh_node_info(ControlConnection* control_connection,
-                                   const RefreshNodeData& data,
-                                   Response* response);
-  static void on_refresh_node_info_all(ControlConnection* control_connection,
-                                       const RefreshNodeData& data,
-                                       Response* response);
-  void on_local_query(ResponseMessage* response);
-  void on_peer_query(ResponseMessage* response);
   static void on_reconnect(Timer* timer);
 
   bool handle_query_invalid_response(Response* response);
   void handle_query_failure(CassError code, const std::string& message);
   void handle_query_timeout();
 
-  void query_meta_all();
+  void query_meta_hosts();
+  static void on_query_hosts(ControlConnection* control_connection,
+                             const UnusedData& data,
+                             const MultipleRequestHandler::ResponseVec& responses);
+
+  void query_meta_schema();
+  static void on_query_meta_schema(ControlConnection* control_connection,
+                                const UnusedData& data,
+                                const MultipleRequestHandler::ResponseVec& responses);
+
   void refresh_node_info(SharedRefPtr<Host> host,
                          bool is_new_node,
                          bool query_tokens = false);
+  static void on_refresh_node_info(ControlConnection* control_connection,
+                                   const RefreshNodeData& data,
+                                   Response* response);
+  static void on_refresh_node_info_all(ControlConnection* control_connection,
+                                       const RefreshNodeData& data,
+                                       Response* response);
+
   void update_node_info(SharedRefPtr<Host> host, const Row* row);
 
   void refresh_keyspace(const StringRef& keyspace_name);
@@ -196,10 +218,18 @@ private:
                                const MultipleRequestHandler::ResponseVec& responses);
 
   void refresh_type(const StringRef& keyspace_name,
-                        const StringRef& type_name);
+                    const StringRef& type_name);
   static void on_refresh_type(ControlConnection* control_connection,
                               const std::pair<std::string, std::string>& keyspace_and_type_names,
                               Response* response);
+
+  void refresh_function(const StringRef& keyspace_name,
+                        const StringRef& function_name,
+                        const StringRefVec& arg_types,
+                        bool is_aggregate);
+  static void on_refresh_function(ControlConnection* control_connection,
+                                  const RefreshFunctionData& data,
+                                  Response* response);
 
 private:
   State state_;
@@ -210,7 +240,7 @@ private:
   Address current_host_address_;
   int protocol_version_;
   std::string last_connection_error_;
-  bool query_tokens_;
+  bool should_query_tokens_;
 
   static Address bind_any_ipv4_;
   static Address bind_any_ipv6_;

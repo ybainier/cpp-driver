@@ -16,6 +16,7 @@
 
 #include "value.hpp"
 
+#include "collection_iterator.hpp"
 #include "data_type.hpp"
 #include "external_types.hpp"
 #include "serialization.hpp"
@@ -182,7 +183,7 @@ CassValueType cass_value_secondary_sub_type(const CassValue* collection) {
 namespace cass {
 
 Value::Value(int protocol_version,
-             const SharedRefPtr<const DataType>& data_type,
+             const DataType::ConstPtr& data_type,
              char* data, int32_t size)
   : protocol_version_(protocol_version)
   , data_type_(data_type) {
@@ -198,7 +199,7 @@ Value::Value(int protocol_version,
       SharedRefPtr<const SubTypesDataType> sub_types(data_type);
       count_ = sub_types->types().size();
     } else if (data_type->is_user_type()) {
-      SharedRefPtr<const UserType> user_type(data_type);
+      UserType::ConstPtr user_type(data_type);
       count_ = user_type->fields().size();
     } else {
       count_ = 0;
@@ -206,6 +207,39 @@ Value::Value(int protocol_version,
     data_ = data;
     size_ = size;
   }
+}
+
+bool Value::as_bool() const {
+  assert(value_type() == CASS_VALUE_TYPE_BOOLEAN);
+  uint8_t value;
+  decode_byte(data_, value);
+  return value != 0;
+}
+
+int32_t Value::as_int32() const {
+  assert(value_type() == CASS_VALUE_TYPE_INT);
+  int32_t value;
+  decode_int32(data_, value);
+  return value;
+}
+
+CassUuid Value::as_uuid() const {
+  assert(value_type() == CASS_VALUE_TYPE_UUID || value_type() == CASS_VALUE_TYPE_TIMEUUID);
+  CassUuid value;
+  decode_uuid(data_, &value);
+  return value;
+
+}
+
+StringVec Value::as_stringlist() const {
+  assert((value_type() == CASS_VALUE_TYPE_LIST || value_type() == CASS_VALUE_TYPE_SET) &&
+         primary_value_type() == CASS_VALUE_TYPE_VARCHAR);
+  StringVec stringlist;
+  CollectionIterator iterator(this);
+  while (iterator.next()) {
+    stringlist.push_back(iterator.value()->to_string());
+  }
+  return stringlist;
 }
 
 } // namespace cassandra

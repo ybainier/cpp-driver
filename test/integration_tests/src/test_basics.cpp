@@ -14,10 +14,6 @@
   limitations under the License.
 */
 
-#ifdef STAND_ALONE
-#   define BOOST_TEST_MODULE cassandra
-#endif
-
 #include <algorithm>
 #include <cmath>
 
@@ -39,6 +35,13 @@ struct BasicTests : public test_utils::SingleSessionTest {
                                            % test_utils::SIMPLE_KEYSPACE % "1"));
 
     test_utils::execute_query(session, str(boost::format("USE %s") % test_utils::SIMPLE_KEYSPACE));
+  }
+
+  ~BasicTests() {
+    // Drop the keyspace (ignore any and all errors)
+    test_utils::execute_query_with_error(session,
+      str(boost::format(test_utils::DROP_KEYSPACE_FORMAT)
+        % test_utils::SIMPLE_KEYSPACE));
   }
 
   template <class T>
@@ -667,7 +670,7 @@ BOOST_AUTO_TEST_CASE(unset_parameters)
 
   CassError rc = cass_future_error_code(future.get());
 
-  if (version.major >= 2 && version.minor >= 2) {
+  if (version >= "2.2.0") {
     // C* 2.2+ uses the value UNSET and that makes this statement a no-op
     BOOST_REQUIRE(rc == CASS_OK);
   } else {

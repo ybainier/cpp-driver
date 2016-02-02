@@ -15,10 +15,30 @@ endif()
 
 # Title the project and define the versioning
 project(${PROJECT_NAME_STR} C CXX)
-set(PROJECT_VERSION_MAJOR 2)
-set(PROJECT_VERSION_MINOR 2)
-set(PROJECT_VERSION_PATCH 0)
+
+# Retrieve version from header file
+set(PROJECT_VERSION_HEADER_FILE "${PROJECT_SOURCE_DIR}/include/cassandra.h")
+
+file(STRINGS ${PROJECT_VERSION_HEADER_FILE} PROJECT_VERSION_PARTS
+  REGEX "^#define[ \t]+CASS_VERSION_(MAJOR|MINOR|PATCH)[ \t]+[0-9]+$")
+
+# Verify version parts
+string(REGEX MATCH "CASS_VERSION_MAJOR[ \t]+[0-9]+" PROJECT_VERSION_MAJOR  ${PROJECT_VERSION_PARTS})
+string(REGEX MATCH "CASS_VERSION_MINOR[ \t]+[0-9]+" PROJECT_VERSION_MINOR  ${PROJECT_VERSION_PARTS})
+string(REGEX MATCH "CASS_VERSION_PATCH[ \t]+[0-9]+" PROJECT_VERSION_PATCH  ${PROJECT_VERSION_PARTS})
+
+if(NOT PROJECT_VERSION_MAJOR OR NOT PROJECT_VERSION_MINOR OR NOT PROJECT_VERSION_PATCH)
+  message(FATAL_ERROR "Unable to retrieve project version from ${PROJECT_VERSION_HEADER_FILE}")
+endif()
+
+# Extract version numbers
+string(REGEX REPLACE "CASS_VERSION_MAJOR[ \t]+([0-9]+)" "\\1" PROJECT_VERSION_MAJOR  ${PROJECT_VERSION_MAJOR})
+string(REGEX REPLACE "CASS_VERSION_MINOR[ \t]+([0-9]+)" "\\1" PROJECT_VERSION_MINOR  ${PROJECT_VERSION_MINOR})
+string(REGEX REPLACE "CASS_VERSION_PATCH[ \t]+([0-9]+)" "\\1" PROJECT_VERSION_PATCH  ${PROJECT_VERSION_PATCH})
+
 set(PROJECT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
+
+message(STATUS "Project version: ${PROJECT_VERSION_STRING}")
 
 set(CASS_DRIVER_PROJECT_NAME ${PROJECT_NAME_STR})
 
@@ -298,7 +318,7 @@ endif()
 
 # Assign additional library requirements for Windows
 if(WIN32)
-  set(CASS_LIBS ${CASS_LIBS} iphlpapi psapi wsock32 ws2_32 userenv)
+  set(CASS_LIBS ${CASS_LIBS} iphlpapi psapi wsock32 crypt32 ws2_32 userenv)
 endif()
 
 #----------------------
@@ -442,22 +462,9 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   # Clang/Intel specific compiler options
   # I disabled long-long warning because boost generates about 50 such warnings
-  set(WARNING_COMPILER_FLAGS "-Wall -pedantic -Wextra -Wno-long-long -Wno-unused-parameter -Wno-variadic-macros -Wno-zero-length-array")
-
-  # Detect if this is Apple's clang
-  execute_process(COMMAND ${CMAKE_CXX_COMPILER} -v ERROR_VARIABLE CASS_CLANG_VERSION_INFO)
-  if (CASS_CLANG_VERSION_INFO MATCHES "^Apple LLVM")
-    set(CASS_IS_APPLE_CLANG 1)
-  else()
-    set(CASS_IS_APPLE_CLANG 0)
-  endif()
-
-  if(NOT CASS_IS_APPLE_CLANG AND
-      (${CMAKE_CXX_COMPILER_VERSION} VERSION_EQUAL "3.6" OR
-       ${CMAKE_CXX_COMPILER_VERSION} VERSION_GREATER "3.6")
-     )
-    set(WARNING_COMPILER_FLAGS "${WARNING_COMPILER_FLAGS} -Wno-unused-local-typedef ")
-  endif()
+  set(WARNING_COMPILER_FLAGS "-Wall -pedantic -Wextra -Wno-long-long -Wno-unused-parameter")
+  set(WARNING_COMPILER_FLAGS "${WARNING_COMPILER_FLAGS} -Wno-variadic-macros -Wno-zero-length-array")
+  set(WARNING_COMPILER_FLAGS "${WARNING_COMPILER_FLAGS} -Wno-unused-local-typedef -Wno-unknown-warning-option")
 
   # OpenSSL is deprecated on later versions of Mac OS X. The long-term solution
   # is to provide a CommonCryto implementation.
@@ -624,7 +631,7 @@ if(CASS_BUILD_TESTS)
 
   # Add CCM bridge as a dependency for integration tests
   add_subdirectory("${PROJECT_SOURCE_DIR}/test/ccm_bridge")
-  set(CCM_BRIDGE_INCLUDES "${PROJECT_SOURCE_DIR}/test/ccm_bridge/include")
+  set(CCM_BRIDGE_INCLUDES "${PROJECT_SOURCE_DIR}/test/ccm_bridge/src")
 
   # Add the integration test project
   add_subdirectory(test/integration_tests)
