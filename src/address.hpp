@@ -20,7 +20,6 @@
 #include "utils.hpp"
 
 #include <uv.h>
-#include <stdint.h>
 #include <set>
 #include <string.h>
 #include <string>
@@ -69,7 +68,7 @@ public:
 
   std::string to_string(bool with_port = false) const;
 
-  int64_t compare(const Address& a) const;
+  int compare(const Address& a) const;
 
 private:
   void init() { memset(&addr_, 0, sizeof(addr_)); }
